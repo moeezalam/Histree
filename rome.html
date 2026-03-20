@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rome — The Complete Cinematic History</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #c9a84c;
+    --gold-light: #e8cc7a;
+    --crimson: #8b1a1a;
+    --crimson-light: #b52020;
+    --marble-dark: #0e0c0a;
+    --marble-mid: #1a1510;
+    --marble-light: #2a2018;
+    --text: #e8dcc8;
+    --text-dim: #9a8870;
+    --trunk: #c9a84c;
+    --accent: #8b1a1a;
+    --accent-light: #b52020;
+    --accent-glow: rgba(139,26,26,0.6);
+  }
+
+  body {
+    background: var(--marble-dark);
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(105deg, transparent, transparent 40px, rgba(255,255,255,0.008) 40px, rgba(255,255,255,0.008) 41px),
+      repeating-linear-gradient(75deg, transparent, transparent 60px, rgba(255,255,255,0.005) 60px, rgba(255,255,255,0.005) 61px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    max-width: 1060px;
+    margin: 0 auto;
+    padding: 60px 20px 100px;
+  }
+
+  /* ── HEADER ── */
+  header {
+    text-align: center;
+    margin-bottom: 80px;
+  }
+
+  .header-ornament {
+    font-size: 12px;
+    letter-spacing: 8px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    opacity: 0.7;
+  }
+
+  .back-link {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    opacity: 0.6;
+    margin-bottom: 12px;
+  }
+
+  .back-link a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .back-link a:hover { color: var(--gold-light); }
+
+  h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(22px, 4vw, 42px);
+    font-weight: 900;
+    color: var(--gold-light);
+    letter-spacing: 3px;
+    line-height: 1.2;
+    text-shadow: 0 0 40px rgba(201,168,76,0.3);
+  }
+
+  .header-sub {
+    margin-top: 14px;
+    font-size: 16px;
+    color: var(--text-dim);
+    font-style: italic;
+    letter-spacing: 1px;
+  }
+
+  .header-line {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 24px;
+    justify-content: center;
+  }
+
+  .header-line::before, .header-line::after {
+    content: '';
+    height: 1px;
+    width: 120px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  .header-dates {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    color: var(--gold);
+    letter-spacing: 4px;
+  }
+
+  /* ── TREE ── */
+  .tree {
+    position: relative;
+    padding: 0 0 40px;
+  }
+
+  .trunk {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    transform: translateX(-50%);
+    background: linear-gradient(to bottom, var(--gold) 0%, var(--gold) 90%, transparent 100%);
+    opacity: 0.45;
+  }
+
+  /* ── PHASE NODE ── */
+  .phase {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 0;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .phase:nth-child(odd)  { flex-direction: row; }
+  .phase:nth-child(even) { flex-direction: row-reverse; }
+
+  .phase-block {
+    width: calc(50% - 32px);
+    padding-bottom: 64px;
+    position: relative;
+  }
+
+  .phase:nth-child(odd)  .phase-block { padding-right: 32px; text-align: right; }
+  .phase:nth-child(even) .phase-block { padding-left:  32px; text-align: left;  }
+
+  /* branch connector */
+  .phase:nth-child(odd)  .phase-block::after {
+    content: ''; position: absolute; right: 0; top: 6px;
+    width: 32px; height: 1px; background: var(--gold); opacity: 0.4;
+  }
+  .phase:nth-child(even) .phase-block::after {
+    content: ''; position: absolute; left: 0; top: 6px;
+    width: 32px; height: 1px; background: var(--gold); opacity: 0.4;
+  }
+
+  .trunk-node {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--gold);
+    border: 2px solid var(--marble-dark);
+    box-shadow: 0 0 12px rgba(201,168,76,0.6);
+    z-index: 2;
+    flex-shrink: 0;
+  }
+
+  .phase-spacer { width: 64px; flex-shrink: 0; }
+
+  .phase-num {
+    font-size: 10px;
+    color: var(--accent-light);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    opacity: 0.9;
+  }
+
+  .phase-date {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 3px;
+    opacity: 0.85;
+    margin-bottom: 6px;
+  }
+
+  .phase-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(13px, 2vw, 17px);
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: 1px;
+    line-height: 1.3;
+    margin-bottom: 6px;
+  }
+
+  .phase-desc {
+    font-size: 12.5px;
+    color: var(--text-dim);
+    font-style: italic;
+    line-height: 1.6;
+    margin-top: 6px;
+    margin-bottom: 2px;
+  }
+
+  /* ── FILMS LIST ── */
+  .films {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 12px;
+  }
+
+  .phase:nth-child(odd)  .films { align-items: flex-end; }
+  .phase:nth-child(even) .films { align-items: flex-start; }
+
+  .film-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--marble-light);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 3px;
+    padding: 6px 12px;
+    font-size: 13px;
+    color: var(--text);
+    font-style: italic;
+    transition: all 0.2s;
+    position: relative;
+    max-width: 300px;
+  }
+
+  .film-item:hover {
+    border-color: rgba(201,168,76,0.5);
+    background: rgba(201,168,76,0.07);
+    color: var(--gold-light);
+    transform: translateX(-2px);
+  }
+
+  .phase:nth-child(even) .film-item:hover { transform: translateX(2px); }
+
+  .film-item.type-optional { opacity: 0.65; }
+
+  .film-type {
+    font-family: 'Cinzel', serif;
+    font-size: 8px;
+    letter-spacing: 2px;
+    padding: 2px 5px;
+    border-radius: 2px;
+    font-style: normal;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .type-movie  { background: rgba(139,26,26,0.4);  color: #e87070; border: 1px solid rgba(139,26,26,0.5); }
+  .type-series { background: rgba(30,60,100,0.4);  color: #7ab0e8; border: 1px solid rgba(30,60,100,0.5); }
+  .type-mini   { background: rgba(40,90,60,0.4);   color: #7adfa0; border: 1px solid rgba(40,90,60,0.5); }
+  .type-doc    { background: rgba(80,50,10,0.5);   color: #e8c070; border: 1px solid rgba(150,100,20,0.4); }
+  .type-drama  { background: rgba(70,30,100,0.45); color: #c07ae8; border: 1px solid rgba(100,40,140,0.5); }
+
+  /* ── WATCH NOTE / PARALLEL LABEL ── */
+  .parallel-label {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    opacity: 0.65;
+    margin-top: 5px;
+    line-height: 1.7;
+  }
+
+  .phase:nth-child(even) .parallel-label { text-align: left; }
+  .phase:nth-child(odd)  .parallel-label { text-align: right; }
+
+  /* ── CHARACTER SPOTLIGHT ── */
+  .spotlight {
+    margin-top: 14px;
+    border-left: 2px solid var(--accent);
+    padding-left: 10px;
+  }
+
+  .phase:nth-child(odd) .spotlight {
+    border-left: none;
+    border-right: 2px solid var(--accent);
+    padding-left: 0;
+    padding-right: 10px;
+  }
+
+  .spotlight-label {
+    font-family: 'Cinzel', serif;
+    font-size: 8.5px;
+    letter-spacing: 2.5px;
+    color: #c07ae8;
+    opacity: 0.85;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+
+  .spotlight-text {
+    font-size: 11.5px;
+    color: var(--text-dim);
+    font-style: italic;
+    line-height: 1.6;
+  }
+
+  .spotlight-films {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 8px;
+  }
+
+  .phase:nth-child(odd)  .spotlight-films { align-items: flex-end; }
+  .phase:nth-child(even) .spotlight-films { align-items: flex-start; }
+
+  /* ── DIVIDER ── */
+  .era-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin: 0 0 10px;
+    position: relative;
+    z-index: 3;
+  }
+
+  .era-divider-line {
+    height: 1px;
+    flex: 1;
+    max-width: 180px;
+    background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent);
+  }
+
+  .era-divider-label {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 4px;
+    color: var(--gold);
+    opacity: 0.5;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 2px;
+    background: var(--marble-dark);
+  }
+
+  /* ── END NODE ── */
+  .end-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0;
+    padding-top: 20px;
+    position: relative;
+  }
+
+  .end-node::before {
+    content: '';
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    opacity: 0.4;
+    margin-bottom: 0;
+  }
+
+  .end-diamond {
+    width: 20px; height: 20px;
+    background: var(--accent);
+    transform: rotate(45deg);
+    box-shadow: 0 0 20px var(--accent-glow);
+    margin-bottom: 20px;
+  }
+
+  .end-label {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 3px;
+    color: var(--accent-light);
+    text-align: center;
+  }
+
+  .end-year {
+    font-family: 'Cinzel', serif;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--accent);
+    text-shadow: 0 0 30px var(--accent-glow);
+    margin-top: 6px;
+  }
+
+  /* ── LEGEND ── */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 60px;
+    padding-top: 30px;
+    border-top: 1px solid rgba(201,168,76,0.15);
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--text-dim);
+    font-style: italic;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .phase:nth-child(1)  { animation-delay: 0.04s; }
+  .phase:nth-child(2)  { animation-delay: 0.08s; }
+  .phase:nth-child(3)  { animation-delay: 0.12s; }
+  .phase:nth-child(4)  { animation-delay: 0.16s; }
+  .phase:nth-child(5)  { animation-delay: 0.20s; }
+  .phase:nth-child(6)  { animation-delay: 0.24s; }
+  .phase:nth-child(7)  { animation-delay: 0.28s; }
+  .phase:nth-child(8)  { animation-delay: 0.32s; }
+  .phase:nth-child(9)  { animation-delay: 0.36s; }
+  .phase:nth-child(10) { animation-delay: 0.40s; }
+  .phase:nth-child(11) { animation-delay: 0.44s; }
+  .phase:nth-child(12) { animation-delay: 0.48s; }
+  .phase:nth-child(13) { animation-delay: 0.52s; }
+  .phase:nth-child(14) { animation-delay: 0.56s; }
+  .phase:nth-child(15) { animation-delay: 0.60s; }
+  .phase:nth-child(16) { animation-delay: 0.64s; }
+  .phase:nth-child(17) { animation-delay: 0.68s; }
+  .phase:nth-child(18) { animation-delay: 0.72s; }
+  .phase:nth-child(19) { animation-delay: 0.76s; }
+  .phase:nth-child(20) { animation-delay: 0.80s; }
+  .phase:nth-child(21) { animation-delay: 0.84s; }
+  .phase:nth-child(22) { animation-delay: 0.88s; }
+
+  /* ── MOBILE ── */
+  @media (max-width: 600px) {
+    .phase { flex-direction: column !important; padding-left: 30px; }
+    .phase-block { width: 100% !important; padding: 0 0 40px 0 !important; text-align: left !important; }
+    .trunk { left: 10px; }
+    .trunk-node { left: 10px; }
+    .phase-block::after { display: none; }
+    .films { align-items: flex-start !important; }
+    .spotlight-films { align-items: flex-start !important; }
+    .spotlight { border-left: 2px solid rgba(201,168,76,0.25) !important; border-right: none !important; padding-left: 10px !important; padding-right: 0 !important; }
+    .phase:nth-child(even) .phase-block { padding-left: 0 !important; }
+    .film-item:hover { transform: translateX(2px) !important; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div class="header-ornament">✦ Cinematic Curriculum ✦</div>
+    <div class="back-link"><a href="index.html">← All Empires</a></div>
+    <h1>THE HISTORY OF ROME<br>IN FILM &amp; SERIES</h1>
+    <p class="header-sub">From founding myth to final fall — the complete watch order</p>
+    <div class="header-line">
+      <span class="header-dates">753 BC — 1453 AD</span>
+    </div>
+  </header>
+
+  <div class="tree">
+    <div class="trunk"></div>
+
+    <!-- ═══════════════════════════ ROMAN KINGDOM ═══════════════════════════ -->
+
+    <!-- PHASE I -->
+    <div class="phase">
+      <div class="phase-block">
+        <div class="phase-num">Phase I</div>
+        <div class="phase-date">753 BC</div>
+        <div class="phase-title">The Mythical Founding</div>
+        <div class="phase-desc">Romulus &amp; Remus · twin brothers suckled by a she-wolf · fratricide · first wall of Rome built · the Seven Hills settled · Romulus becomes the first king</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-movie">FILM</span> The First King (2019) — Il Primo Re</div>
+          <div class="film-item"><span class="film-type type-series">SERIES</span> Romulus — Season 1 (2020)</div>
+          <div class="film-item"><span class="film-type type-series">SERIES</span> Romulus — Season 2 (2022)</div>
+        </div>
+        <div class="parallel-label">⟡ Start here — this is the very seed of Rome<br>⟡ The First King is raw, visceral, in ancient Latin dialect<br>⟡ Romulus (Sky Atlantic) expands the founding myth beautifully</div>
+      </div>
+      <div class="trunk-node"></div>
+      <div class="phase-spacer"></div>
+    </div>
+
+    <!-- PHASE II -->
+    <div class="phase">
+      <div class="phase-spacer"></div>
+      <div class="trunk-node"></div>
+      <div class="phase-block">
+        <div class="phase-num">Phase II</div>
+        <div class="phase-date">753 – 509 BC</div>
+        <div class="phase-title">The Roman Kingdom</div>
+        <div class="phase-desc">Seven Kings of Rome · the Rape of the Sabine Women · Tarquinius Superbus, the last tyrannical king · Lucretia's violation sparks the revolution that ends the monarchy and births the Republic</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-movie">FILM</span> Duel of Champions (1961)</div>
+          <div class="film-item type-optional"><span class="film-type type-movie">FILM</span> The Rape of the Sabine Women (1961)</div>
+          <div class="film-item type-optional"><span class="film-type type-movie">FILM</span> The Last Glory of Troy (1962)</div>
+        </div>
+        <div class="parallel-label">⟡ These are Italian peplum films — optional but atmospheric<br>⟡ Duel of Champions covers the Horatii vs Curiatii duel, ~670 BC</div>
+      </div>
+    </div>
+
+    <!-- PHASE III -->
+    <div class="phase">
+      <div class="phase-block">
+        <div class="phase-num">Phase III</div>
+        <div class="phase-date">509 – 400 BC</div>
+        <div class="phase-title">Birth of the Republic</div>
+        <div class="phase-desc">Expulsion of kings · Senate established · early patrician-plebeian class wars · the Conflict of the Orders · Coriolanus, the exiled general who turned enemy of Rome</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-movie">FILM</span> Coriolanus (2011)</div>
+        </div>
+        <div class="parallel-label">⟡ Ralph Fiennes directs &amp; stars — set in early Republic, ~490 BC<br>⟡ Captures the aristocratic arrogance vs populist tension perfectly</div>
+
+        <div class="spotlight">
+          <div class="spotlight-label">⚔ Character Spotlight — Coriolanus</div>
+          <div class="spotlight-text">Shakespeare's Coriolanus is set ~490 BC — a Roman general so contemptuous of the common people he leads the enemy against Rome. Fiennes's modern retelling is the only major screen version. Watch before moving on.</div>
+        </div>
+      </div>
+      <div class="trunk-node"></div>
+      <div class="phase-spacer"></div>
+    </div>
+
+    <!-- PHASE IV -->
+    <div class="phase">
+      <div class="phase-spacer"></div>
+      <div class="trunk-node"></div>
+      <div class="phase-block">
+        <div class="phase-num">Phase IV</div>
+        <div class="phase-date">264 – 146 BC</div>
+        <div class="phase-title">The Punic Wars — Rome vs Carthage</div>
+        <div class="phase-desc">Three wars against Carthage · Hannibal Barca crosses the Alps with war elephants · Battle of Cannae, Rome's worst defeat · Scipio Africanus turns the tide at Zama · Carthage is razed to the ground · Rome becomes master of the Mediterranean</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-mini">MINI</span> Hannibal (2005) — Alexander Siddig</div>
+          <div class="film-item"><span class="film-type type-movie">FILM</span> Hannibal (1959) — Victor Mature</div>
+          <div class="film-item type-optional"><span class="film-type type-movie">FILM</span> Cabiria (1914) — silent epic, 2nd Punic War</div>
+          <div class="film-item type-optional"><span class="film-type type-movie">FILM</span> Scipio Africanus (1937) — Italian epic, Zama</div>
+        </div>
+        <div class="parallel-label">⟡ Watch Hannibal (2005) first — most accurate and complete arc<br>⟡ Cabiria (1914) is a cinematic landmark, optional but stunning</div>
+
+        <div class="spotlight">
+          <div class="spotlight-label">🐘 Character Spotlight — Hannibal Barca</div>
+          <div class="spotlight-text">History's greatest general crossed the Alps with 37 elephants. Hannibal (2005) miniseries gives him the most dignified and complete screen treatment. Watch this to understand who terrified Rome most in the Republic era.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHASE V -->
+    <div class="phase">
+      <div class="phase-block">
+        <div class="phase-num">Phase V</div>
+        <div class="phase-date">133 – 82 BC</div>
+        <div class="phase-title">Crisis of the Republic</div>
+        <div class="phase-desc">Gracchi brothers assassinated for land reform · Marius and Sulla's civil wars · Sulla becomes the first Roman to march an army into Rome · the Republic cracks under political violence and military dictatorship</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-doc">DOC</span> Mary Beard's Ultimate Rome (2012)</div>
+          <div class="film-item type-optional"><span class="film-type type-drama">DRAMA</span> Barbarians Rising (2016) — Eps. 1–2</div>
+        </div>
+        <div class="parallel-label">⟡ No major drama covers Gracchi / Marius / Sulla yet<br>⟡ Mary Beard's documentary fills this gap perfectly<br>⟡ Barbarians Rising Ep.1 gives tribal context to Rome's border pressures</div>
+      </div>
+      <div class="trunk-node"></div>
+      <div class="phase-spacer"></div>
+    </div>
+
+    <!-- PHASE VI -->
+    <div class="phase">
+      <div class="phase-spacer"></div>
+      <div class="trunk-node"></div>
+      <div class="phase-block">
+        <div class="phase-num">Phase VI</div>
+        <div class="phase-date">73 – 71 BC</div>
+        <div class="phase-title">Spartacus — The Slave Uprising</div>
+        <div class="phase-desc">Thracian gladiator Spartacus escapes Capua and raises an army of 120,000 slaves · defeats eight Roman armies · marches the length of Italy · ultimately crushed by Crassus · 6,000 slaves crucified along the Appian Way</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-mini">MINI</span> Spartacus: Gods of the Arena (2011) — WATCH FIRST</div>
+          <div class="film-item"><span class="film-type type-series">SERIES</span> Spartacus: Blood and Sand — Season 1 (2010)</div>
+          <div class="film-item"><span class="film-type type-series">SERIES</span> Spartacus: Vengeance — Season 2 (2012)</div>
+          <div class="film-item"><span class="film-type type-series">SERIES</span> Spartacus: War of the Damned — Season 3 (2013)</div>
+          <div class="film-item"><span class="film-type type-movie">FILM</span> Spartacus (1960) — Kubrick / Kirk Douglas ⟡ parallel</div>
+        </div>
+        <div class="parallel-label">⟡ Gods of the Arena is the prequel — sets up Batiatus's ludus<br>⟡ Watch Kubrick's Spartacus (1960) alongside S2 as the classic alternative<br>⟡ Crassus &amp; a young Julius Caesar both appear — notice them carefully</div>
+
+        <div class="spotlight">
+          <div class="spotlight-label">⚔ Character Spotlight — Spartacus, Crassus, Caesar</div>
+          <div class="spotlight-text">Crassus (Starz series: Simon Merrells) is depicted crushing the revolt. He and Pompey will both claim credit. A young Caesar briefly appears. These are the men who will soon carve Rome apart in the Phase VIII civil war.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════ LATE REPUBLIC ═══════════════════════════ -->
+
+    <!-- PHASE VII -->
+    <div class="phase">
+      <div class="phase-block">
+        <div class="phase-num">Phase VII</div>
+        <div class="phase-date">100 – 49 BC</div>
+        <div class="phase-title">Caesar's Rise &amp; the First Triumvirate</div>
+        <div class="phase-desc">Julius Caesar rises through the cursus honorum · forms the First Triumvirate with Crassus and Pompey · Gallic Wars — Caesar conquers modern-day France in eight campaigns · crosses the Rubicon into civil war in 49 BC</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-mini">MINI</span> Julius Caesar (2002) — Jeremy Sisto</div>
+          <div class="film-item"><span class="film-type type-series">SERIES</span> Rome — Season 1, Eps. 1–4 (2005)</div>
+        </div>
+        <div class="parallel-label">⟡ Julius Caesar (2002) covers his full rise from youth<br>⟡ Rome S1 Ep.1–4 opens at the end of the Gallic Wars, 52 BC<br>⟡ Rome follows Vorenus &amp; Pullo — two soldiers who witness history firsthand</div>
+      </div>
+      <div class="trunk-node"></div>
+      <div class="phase-spacer"></div>
+    </div>
+
+    <!-- PHASE VIII -->
+    <div class="phase">
+      <div class="phase-spacer"></div>
+      <div class="trunk-node"></div>
+      <div class="phase-block">
+        <div class="phase-num">Phase VIII</div>
+        <div class="phase-date">49 – 44 BC</div>
+        <div class="phase-title">Caesar's Civil War &amp; Dictatorship</div>
+        <div class="phase-desc">Caesar vs Pompey · Battle of Pharsalus · Pompey flees to Egypt and is murdered · Caesar meets Cleopatra in Alexandria · Caesar's dictatorship · the Ides of March, 44 BC — senators Brutus &amp; Cassius lead the assassination · 23 stab wounds</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-series">SERIES</span> Rome — Season 1, Eps. 5–12 (2005)</div>
+          <div class="film-item"><span class="film-type type-movie">FILM</span> Julius Caesar (1953) — Marlon Brando</div>
+          <div class="film-item"><span class="film-type type-movie">FILM</span> Cleopatra (1963) — Taylor / Burton ⟡ parallel</div>
+          <div class="film-item"><span class="film-type type-mini">MINI</span> Cleopatra (1999) — Timothy Dalton as Caesar ⟡ parallel</div>
+        </div>
+        <div class="parallel-label">⟡ Rome S1 Ep.5–12 is the gold standard for this era<br>⟡ Julius Caesar (1953): watch for the assassination &amp; funeral oration<br>⟡ Watch Cleopatra (1963) first half ALONGSIDE Rome S1 Ep.7–9 for Egypt arc<br>⟡ Cleopatra’s Egypt continues in egypt.html — use that file for the full Ptolemaic arc</div>
+
+        <div class="spotlight">
+          <div class="spotlight-label">👑 Character Spotlight — Julius Caesar</div>
+          <div class="spotlight-text">Ciaran Hinds (Rome), Jeremy Sisto (2002 mini), and Rex Harrison (Cleopatra 1963) each give you a facet of Caesar. Rome S1 shows his brilliance and ruthlessness through the eyes of soldiers. The 1953 Brando version is essential for the assassination aftermath.</div>
+          <div class="spotlight-films">
+            <div class="film-item"><span class="film-type type-series">SERIES</span> Rome S1 — Hinds as Caesar</div>
+            <div class="film-item"><span class="film-type type-movie">FILM</span> Julius Caesar (1953) — Marlon Brando as Antony</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHASE IX -->
+    <div class="phase">
+      <div class="phase-block">
+        <div class="phase-num">Phase IX</div>
+        <div class="phase-date">44 – 27 BC</div>
+        <div class="phase-title">The Second Triumvirate &amp; Final Civil Wars</div>
+        <div class="phase-desc">Antony, Octavian, and Lepidus divide the world · Brutus &amp; Cassius defeated at Philippi · Antony takes the East and falls for Cleopatra · Octavian &amp; Antony's final conflict · Battle of Actium 31 BC · Antony and Cleopatra's suicides · Octavian stands alone — the Republic is over</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-series">SERIES</span> Rome — Season 2, All 10 Eps. (2007)</div>
+          <div class="film-item"><span class="film-type type-mini">MINI</span> Empire (2005) — Santiago Cabrera as Octavian</div>
+          <div class="film-item"><span class="film-type type-movie">FILM</span> Cleopatra (1963) — second half ⟡ parallel</div>
+          <div class="film-item"><span class="film-type type-movie">FILM</span> Antony and Cleopatra (1972) — Charlton Heston</div>
+          <div class="film-item"><span class="film-type type-mini">MINI</span> Cleopatra (1999) — Billy Zane as Antony ⟡ parallel</div>
+        </div>
+        <div class="parallel-label">⟡ Rome S2 is your primary track — follow it episode by episode<br>⟡ Empire (2005) covers the same 44 BC moment from Octavian's POV<br>⟡ Watch Cleopatra (1963) second half simultaneous with Rome S2 Ep.3–7<br>⟡ egypt.html completes Cleopatra’s dynasty context and aftermath</div>
+
+        <div class="spotlight">
+          <div class="spotlight-label">♛ Character Spotlight — Cleopatra VII</div>
+          <div class="spotlight-text">Watch both halves of Cleopatra (1963) as your parallel track through Phases VIII and IX. Elizabeth Taylor's Cleopatra is the definitive screen portrayal. Cleopatra (1999) gives more political depth. For Antony's descent, Rome S2 + Antony and Cleopatra (1972) together are unbeatable.</div>
+          <div class="spotlight-films">
+            <div class="film-item"><span class="film-type type-movie">FILM</span> Cleopatra (1963) — Taylor &amp; Burton</div>
+            <div class="film-item"><span class="film-type type-mini">MINI</span> Cleopatra (1999) — Leonor Varela</div>
+          </div>
+        </div>
+      </div>
+      <div class="trunk-node"></div>
+      <div class="phase-spacer"></div>
+    </div>
+
+    <!-- ═══════════════════════════ THE EMPIRE ═══════════════════════════ -->
+
+    <!-- PHASE X -->
+    <div class="phase">
+      <div class="phase-spacer"></div>
+      <div class="trunk-node"></div>
+      <div class="phase-block">
+        <div class="phase-num">Phase X</div>
+        <div class="phase-date">27 BC – 14 AD</div>
+        <div class="phase-title">Augustus — The First Emperor</div>
+        <div class="phase-desc">Octavian becomes Augustus — "the revered one" · Pax Romana begins · the Principate established · Rome's golden age · Virgil, Horace, Ovid flourish · Augustus's wife Livia maneuvers the succession · his heirs die mysteriously until Tiberius is chosen</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-mini">MINI</span> Augustus: The First Emperor (2003) — Peter O'Toole</div>
+          <div class="film-item"><span class="film-type type-series">SERIES</span> Domina — Season 1 (2021)</div>
+          <div class="film-item"><span class="film-type type-series">SERIES</span> Domina — Season 2 (2023)</div>
+        </div>
+        <div class="parallel-label">⟡ Augustus (2003): Peter O'Toole narrates his life in old age — masterful<br>⟡ Domina follows Livia — watch S1 simultaneously with Augustus (2003)</div>
+
+        <div class="spotlight">
+          <div class="spotlight-label">♛ Character Spotlight — Livia Drusilla</div>
+          <div class="spotlight-text">The most powerful woman in Roman history. Domina (Sky Atlantic) gives her the full arc — from a teenage bride to the empress-mother who may have killed half the imperial family. Watch both Domina seasons before proceeding. Then continue in I, Claudius where she appears as an old woman still wielding iron control.</div>
+          <div class="spotlight-films">
+            <div class="film-item"><span class="film-type type-series">SERIES</span> Domina S1 &amp; S2 — Kasia Smutniak</div>
+            <div class="film-item"><span class="film-type type-series">SERIES</span> I, Claudius — Sian Phillips as Livia</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHASE XI -->
+    <div class="phase">
+      <div class="phase-block">
+        <div class="phase-num">Phase XI</div>
+        <div class="phase-date">14 – 68 AD</div>
+        <div class="phase-title">The Julio-Claudian Dynasty</div>
+        <div class="phase-desc">Tiberius — paranoid and reclusive · Caligula — divine madness · Claudius — the unexpected scholar-emperor · Nero — artistic, narcissistic, burns Rome · the Julio-Claudian line ends in blood and fire</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-series">SERIES</span> I, Claudius — All 13 Eps. (BBC, 1976) ← ESSENTIAL</div>
+          <div class="film-item"><span class="film-type type-movie">FILM</span> Caligula (1979) — Malcolm McDowell ⟡ after Ep.8</div>
+          <div class="film-item"><span class="film-type type-mini">MINI</span> Nero (2004) — Hans Matheson ⟡ after I, Claudius Ep.12</div>
+          <div class="film-item"><span class="film-type type-movie">FILM</span> Quo Vadis (1951) — Robert Taylor ⟡ parallel (Nero era)</div>
+          <div class="film-item"><span class="film-type type-mini">MINI</span> A.D. Anno Domini (1985) — Rome vs Christians</div>
+        </div>
+        <div class="parallel-label">⟡ I, Claudius is the BBC masterpiece — 13 episodes, watch every one<br>⟡ Ep.1–5: Tiberius | Ep.6–8: Caligula | Ep.9–11: Claudius | Ep.12–13: Nero begins<br>⟡ Watch Caligula (1979) after I, Claudius Ep.8 for an intense deep-dive<br>⟡ Quo Vadis (1951) covers Nero's persecution of Christians, 64 AD<br>⟡ A.D. Anno Domini covers the parallel story of early Christianity 33–68 AD</div>
+
+        <div class="spotlight">
+          <div class="spotlight-label">👁 Character Spotlight — Caligula</div>
+          <div class="spotlight-text">John Hurt's Caligula in I, Claudius (1976) is the greatest screen performance of the mad emperor — contained, chilling. Malcolm McDowell's Caligula (1979) is controversial and explicit but gives his full excess and fall. Watch Hurt first, then McDowell as supplemental.</div>
+          <div class="spotlight-films">
+            <div class="film-item"><span class="film-type type-series">SERIES</span> I, Claudius Ep.6–8 — John Hurt</div>
+            <div class="film-item"><span class="film-type type-movie">FILM</span> Caligula (1979) — McDowell ⚠ explicit</div>
+          </div>
+        </div>
+      </div>
+      <div class="trunk-node"></div>
+      <div class="phase-spacer"></div>
+    </div>
+
+    <!-- PHASE XII -->
+    <div class="phase">
+      <div class="phase-spacer"></div>
+      <div class="trunk-node"></div>
+      <div class="phase-block">
+        <div class="phase-num">Phase XII</div>
+        <div class="phase-date">64 – 96 AD</div>
+        <div class="phase-title">Nero's Fall, Year of Four Emperors &amp; The Flavians</div>
+        <div class="phase-desc">Rome burns in 64 AD · Nero blames Christians · Nero's suicide · civil war — four emperors in one year: Galba, Otho, Vitellius, Vespasian · Vespasian founds the Flavian dynasty · Titus destroys Jerusalem in 70 AD · Vesuvius obliterates Pompeii and Herculaneum in 79 AD · Domitian's reign of terror ends the dynasty</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-movie">FILM</span> Pompeii (2014) — volcanic spectacle, 79 AD</div>
+          <div class="film-item"><span class="film-type type-drama">DRAMA</span> Pompeii: The Last Day (BBC, 2003) ← more accurate</div>
+          <div class="film-item"><span class="film-type type-movie">FILM</span> Imperium: Pompeii (2007) — TV film, Titus era</div>
+          <div class="film-item type-optional"><span class="film-type type-movie">FILM</span> Ben-Hur (1959) — Charlton Heston ⟡ parallel</div>
+          <div class="film-item type-optional"><span class="film-type type-movie">FILM</span> The Robe (1953) — early Claudius era parallel</div>
+        </div>
+        <div class="parallel-label">⟡ Pompeii: The Last Day (BBC) is more historically grounded than the 2014 film<br>⟡ Watch both back to back — the BBC version first, then 2014 for spectacle<br>⟡ Ben-Hur (1959) is set in Judea under Roman rule ~26–33 AD — optional parallel</div>
+      </div>
+    </div>
+
+    <!-- PHASE XIII -->
+    <div class="phase">
+      <div class="phase-block">
+        <div class="phase-num">Phase XIII</div>
+        <div class="phase-date">96 – 138 AD</div>
+        <div class="phase-title">The Five Good Emperors — Nerva to Hadrian</div>
+        <div class="phase-desc">Nerva · Trajan — Rome reaches its greatest territorial extent · Dacian Wars · the Column of Trajan still stands · Hadrian consolidates — builds his wall across Britain · the Empire at its most sophisticated, stable, and vast</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-movie">FILM</span> Centurion (2010) — Neil Marshall, Hadrian's frontier</div>
+          <div class="film-item"><span class="film-type type-movie">FILM</span> The Eagle (2011) — Hadrian's Britain, ~140 AD</div>
+          <div class="film-item type-optional"><span class="film-type type-movie">FILM</span> The Last Legion (2007) — stretches to this era's memory</div>
+        </div>
+        <div class="parallel-label">⟡ Watch Centurion + The Eagle back-to-back — both set on the frontier<br>⟡ Centurion (2010) covers the legendary disappearance of the Ninth Legion ~117 AD<br>⟡ The Eagle (2011) follows a soldier recovering his father's lost legion's standard</div>
+
+        <div class="spotlight">
+          <div class="spotlight-label">🦅 Character Spotlight — Hadrian's Soldiers</div>
+          <div class="spotlight-text">No major film has been made about Hadrian or Trajan themselves — a great gap in Roman cinema. The Eagle and Centurion cover the texture of frontier life beautifully. The isolation, the cold, and the empire's edges are well captured. Watch both as a double feature.</div>
+        </div>
+      </div>
+      <div class="trunk-node"></div>
+      <div class="phase-spacer"></div>
+    </div>
+
+    <!-- PHASE XIV -->
+    <div class="phase">
+      <div class="phase-spacer"></div>
+      <div class="trunk-node"></div>
+      <div class="phase-block">
+        <div class="phase-num">Phase XIV</div>
+        <div class="phase-date">161 – 192 AD</div>
+        <div class="phase-title">Marcus Aurelius &amp; Commodus — Peak &amp; Rupture</div>
+        <div class="phase-desc">Marcus Aurelius — philosopher-emperor, author of the Meditations · wages endless wars against Germanic tribes · his son Commodus is everything he is not — vain, cruel, delusional · Commodus declares himself Hercules reborn · assassinated 192 AD · the Antonine golden age dies with him</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-movie">FILM</span> The Fall of the Roman Empire (1964) — WATCH FIRST</div>
+          <div class="film-item"><span class="film-type type-movie">FILM</span> Gladiator (2000) — Ridley Scott ← WATCH SECOND</div>
+          <div class="film-item"><span class="film-type type-movie">FILM</span> Gladiator II (2024) — Ridley Scott, Caracalla era ⟡ after</div>
+        </div>
+        <div class="parallel-label">⟡ The Fall of the Roman Empire (1964): Alec Guinness as Marcus Aurelius<br>⟡ Both films cover the SAME historical moment — watch 1964 film first<br>⟡ Gladiator (2000) takes creative liberty but captures the spirit perfectly<br>⟡ Gladiator II is set in the Severan era ~211 AD — a generation later</div>
+
+        <div class="spotlight">
+          <div class="spotlight-label">👑 Character Spotlight — Marcus Aurelius &amp; Commodus</div>
+          <div class="spotlight-text">Alec Guinness (1964) gives you a noble, weary philosopher-king. Richard Harris (Gladiator 2000) gives you the same man's final haunted hour. Joaquin Phoenix's Commodus is cinema gold — the petulant, jealous son who destroys his father's legacy. These two films are the best back-to-back watch in this entire curriculum.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHASE XV -->
+    <div class="phase">
+      <div class="phase-block">
+        <div class="phase-num">Phase XV</div>
+        <div class="phase-date">193 – 284 AD</div>
+        <div class="phase-title">The Crisis of the Third Century</div>
+        <div class="phase-desc">Year of the Five Emperors · the Severan dynasty · Caracalla grants citizenship to all free Romans · 50 years of chaos — over 20 emperors · economic collapse · the plague of Cyprian kills millions · barbarian invasions on every border · the empire nearly dissolves</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-drama">DRAMA</span> Barbarians Rising (2016) — History Channel, Eps. 3–5</div>
+          <div class="film-item type-optional"><span class="film-type type-doc">DOC</span> Fall of Civilizations — Roman Ep.</div>
+        </div>
+        <div class="parallel-label">⟡ No major drama covers this era — documentary bridge is recommended<br>⟡ Barbarians Rising gives the barbarian perspective during Rome's fragmentation<br>⟡ Gladiator II is also loosely set early in this era (~211–218 AD Caracalla)</div>
+      </div>
+      <div class="trunk-node"></div>
+      <div class="phase-spacer"></div>
+    </div>
+
+    <!-- ═══════════════════════════ LATE EMPIRE ═══════════════════════════ -->
+
+    <!-- PHASE XVI -->
+    <div class="phase">
+      <div class="phase-spacer"></div>
+      <div class="trunk-node"></div>
+      <div class="phase-block">
+        <div class="phase-num">Phase XVI</div>
+        <div class="phase-date">284 – 337 AD</div>
+        <div class="phase-title">Diocletian's Reform &amp; Constantine's Revolution</div>
+        <div class="phase-desc">Diocletian splits the empire into the Tetrarchy · stabilizes Rome through iron rule · the Great Persecution of Christians · Constantine the Great defeats his rivals · sees a vision of the cross before the Battle of Milvian Bridge 312 AD · issues the Edict of Milan — Christianity becomes legal · Constantinople founded 330 AD · Rome has a new heart, a new religion, a new direction</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-movie">FILM</span> Constantine and the Cross (1961) — Cornel Wilde</div>
+          <div class="film-item type-optional"><span class="film-type type-doc">DOC</span> Constantine's Sword (2007) — documentary</div>
+        </div>
+        <div class="parallel-label">⟡ Constantine and the Cross (1961) is the major screen treatment<br>⟡ Covers his rise, the Milvian Bridge, and conversion to Christianity</div>
+
+        <div class="spotlight">
+          <div class="spotlight-label">✝ Character Spotlight — Constantine the Great</div>
+          <div class="spotlight-text">Constantine's conversion is one of history's most consequential moments. It transformed Rome, birthed Christendom, and shaped Western civilization for 1,700 years. No modern prestige production exists yet — Constantine and the Cross (1961) remains the primary screen version, imperfect but functional.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHASE XVII -->
+    <div class="phase">
+      <div class="phase-block">
+        <div class="phase-num">Phase XVII</div>
+        <div class="phase-date">337 – 395 AD</div>
+        <div class="phase-title">Christian Rome &amp; the Pagan Sunset</div>
+        <div class="phase-desc">Sons of Constantine divide the empire · Julian the Apostate attempts to reverse Christianity — fails · Theodosius I makes Christianity the official state religion · pagan temples closed · Hypatia of Alexandria and the last flames of classical learning · the empire is formally divided in 395 AD — East and West, never to be reunited</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-movie">FILM</span> Agora (2009) — Rachel Weisz as Hypatia</div>
+        </div>
+        <div class="parallel-label">⟡ Agora is set in Alexandria ~391–415 AD — watch it here<br>⟡ Depicts the violent Christian destruction of the Library and pagan learning<br>⟡ One of the most underrated Roman-era films ever made</div>
+
+        <div class="spotlight">
+          <div class="spotlight-label">📜 Character Spotlight — Hypatia of Alexandria</div>
+          <div class="spotlight-text">Agora (2009) is one of the most intellectually powerful films in this entire curriculum. Rachel Weisz plays the philosopher-mathematician caught between Roman paganism and the rising tide of Christian fanaticism. Essential watching for understanding what Rome became at its spiritual crossroads.</div>
+        </div>
+      </div>
+      <div class="trunk-node"></div>
+      <div class="phase-spacer"></div>
+    </div>
+
+    <!-- PHASE XVIII -->
+    <div class="phase">
+      <div class="phase-spacer"></div>
+      <div class="trunk-node"></div>
+      <div class="phase-block">
+        <div class="phase-num">Phase XVIII</div>
+        <div class="phase-date">395 – 455 AD</div>
+        <div class="phase-title">Attila the Hun &amp; the Western Collapse</div>
+        <div class="phase-desc">The Western Empire weakens under child-emperors and corrupt generals · Visigoths sack Rome in 410 AD — the first time in 800 years · Attila the Hun, "the Scourge of God," ravages Gaul and Italy · Pope Leo I rides out to negotiate Rome's survival · the Vandals sack Rome in 455 AD — two sackings in 45 years</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-mini">MINI</span> Attila (2001) — Gerard Butler / Powers Boothe</div>
+          <div class="film-item"><span class="film-type type-movie">FILM</span> Sign of the Pagan (1954) — Jack Palance as Attila</div>
+          <div class="film-item"><span class="film-type type-drama">DRAMA</span> Barbarians Rising (2016) — Attila episodes</div>
+        </div>
+        <div class="parallel-label">⟡ Attila (2001) miniseries is the best modern treatment — Powers Boothe as Aetius<br>⟡ Gerard Butler plays Attila with genuine menace<br>⟡ Watch Attila (2001) then Sign of the Pagan (1954) as the classic comparison</div>
+
+        <div class="spotlight">
+          <div class="spotlight-label">⚔ Character Spotlight — Attila &amp; Aetius</div>
+          <div class="spotlight-text">Attila and the Roman general Aetius grew up together as hostages in each other's courts — and then became the two greatest enemies of the age. The 2001 miniseries captures this tragic irony beautifully. Aetius is sometimes called "the last of the Romans." These two men are the final great drama of the Western Empire.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHASE XIX -->
+    <div class="phase">
+      <div class="phase-block">
+        <div class="phase-num">Phase XIX</div>
+        <div class="phase-date">455 – 476 AD</div>
+        <div class="phase-title">The Final Fall — The Last Western Emperor</div>
+        <div class="phase-desc">A procession of puppet emperors controlled by barbarian generals · Odoacer, a Germanic chieftain, deposes Romulus Augustulus on 4 September 476 AD · no battle, no dramatic last stand — just a quiet deposition · he sends the imperial regalia to Constantinople · the Western Roman Empire is over after 500 years</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-movie">FILM</span> The Last Legion (2007) — Colin Firth, Ben Kingsley</div>
+          <div class="film-item"><span class="film-type type-drama">DRAMA</span> Barbarians Rising (2016) — Odoacer final episodes</div>
+        </div>
+        <div class="parallel-label">⟡ The Last Legion follows Romulus Augustulus, the last Western emperor<br>⟡ Takes creative liberties but captures the pathos of Rome's twilight perfectly<br>⟡ Watch it as the emotional close to the Western story</div>
+
+        <div class="spotlight">
+          <div class="spotlight-label">🌅 The Last Roman Moment</div>
+          <div class="spotlight-text">Romulus Augustulus was a teenager when he became the last emperor. He was deposed without being killed — Odoacer pitied him. He lived out his days in a castle in Campania. The Western Roman Empire didn't end with a great battle. It ended with a sad, quiet letter to Constantinople. The Last Legion dramatises this poignantly.</div>
+        </div>
+      </div>
+      <div class="trunk-node"></div>
+      <div class="phase-spacer"></div>
+    </div>
+
+    <!-- ═══════════════════════════ BYZANTINE EMPIRE ═══════════════════════════ -->
+
+    <!-- PHASE XX -->
+    <div class="phase">
+      <div class="phase-spacer"></div>
+      <div class="trunk-node"></div>
+      <div class="phase-block">
+        <div class="phase-num">Phase XX</div>
+        <div class="phase-date">476 – 565 AD</div>
+        <div class="phase-title">The Eastern Roman Empire — Justinian's Reconquest</div>
+        <div class="phase-desc">The Eastern Empire (Byzantium) survives · Constantinople — the New Rome · Emperor Justinian I and Empress Theodora — the most remarkable imperial couple in history · Justinian reconquers North Africa, Italy, and parts of Spain · the great Hagia Sophia is built · the Justinianic Plague devastates the empire · Belisarius, the greatest general of the age</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-doc">DOC</span> Byzantium: The Lost Empire (TLC, 1997) — Eps. 1–2</div>
+          <div class="film-item type-optional"><span class="film-type type-movie">FILM</span> Teodora, Imperatrice di Bisanzio (1954)</div>
+        </div>
+        <div class="parallel-label">⟡ Byzantium: The Lost Empire (1997) is a 4-episode documentary — essential<br>⟡ John Romer guides through Constantinople, Ravenna &amp; the lost world of Byzantium<br>⟡ Eps. 1–2 cover the founding through Justinian's golden age</div>
+
+        <div class="spotlight">
+          <div class="spotlight-label">👑 Character Spotlight — Justinian &amp; Theodora</div>
+          <div class="spotlight-text">Theodora was born a circus performer — she became Empress of Rome. Justinian was the last Roman emperor who spoke Latin as a first language. Together they were the last great flame of the ancient world. Shockingly, no prestige modern series exists about them yet. Byzantium: The Lost Empire (doc) fills the gap until one does.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHASE XXI -->
+    <div class="phase">
+      <div class="phase-block">
+        <div class="phase-num">Phase XXI</div>
+        <div class="phase-date">565 – 1204 AD</div>
+        <div class="phase-title">Byzantium — The Long Vigil</div>
+        <div class="phase-desc">Centuries of survival against Arabs, Bulgars, Normans, and Seljuks · the Macedonian dynasty's golden age · the Great Schism of 1054 — Eastern and Western Christianity divide forever · the First through Fourth Crusades pass through Constantinople · 1204 AD — Crusaders sack Constantinople in the Fourth Crusade, a catastrophe from which Byzantium never truly recovers</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-doc">DOC</span> Byzantium: The Lost Empire — Eps. 3–4 (1997)</div>
+          <div class="film-item type-optional"><span class="film-type type-drama">DRAMA</span> Barbarians Rising — later episodes for context</div>
+          <div class="film-item type-optional"><span class="film-type type-doc">DOC</span> History's Turning Points — Constantinople (1995)</div>
+        </div>
+        <div class="parallel-label">⟡ Byzantium: The Lost Empire Eps.3–4 complete the documentary arc<br>⟡ Very little drama covers this middle Byzantine period — documentary is your bridge</div>
+      </div>
+      <div class="trunk-node"></div>
+      <div class="phase-spacer"></div>
+    </div>
+
+    <!-- PHASE XXII -->
+    <div class="phase">
+      <div class="phase-spacer"></div>
+      <div class="trunk-node"></div>
+      <div class="phase-block">
+        <div class="phase-num">Phase XXII</div>
+        <div class="phase-date">1204 – 1453 AD</div>
+        <div class="phase-title">The Last Century of Rome — Fall of Constantinople</div>
+        <div class="phase-desc">A weakened, shrunken Byzantine state · the Ottomans rise and surround Constantinople · 21-year-old Sultan Mehmed II assembles the largest army of the medieval world · a 53-day siege in 1453 AD · the great Theodosian Walls breached by the world's largest cannons · Emperor Constantine XI dies fighting on the walls · the last Roman Emperor falls · Rome's 2,206-year story ends — 29 May 1453 AD</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-series">SERIES</span> Rise of Empires: Ottoman (Netflix, 2020) ← ESSENTIAL</div>
+          <div class="film-item"><span class="film-type type-movie">FILM</span> Conquest 1453 / Fetih 1453 (2012) — Turkish epic</div>
+          <div class="film-item"><span class="film-type type-doc">DOC</span> 1453: The Fall of Constantinople (NatGeo, 2007)</div>
+          <div class="film-item type-optional"><span class="film-type type-doc">DOC</span> History's Turning Points: Siege of Constantinople</div>
+        </div>
+        <div class="parallel-label">⟡ Rise of Empires: Ottoman (Netflix) is the definitive modern treatment — 6 episodes<br>⟡ Watch it first — docudrama with stunning reenactments and expert commentary<br>⟡ Then watch Conquest 1453 (2012) for the Turkish cinematic epic version<br>⟡ The NatGeo documentary fills any remaining gaps with maps and analysis<br>⟡ Continue into ottoman.html for the Ottoman rise and aftermath</div>
+
+        <div class="spotlight">
+          <div class="spotlight-label">🗡 The Last Roman Emperor — Constantine XI</div>
+          <div class="spotlight-text">Constantine XI Palaiologos had no money, no fleet, only 7,000 men against 80,000 Ottomans. He refused to surrender. He died fighting in the streets, his imperial regalia discarded so he would not be captured alive. His body was never found. He is the last Emperor of Rome. Rise of Empires: Ottoman gives him the dignity he deserves.</div>
+          <div class="spotlight-films">
+            <div class="film-item"><span class="film-type type-series">SERIES</span> Rise of Empires: Ottoman — 6 Episodes</div>
+            <div class="film-item"><span class="film-type type-movie">FILM</span> Conquest 1453 (Fetih 1453)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end tree -->
+
+  <!-- END NODE -->
+  <div class="end-node">
+    <div class="end-diamond"></div>
+    <div class="end-label">FINIS IMPERII ROMANI</div>
+    <div class="end-year">1453 AD</div>
+  </div>
+
+  <!-- LEGEND -->
+  <div class="legend">
+    <div class="legend-item"><span class="film-type type-movie">FILM</span> Feature Film</div>
+    <div class="legend-item"><span class="film-type type-series">SERIES</span> TV Series</div>
+    <div class="legend-item"><span class="film-type type-mini">MINI</span> Miniseries</div>
+    <div class="legend-item"><span class="film-type type-doc">DOC</span> Documentary</div>
+    <div class="legend-item"><span class="film-type type-drama">DRAMA</span> Docudrama</div>
+    <div class="legend-item" style="color:var(--text-dim); font-style:italic; font-size:12px;">⟡ parallel / optional</div>
+    <div class="legend-item" style="color:#c07ae8; font-style:italic; font-size:12px;">◈ Character Spotlight</div>
+  </div>
+
+</div>
+</body>
+</html>

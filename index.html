@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Empires of History - Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #c9a84c;
+    --gold-light: #e8cc7a;
+    --text: #e8dcc8;
+    --text-dim: #9a8870;
+    --ink: #061015;
+    --mist: rgba(30, 120, 110, 0.35);
+    --glow: rgba(70, 220, 180, 0.35);
+    --glow-strong: rgba(110, 255, 230, 0.45);
+    --branch-main: rgba(90, 240, 220, 0.65);
+    --branch-fork: rgba(125, 110, 255, 0.65);
+    --branch-concurrent: rgba(70, 220, 200, 0.6);
+  }
+
+  body {
+    background:
+      radial-gradient(1200px 700px at 50% 12%, rgba(70, 255, 230, 0.25), transparent 60%),
+      radial-gradient(900px 600px at 50% 38%, rgba(40, 200, 180, 0.2), transparent 65%),
+      radial-gradient(600px 420px at 24% 78%, rgba(20, 110, 140, 0.35), transparent 70%),
+      radial-gradient(700px 460px at 80% 82%, rgba(10, 80, 110, 0.35), transparent 70%),
+      radial-gradient(500px 320px at 50% 100%, rgba(20, 120, 90, 0.2), transparent 70%),
+      #05090f;
+    color: var(--text);
+    font-family: 'Cormorant Garamond', serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 54px 20px 90px;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 50% 35%, rgba(255,255,255,0.06), transparent 55%),
+      radial-gradient(circle at 30% 70%, rgba(255,255,255,0.04), transparent 55%),
+      radial-gradient(circle at 70% 75%, rgba(255,255,255,0.04), transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 1180px;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+
+  .header-ornament {
+    font-size: 11px;
+    letter-spacing: 9px;
+    text-transform: uppercase;
+    color: rgba(200, 255, 235, 0.55);
+    margin-bottom: 14px;
+  }
+
+  h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(20px, 3.6vw, 36px);
+    font-weight: 900;
+    color: #e6fff5;
+    letter-spacing: 3px;
+    line-height: 1.2;
+    text-shadow: 0 0 28px rgba(85, 255, 210, 0.35);
+  }
+
+  .header-sub {
+    margin-top: 10px;
+    font-size: 15px;
+    color: rgba(200, 255, 235, 0.7);
+    font-style: italic;
+    letter-spacing: 1px;
+  }
+
+  .header-line {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 18px;
+    justify-content: center;
+  }
+
+  .header-line::before, .header-line::after {
+    content: '';
+    height: 1px;
+    width: 120px;
+    background: linear-gradient(90deg, transparent, rgba(80, 240, 200, 0.5), transparent);
+  }
+
+  .header-dates {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    letter-spacing: 4px;
+    color: rgba(200, 255, 235, 0.75);
+  }
+
+  .tree-wrap {
+    position: relative;
+    padding: 34px;
+    border-radius: 22px;
+    background: rgba(7, 14, 18, 0.6);
+    border: 1px solid rgba(90, 255, 210, 0.12);
+    box-shadow: 0 0 50px rgba(10, 40, 35, 0.6), inset 0 0 70px rgba(20, 100, 80, 0.25);
+    overflow: hidden;
+  }
+
+  .tree-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -15%;
+    background:
+      radial-gradient(circle at 35% 35%, rgba(120, 255, 235, 0.18), transparent 55%),
+      radial-gradient(circle at 70% 40%, rgba(80, 210, 190, 0.18), transparent 55%),
+      radial-gradient(circle at 45% 70%, rgba(40, 160, 150, 0.18), transparent 60%);
+    filter: blur(10px);
+    opacity: 0.7;
+    pointer-events: none;
+    animation: mistDrift 16s ease-in-out infinite alternate;
+    z-index: 0;
+  }
+
+  .tree-wrap::after {
+    content: '';
+    position: absolute;
+    inset: -20%;
+    background: radial-gradient(circle at 50% 55%, rgba(8, 18, 22, 0) 0%, rgba(5, 10, 14, 0.55) 70%, rgba(4, 7, 10, 0.85) 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    position: relative;
+    z-index: 1;
+  }
+
+  .tree-trunk {
+    stroke: url(#trunkGradient);
+    fill: none;
+    filter: url(#glow);
+    opacity: 0.9;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    animation: glowPulse 6s ease-in-out infinite;
+  }
+
+  .trunk-base { stroke-width: 18; opacity: 0.35; filter: url(#glowStrong); }
+  .trunk-mid  { stroke-width: 11; opacity: 0.7; }
+  .trunk-core { stroke-width: 6; opacity: 1; }
+
+  .branch-main,
+  .branch-fork,
+  .branch-concurrent,
+  .branch-canopy,
+  .root-line {
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    filter: url(#glowSoft);
+  }
+
+  .branch-main {
+    stroke: var(--branch-main);
+    stroke-width: 3;
+    animation: branchPulse 8s ease-in-out infinite;
+  }
+
+  .branch-fork {
+    stroke: var(--branch-fork);
+    stroke-width: 2.3;
+    animation: branchPulse 9s ease-in-out infinite;
+  }
+
+  .branch-concurrent {
+    stroke: var(--branch-concurrent);
+    stroke-width: 2;
+    stroke-dasharray: 6 4;
+    animation: branchPulse 10s ease-in-out infinite;
+  }
+
+  .branch-canopy {
+    stroke: rgba(120, 255, 230, 0.45);
+    stroke-width: 2.2;
+    opacity: 0.7;
+    animation: branchPulse 12s ease-in-out infinite;
+  }
+
+  .root-line {
+    stroke: rgba(60, 200, 180, 0.5);
+    stroke-width: 2.6;
+    opacity: 0.7;
+  }
+
+  .ambient-glow {
+    opacity: 0.55;
+    filter: url(#glowSoft);
+    animation: canopyPulse 8s ease-in-out infinite;
+  }
+
+  .ambient-glow.fast {
+    animation-duration: 5s;
+  }
+
+  .node {
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(6px) scale(0.98);
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: nodeIn 1.15s ease forwards;
+  }
+
+  .node rect {
+    rx: 10px;
+    ry: 10px;
+    stroke-width: 1.2;
+    filter: url(#nodeGlow);
+  }
+
+  .c-amber rect  { fill: rgba(20, 18, 10, 0.82); stroke: #c9a84c; }
+  .c-amber text  { fill: #f4d993; }
+  .c-purple rect { fill: rgba(20, 16, 36, 0.85); stroke: #7e6cff; }
+  .c-purple text { fill: #c7beff; }
+  .c-teal rect   { fill: rgba(10, 22, 24, 0.85); stroke: #4ddcc2; }
+  .c-teal text   { fill: #92f5df; }
+
+  .node:hover rect { stroke: #ffffff; filter: url(#nodeGlowStrong); }
+
+  .th { font-family: 'Cinzel', serif; font-size: 13px; font-weight: 600; }
+  .ts { font-family: 'Cormorant Garamond', serif; font-size: 11.5px; font-style: italic; fill: rgba(230, 240, 235, 0.75); }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 26px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: rgba(230, 240, 235, 0.7);
+    font-style: italic;
+  }
+
+  .legend-swatch {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    border: 1px solid transparent;
+  }
+
+  .legend-swatch.amber { background: rgba(20, 18, 10, 0.8); border-color: #c9a84c; }
+  .legend-swatch.purple { background: rgba(20, 16, 36, 0.85); border-color: #7e6cff; }
+  .legend-swatch.teal { background: rgba(10, 22, 24, 0.85); border-color: #4ddcc2; }
+
+  .legend-line {
+    width: 26px;
+    border-top: 2px solid rgba(120, 255, 230, 0.6);
+  }
+
+  .legend-line.dashed {
+    border-top-style: dashed;
+    border-top-color: rgba(70, 220, 200, 0.7);
+  }
+
+  footer {
+    margin-top: 32px;
+    text-align: center;
+    font-size: 12px;
+    color: rgba(230, 240, 235, 0.6);
+    font-style: italic;
+    letter-spacing: 1px;
+  }
+
+  @keyframes glowPulse {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+  }
+
+  @keyframes branchPulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 0.9; }
+  }
+
+  @keyframes canopyPulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.7; }
+  }
+
+  @keyframes mistDrift {
+    0% { transform: translate3d(-8px, -6px, 0); }
+    100% { transform: translate3d(10px, 8px, 0); }
+  }
+
+  @keyframes nodeIn {
+    0% { opacity: 0; transform: translateY(8px) scale(0.98); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  @media (max-width: 900px) {
+    .tree-wrap { padding: 22px; }
+    .th { font-size: 12px; }
+    .ts { font-size: 10px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div class="header-ornament">::: Cinematic Atlas :::</div>
+    <h1>EMPIRES OF HISTORY<br>IN FILM &amp; SERIES</h1>
+    <p class="header-sub">A complete cinematic atlas, from earliest kingdoms to modern empires</p>
+    <div class="header-line">
+      <span class="header-dates">1550 BC - 1997 AD</span>
+    </div>
+  </header>
+
+  <div class="tree-wrap">
+    <svg viewBox="0 0 1100 900" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="trunkGradient" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#7fffe0"/>
+          <stop offset="50%" stop-color="#41d1b3"/>
+          <stop offset="100%" stop-color="#1b7f90"/>
+        </linearGradient>
+        <radialGradient id="canopyGlow" cx="50%" cy="40%" r="60%">
+          <stop offset="0%" stop-color="#7fffe4" stop-opacity="0.55"/>
+          <stop offset="55%" stop-color="#38cdb5" stop-opacity="0.2"/>
+          <stop offset="100%" stop-color="#0a1a1e" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="rootGlow" cx="50%" cy="50%" r="60%">
+          <stop offset="0%" stop-color="#4de2c6" stop-opacity="0.45"/>
+          <stop offset="60%" stop-color="#167b7a" stop-opacity="0.2"/>
+          <stop offset="100%" stop-color="#08151a" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+          <feGaussianBlur stdDeviation="6" result="blur"/>
+          <feMerge>
+            <feMergeNode in="blur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+        <filter id="glowStrong" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="10" result="blur"/>
+          <feMerge>
+            <feMergeNode in="blur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+        <filter id="glowSoft" x="-40%" y="-40%" width="180%" height="180%">
+          <feGaussianBlur stdDeviation="3" result="blur"/>
+          <feMerge>
+            <feMergeNode in="blur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+        <filter id="nodeGlow" x="-30%" y="-30%" width="160%" height="160%">
+          <feGaussianBlur stdDeviation="2.5" result="blur"/>
+          <feMerge>
+            <feMergeNode in="blur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+        <filter id="nodeGlowStrong" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="4" result="blur"/>
+          <feMerge>
+            <feMergeNode in="blur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+      </defs>
+
+      <ellipse class="ambient-glow" cx="550" cy="220" rx="320" ry="180" fill="url(#canopyGlow)"/>
+      <ellipse class="ambient-glow fast" cx="550" cy="360" rx="280" ry="200" fill="url(#canopyGlow)"/>
+      <ellipse class="ambient-glow" cx="550" cy="640" rx="320" ry="220" fill="url(#canopyGlow)"/>
+      <ellipse class="ambient-glow" cx="550" cy="840" rx="260" ry="140" fill="url(#rootGlow)"/>
+
+      <path class="tree-trunk trunk-base" d="M550 820 C510 760 590 700 545 635 C505 575 585 520 555 450 C525 380 565 320 552 250 C540 195 555 150 550 95"/>
+      <path class="tree-trunk trunk-mid" d="M550 820 C510 760 590 700 545 635 C505 575 585 520 555 450 C525 380 565 320 552 250 C540 195 555 150 550 95"/>
+      <path class="tree-trunk trunk-core" d="M550 820 C510 760 590 700 545 635 C505 575 585 520 555 450 C525 380 565 320 552 250 C540 195 555 150 550 95"/>
+
+      <path class="root-line" d="M550 820 C520 850 470 875 400 890"/>
+      <path class="root-line" d="M550 820 C580 850 640 880 720 892"/>
+      <path class="root-line" d="M550 820 C540 860 545 885 555 900"/>
+      <path class="root-line" d="M540 815 C500 835 450 855 420 875"/>
+      <path class="root-line" d="M560 815 C610 835 660 850 700 868"/>
+
+      <path class="branch-canopy" d="M550 110 C520 80 450 60 360 55"/>
+      <path class="branch-canopy" d="M550 110 C590 75 690 55 820 70"/>
+      <path class="branch-canopy" d="M520 140 C480 120 430 110 380 120"/>
+      <path class="branch-canopy" d="M580 140 C630 115 700 110 760 125"/>
+
+      <path class="branch-main" d="M545 150 C500 120 420 120 360 140"/>
+      <path class="branch-main" d="M545 230 C505 210 430 210 360 230"/>
+      <path class="branch-main" d="M545 330 C505 300 430 300 360 330"/>
+      <path class="branch-main" d="M545 420 C505 400 430 400 360 420"/>
+      <path class="branch-main" d="M545 540 C505 530 430 530 360 540"/>
+
+      <path class="branch-main" d="M555 180 C600 140 670 140 740 180"/>
+      <path class="branch-main" d="M555 280 C610 250 670 250 740 280"/>
+      <path class="branch-main" d="M555 400 C610 380 670 380 740 400"/>
+      <path class="branch-main" d="M555 520 C610 500 670 500 740 520"/>
+
+      <path class="branch-fork" d="M520 250 C430 240 300 240 140 250"/>
+      <path class="branch-fork" d="M520 580 C430 570 300 570 140 580"/>
+      <path class="branch-fork" d="M520 650 C430 640 300 640 140 650"/>
+      <path class="branch-fork" d="M520 720 C430 710 300 710 140 720"/>
+      <path class="branch-fork" d="M520 790 C430 780 300 780 140 790"/>
+
+      <path class="branch-concurrent" d="M580 460 C670 450 800 450 960 460"/>
+      <path class="branch-concurrent" d="M580 520 C670 510 800 510 960 520"/>
+      <path class="branch-concurrent" d="M580 700 C670 690 800 690 960 700"/>
+
+      <a href="egypt.html">
+        <g class="node c-amber" style="animation-delay: 0.1s;">
+          <rect x="260" y="112" width="200" height="56"/>
+          <text class="th" x="360" y="134" text-anchor="middle">Egyptian Empire</text>
+          <text class="ts" x="360" y="154" text-anchor="middle">c.1550 - 30 BC</text>
+        </g>
+      </a>
+
+      <a href="persia.html">
+        <g class="node c-amber" style="animation-delay: 0.16s;">
+          <rect x="260" y="202" width="200" height="56"/>
+          <text class="th" x="360" y="224" text-anchor="middle">Achaemenid Persia</text>
+          <text class="ts" x="360" y="244" text-anchor="middle">550 - 330 BC</text>
+        </g>
+      </a>
+
+      <a href="rome.html">
+        <g class="node c-amber" style="animation-delay: 0.22s;">
+          <rect x="260" y="302" width="200" height="56"/>
+          <text class="th" x="360" y="324" text-anchor="middle">Roman Empire</text>
+          <text class="ts" x="360" y="344" text-anchor="middle">753 BC - 476 AD</text>
+        </g>
+      </a>
+
+      <a href="rome.html">
+        <g class="node c-amber" style="animation-delay: 0.28s;">
+          <rect x="260" y="392" width="200" height="56"/>
+          <text class="th" x="360" y="414" text-anchor="middle">Byzantine Empire</text>
+          <text class="ts" x="360" y="434" text-anchor="middle">476 - 1453 AD</text>
+        </g>
+      </a>
+
+      <a href="ottoman.html">
+        <g class="node c-amber" style="animation-delay: 0.34s;">
+          <rect x="260" y="512" width="200" height="56"/>
+          <text class="th" x="360" y="534" text-anchor="middle">Ottoman Empire</text>
+          <text class="ts" x="360" y="554" text-anchor="middle">1299 - 1922 AD</text>
+        </g>
+      </a>
+
+      <a href="maurya.html">
+        <g class="node c-amber" style="animation-delay: 0.2s;">
+          <rect x="640" y="152" width="200" height="56"/>
+          <text class="th" x="740" y="174" text-anchor="middle">Maurya Empire</text>
+          <text class="ts" x="740" y="194" text-anchor="middle">322 - 185 BC</text>
+        </g>
+      </a>
+
+      <a href="han.html">
+        <g class="node c-amber" style="animation-delay: 0.26s;">
+          <rect x="640" y="252" width="200" height="56"/>
+          <text class="th" x="740" y="274" text-anchor="middle">Han Dynasty</text>
+          <text class="ts" x="740" y="294" text-anchor="middle">206 BC - 220 AD</text>
+        </g>
+      </a>
+
+      <a href="mongol.html">
+        <g class="node c-amber" style="animation-delay: 0.32s;">
+          <rect x="640" y="372" width="200" height="56"/>
+          <text class="th" x="740" y="394" text-anchor="middle">Mongol Empire</text>
+          <text class="ts" x="740" y="414" text-anchor="middle">1206 - 1368 AD</text>
+        </g>
+      </a>
+
+      <a href="mughal.html">
+        <g class="node c-amber" style="animation-delay: 0.38s;">
+          <rect x="640" y="492" width="200" height="56"/>
+          <text class="th" x="740" y="514" text-anchor="middle">Mughal Empire</text>
+          <text class="ts" x="740" y="534" text-anchor="middle">1526 - 1857 AD</text>
+        </g>
+      </a>
+
+      <a href="macedon.html">
+        <g class="node c-purple" style="animation-delay: 0.24s;">
+          <rect x="40" y="222" width="200" height="56"/>
+          <text class="th" x="140" y="244" text-anchor="middle">Macedonian Empire</text>
+          <text class="ts" x="140" y="264" text-anchor="middle">fork - 336 - 323 BC</text>
+        </g>
+      </a>
+
+      <a href="spanish.html">
+        <g class="node c-purple" style="animation-delay: 0.42s;">
+          <rect x="40" y="552" width="200" height="56"/>
+          <text class="th" x="140" y="574" text-anchor="middle">Spanish Empire</text>
+          <text class="ts" x="140" y="594" text-anchor="middle">fork - 1492 - 1975 AD</text>
+        </g>
+      </a>
+
+      <a href="british.html">
+        <g class="node c-purple" style="animation-delay: 0.46s;">
+          <rect x="40" y="622" width="200" height="56"/>
+          <text class="th" x="140" y="644" text-anchor="middle">British Empire</text>
+          <text class="ts" x="140" y="664" text-anchor="middle">fork - 1583 - 1997 AD</text>
+        </g>
+      </a>
+
+      <a href="russian.html">
+        <g class="node c-purple" style="animation-delay: 0.5s;">
+          <rect x="40" y="692" width="200" height="56"/>
+          <text class="th" x="140" y="714" text-anchor="middle">Russian Empire</text>
+          <text class="ts" x="140" y="734" text-anchor="middle">fork - 1721 - 1917 AD</text>
+        </g>
+      </a>
+
+      <a href="napoleon.html">
+        <g class="node c-purple" style="animation-delay: 0.54s;">
+          <rect x="40" y="762" width="200" height="56"/>
+          <text class="th" x="140" y="784" text-anchor="middle">Napoleon's Empire</text>
+          <text class="ts" x="140" y="804" text-anchor="middle">fork - 1804 - 1815 AD</text>
+        </g>
+      </a>
+
+      <a href="islamic.html">
+        <g class="node c-teal" style="animation-delay: 0.36s;">
+          <rect x="860" y="432" width="200" height="56"/>
+          <text class="th" x="960" y="454" text-anchor="middle">Islamic Caliphates</text>
+          <text class="ts" x="960" y="474" text-anchor="middle">concurrent - 632 - 1258 AD</text>
+        </g>
+      </a>
+
+      <a href="viking.html">
+        <g class="node c-teal" style="animation-delay: 0.4s;">
+          <rect x="860" y="492" width="200" height="56"/>
+          <text class="th" x="960" y="514" text-anchor="middle">Viking Age</text>
+          <text class="ts" x="960" y="534" text-anchor="middle">concurrent - 793 - 1066 AD</text>
+        </g>
+      </a>
+
+      <a href="japanese.html">
+        <g class="node c-teal" style="animation-delay: 0.58s;">
+          <rect x="860" y="672" width="200" height="56"/>
+          <text class="th" x="960" y="694" text-anchor="middle">Japanese Imperial Age</text>
+          <text class="ts" x="960" y="714" text-anchor="middle">concurrent - 1868 - 1945 AD</text>
+        </g>
+      </a>
+    </svg>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><span class="legend-swatch amber"></span>Main succession trunk</div>
+    <div class="legend-item"><span class="legend-swatch purple"></span>Fork / successor empire</div>
+    <div class="legend-item"><span class="legend-swatch teal"></span>Concurrent empire</div>
+    <div class="legend-item"><span class="legend-line"></span>solid lines = trunk and forks</div>
+    <div class="legend-item"><span class="legend-line dashed"></span>dashed lines = concurrent</div>
+  </div>
+
+  <footer>
+    The hub contains no phase content - open each empire for the full timeline
+  </footer>
+
+</div>
+</body>
+</html>

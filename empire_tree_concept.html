@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Empire Tree — Concept Structure</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #c9a84c;
+    --gold-light: #e8cc7a;
+    --crimson: #8b1a1a;
+    --crimson-light: #b52020;
+    --marble-dark: #0e0c0a;
+    --marble-mid: #1a1510;
+    --marble-light: #2a2018;
+    --text: #e8dcc8;
+    --text-dim: #9a8870;
+  }
+
+  body {
+    background: var(--marble-dark);
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 48px 20px 80px;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(105deg, transparent, transparent 40px, rgba(255,255,255,0.008) 40px, rgba(255,255,255,0.008) 41px),
+      repeating-linear-gradient(75deg, transparent, transparent 60px, rgba(255,255,255,0.005) 60px, rgba(255,255,255,0.005) 61px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 720px;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .header-ornament {
+    font-size: 11px;
+    letter-spacing: 8px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    opacity: 0.7;
+  }
+
+  h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(18px, 3.5vw, 32px);
+    font-weight: 900;
+    color: var(--gold-light);
+    letter-spacing: 3px;
+    line-height: 1.25;
+    text-shadow: 0 0 40px rgba(201,168,76,0.3);
+  }
+
+  .header-sub {
+    margin-top: 12px;
+    font-size: 15px;
+    color: var(--text-dim);
+    font-style: italic;
+    letter-spacing: 1px;
+  }
+
+  .header-line {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 20px;
+    justify-content: center;
+  }
+
+  .header-line::before, .header-line::after {
+    content: '';
+    height: 1px;
+    width: 100px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  .header-dates {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    color: var(--gold);
+    letter-spacing: 4px;
+  }
+
+  .svg-wrap {
+    width: 100%;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(201,168,76,0.12);
+    border-radius: 6px;
+    padding: 24px 16px;
+  }
+
+  /* ── Node colors matching the original diagram ── */
+  .c-amber rect  { fill: #2a1e08; stroke: #BA7517; }
+  .c-amber text  { fill: #FAC775; }
+  .c-purple rect { fill: #1c1730; stroke: #534AB7; }
+  .c-purple text { fill: #AFA9EC; }
+  .c-teal rect   { fill: #081f18; stroke: #0F6E56; }
+  .c-teal text   { fill: #5DCAA5; }
+
+  .node { cursor: pointer; }
+  .node:hover rect { opacity: 0.85; }
+
+  .th { font-family: 'Cinzel', serif; font-size: 13px; font-weight: 600; }
+  .ts { font-family: 'Cormorant Garamond', serif; font-size: 11.5px; font-style: italic; fill: var(--text-dim); }
+
+  .arr { stroke: var(--text-dim); fill: none; }
+  .leader { stroke: var(--text-dim); stroke-width: 0.5px; stroke-dasharray: 3 3; fill: none; }
+
+  footer {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-dim);
+    font-style: italic;
+    letter-spacing: 1px;
+    opacity: 0.6;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div class="header-ornament">✦ Structural Concept ✦</div>
+    <h1>EMPIRES OF HISTORY<br>TREE STRUCTURE</h1>
+    <p class="header-sub">How the branches, forks, and concurrent empires will be mapped</p>
+    <div class="header-line">
+      <span class="header-dates">1550 BC — 1922 AD</span>
+    </div>
+  </header>
+
+  <div class="svg-wrap">
+    <svg width="100%" viewBox="0 0 680 620" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+      </defs>
+
+      <!-- Main trunk line -->
+      <line x1="200" y1="22" x2="200" y2="548" stroke="#9a8870" stroke-width="2" stroke-opacity="0.5" marker-end="url(#arrow)"/>
+
+      <!-- EGYPTIAN -->
+      <g class="node c-amber">
+        <rect x="110" y="28" width="185" height="50" rx="8" stroke-width="0.5"/>
+        <text class="th" x="202" y="47" text-anchor="middle">Egyptian Empire</text>
+        <text class="ts" x="202" y="65" text-anchor="middle">c.1550 – 1070 BC</text>
+      </g>
+      <circle cx="200" cy="53" r="5" fill="#BA7517"/>
+
+      <!-- Fork → Macedonian -->
+      <path d="M 295,53 H 322 V 113 H 355" fill="none" stroke="#534AB7" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <g class="node c-purple">
+        <rect x="355" y="88" width="185" height="50" rx="8" stroke-width="0.5"/>
+        <text class="th" x="447" y="107" text-anchor="middle">Macedonian Empire</text>
+        <text class="ts" x="447" y="125" text-anchor="middle">fork · 336 – 323 BC</text>
+      </g>
+
+      <!-- ROMAN -->
+      <g class="node c-amber">
+        <rect x="110" y="198" width="185" height="50" rx="8" stroke-width="0.5"/>
+        <text class="th" x="202" y="217" text-anchor="middle">Roman Empire</text>
+        <text class="ts" x="202" y="235" text-anchor="middle">509 BC – 476 AD</text>
+      </g>
+      <circle cx="200" cy="223" r="5" fill="#BA7517"/>
+
+      <!-- Concurrent → Han Dynasty -->
+      <path d="M 295,213 H 355" fill="none" stroke="#0F6E56" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#arrow)"/>
+      <g class="node c-teal">
+        <rect x="355" y="188" width="185" height="50" rx="8" stroke-width="0.5"/>
+        <text class="th" x="447" y="207" text-anchor="middle">Han Dynasty, China</text>
+        <text class="ts" x="447" y="225" text-anchor="middle">concurrent · 206 BC – 220 AD</text>
+      </g>
+
+      <!-- Fork → Holy Roman Empire -->
+      <path d="M 295,233 H 322 V 288 H 355" fill="none" stroke="#534AB7" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <g class="node c-purple">
+        <rect x="355" y="263" width="185" height="50" rx="8" stroke-width="0.5"/>
+        <text class="th" x="447" y="282" text-anchor="middle">Holy Roman Empire</text>
+        <text class="ts" x="447" y="300" text-anchor="middle">fork · 800 – 1806 AD</text>
+      </g>
+
+      <!-- BYZANTINE -->
+      <g class="node c-amber">
+        <rect x="110" y="358" width="185" height="50" rx="8" stroke-width="0.5"/>
+        <text class="th" x="202" y="377" text-anchor="middle">Byzantine Empire</text>
+        <text class="ts" x="202" y="395" text-anchor="middle">476 – 1453 AD</text>
+      </g>
+      <circle cx="200" cy="383" r="5" fill="#BA7517"/>
+
+      <!-- Concurrent → Islamic Caliphates -->
+      <path d="M 295,374 H 322 V 356 H 355" fill="none" stroke="#0F6E56" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#arrow)"/>
+      <g class="node c-teal">
+        <rect x="355" y="331" width="185" height="50" rx="8" stroke-width="0.5"/>
+        <text class="th" x="447" y="350" text-anchor="middle">Islamic Caliphates</text>
+        <text class="ts" x="447" y="368" text-anchor="middle">concurrent · 632 – 1258 AD</text>
+      </g>
+
+      <!-- Concurrent → Mongol Empire -->
+      <path d="M 295,392 H 322 V 432 H 355" fill="none" stroke="#0F6E56" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#arrow)"/>
+      <g class="node c-teal">
+        <rect x="355" y="407" width="185" height="50" rx="8" stroke-width="0.5"/>
+        <text class="th" x="447" y="426" text-anchor="middle">Mongol Empire</text>
+        <text class="ts" x="447" y="444" text-anchor="middle">concurrent · 1206 – 1368 AD</text>
+      </g>
+
+      <!-- OTTOMAN -->
+      <g class="node c-amber">
+        <rect x="110" y="488" width="185" height="50" rx="8" stroke-width="0.5"/>
+        <text class="th" x="202" y="507" text-anchor="middle">Ottoman Empire</text>
+        <text class="ts" x="202" y="525" text-anchor="middle">1299 – 1922 AD</text>
+      </g>
+      <circle cx="200" cy="513" r="5" fill="#BA7517"/>
+
+      <!-- Divider -->
+      <line x1="40" y1="570" x2="640" y2="570" stroke="#9a8870" stroke-width="0.5" stroke-opacity="0.4"/>
+
+      <!-- Legend -->
+      <g class="c-amber"><rect x="40" y="580" width="16" height="16" rx="3" stroke-width="0.5"/></g>
+      <text class="ts" x="62" y="592">Main succession trunk</text>
+
+      <g class="c-purple"><rect x="225" y="580" width="16" height="16" rx="3" stroke-width="0.5"/></g>
+      <text class="ts" x="247" y="592">Fork / successor empire</text>
+
+      <g class="c-teal"><rect x="420" y="580" width="16" height="16" rx="3" stroke-width="0.5"/></g>
+      <text class="ts" x="442" y="592">Concurrent empire (ended)</text>
+
+      <line x1="40" y1="610" x2="70" y2="610" stroke="#534AB7" stroke-width="1.5"/>
+      <text class="ts" x="76" y="614">solid = fork lineage</text>
+      <line x1="225" y1="610" x2="255" y2="610" stroke="#0F6E56" stroke-width="1.5" stroke-dasharray="5 3"/>
+      <text class="ts" x="261" y="614">dashed = concurrent, independent</text>
+    </svg>
+  </div>
+
+  <footer>
+    ✦ Concept structure — full 18-empire tree to follow ✦
+  </footer>
+
+</div>
+</body>
+</html>

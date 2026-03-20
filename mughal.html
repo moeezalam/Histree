@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mughal Empire - The Complete Cinematic History</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #c9a84c;
+    --gold-light: #e8cc7a;
+    --crimson: #8b1a1a;
+    --crimson-light: #b52020;
+    --marble-dark: #0e0c0a;
+    --marble-mid: #1a1510;
+    --marble-light: #2a2018;
+    --text: #e8dcc8;
+    --text-dim: #9a8870;
+    --trunk: #c9a84c;
+    --accent: #8b1a1a;
+    --accent-light: #b52020;
+    --accent-glow: rgba(139,26,26,0.6);
+  }
+
+  :root {
+    --accent: #5a1a60;
+    --accent-light: #802888;
+    --accent-glow: rgba(90,26,96,0.6);
+  }
+
+  body {
+    background: var(--marble-dark);
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(105deg, transparent, transparent 40px, rgba(255,255,255,0.008) 40px, rgba(255,255,255,0.008) 41px),
+      repeating-linear-gradient(75deg, transparent, transparent 60px, rgba(255,255,255,0.005) 60px, rgba(255,255,255,0.005) 61px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    max-width: 1060px;
+    margin: 0 auto;
+    padding: 60px 20px 100px;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 80px;
+  }
+
+  .header-ornament {
+    font-size: 12px;
+    letter-spacing: 8px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    opacity: 0.7;
+  }
+
+  .back-link {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    opacity: 0.6;
+    margin-bottom: 12px;
+  }
+
+  .back-link a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .back-link a:hover { color: var(--gold-light); }
+
+  h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(22px, 4vw, 42px);
+    font-weight: 900;
+    color: var(--gold-light);
+    letter-spacing: 3px;
+    line-height: 1.2;
+    text-shadow: 0 0 40px rgba(201,168,76,0.3);
+  }
+
+  .header-sub {
+    margin-top: 14px;
+    font-size: 16px;
+    color: var(--text-dim);
+    font-style: italic;
+    letter-spacing: 1px;
+  }
+
+  .header-line {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 24px;
+    justify-content: center;
+  }
+
+  .header-line::before, .header-line::after {
+    content: '';
+    height: 1px;
+    width: 120px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  .header-dates {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    color: var(--gold);
+    letter-spacing: 4px;
+  }
+
+  .tree {
+    position: relative;
+    padding: 0 0 40px;
+  }
+
+  .trunk {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    transform: translateX(-50%);
+    background: linear-gradient(to bottom, var(--gold) 0%, var(--gold) 90%, transparent 100%);
+    opacity: 0.45;
+  }
+
+  .phase {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 0;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .phase:nth-child(odd)  { flex-direction: row; }
+  .phase:nth-child(even) { flex-direction: row-reverse; }
+
+  .phase-block {
+    width: calc(50% - 32px);
+    padding-bottom: 64px;
+    position: relative;
+  }
+
+  .phase:nth-child(odd)  .phase-block { padding-right: 32px; text-align: right; }
+  .phase:nth-child(even) .phase-block { padding-left:  32px; text-align: left;  }
+
+  .phase:nth-child(odd)  .phase-block::after {
+    content: ''; position: absolute; right: 0; top: 6px;
+    width: 32px; height: 1px; background: var(--gold); opacity: 0.4;
+  }
+  .phase:nth-child(even) .phase-block::after {
+    content: ''; position: absolute; left: 0; top: 6px;
+    width: 32px; height: 1px; background: var(--gold); opacity: 0.4;
+  }
+
+  .trunk-node {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--gold);
+    border: 2px solid var(--marble-dark);
+    box-shadow: 0 0 12px rgba(201,168,76,0.6);
+    z-index: 2;
+    flex-shrink: 0;
+  }
+
+  .phase-spacer { width: 64px; flex-shrink: 0; }
+
+  .phase-num {
+    font-size: 10px;
+    color: var(--accent-light);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    opacity: 0.9;
+  }
+
+  .phase-date {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 3px;
+    opacity: 0.85;
+    margin-bottom: 6px;
+  }
+
+  .phase-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(13px, 2vw, 17px);
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: 1px;
+    line-height: 1.3;
+    margin-bottom: 6px;
+  }
+
+  .phase-desc {
+    font-size: 12.5px;
+    color: var(--text-dim);
+    font-style: italic;
+    line-height: 1.6;
+    margin-top: 6px;
+    margin-bottom: 2px;
+  }
+
+  .films {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 12px;
+  }
+
+  .phase:nth-child(odd)  .films { align-items: flex-end; }
+  .phase:nth-child(even) .films { align-items: flex-start; }
+
+  .film-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--marble-light);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 3px;
+    padding: 6px 12px;
+    font-size: 13px;
+    color: var(--text);
+    font-style: italic;
+    transition: all 0.2s;
+    position: relative;
+    max-width: 300px;
+  }
+
+  .film-item:hover {
+    border-color: rgba(201,168,76,0.5);
+    background: rgba(201,168,76,0.07);
+    color: var(--gold-light);
+    transform: translateX(-2px);
+  }
+
+  .phase:nth-child(even) .film-item:hover { transform: translateX(2px); }
+
+  .film-item.type-optional { opacity: 0.65; }
+
+  .film-type {
+    font-family: 'Cinzel', serif;
+    font-size: 8px;
+    letter-spacing: 2px;
+    padding: 2px 5px;
+    border-radius: 2px;
+    font-style: normal;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .type-movie  { background: rgba(139,26,26,0.4);  color: #e87070; border: 1px solid rgba(139,26,26,0.5); }
+  .type-series { background: rgba(30,60,100,0.4);  color: #7ab0e8; border: 1px solid rgba(30,60,100,0.5); }
+  .type-mini   { background: rgba(40,90,60,0.4);   color: #7adfa0; border: 1px solid rgba(40,90,60,0.5); }
+  .type-doc    { background: rgba(80,50,10,0.5);   color: #e8c070; border: 1px solid rgba(150,100,20,0.4); }
+  .type-drama  { background: rgba(70,30,100,0.45); color: #c07ae8; border: 1px solid rgba(100,40,140,0.5); }
+
+  .parallel-label {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    opacity: 0.65;
+    margin-top: 5px;
+    line-height: 1.7;
+  }
+
+  .phase:nth-child(even) .parallel-label { text-align: left; }
+  .phase:nth-child(odd)  .parallel-label { text-align: right; }
+
+  .spotlight {
+    margin-top: 14px;
+    border-left: 2px solid var(--accent);
+    padding-left: 10px;
+  }
+
+  .phase:nth-child(odd) .spotlight {
+    border-left: none;
+    border-right: 2px solid var(--accent);
+    padding-left: 0;
+    padding-right: 10px;
+  }
+
+  .spotlight-label {
+    font-family: 'Cinzel', serif;
+    font-size: 8.5px;
+    letter-spacing: 2.5px;
+    color: #c07ae8;
+    opacity: 0.85;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+
+  .spotlight-text {
+    font-size: 11.5px;
+    color: var(--text-dim);
+    font-style: italic;
+    line-height: 1.6;
+  }
+
+  .end-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0;
+    padding-top: 20px;
+    position: relative;
+  }
+
+  .end-node::before {
+    content: '';
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    opacity: 0.4;
+    margin-bottom: 0;
+  }
+
+  .end-diamond {
+    width: 20px; height: 20px;
+    background: var(--accent);
+    transform: rotate(45deg);
+    box-shadow: 0 0 20px var(--accent-glow);
+    margin-bottom: 20px;
+  }
+
+  .end-label {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 3px;
+    color: var(--accent-light);
+    text-align: center;
+  }
+
+  .end-year {
+    font-family: 'Cinzel', serif;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--accent);
+    text-shadow: 0 0 30px var(--accent-glow);
+    margin-top: 6px;
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 60px;
+    padding-top: 30px;
+    border-top: 1px solid rgba(201,168,76,0.15);
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--text-dim);
+    font-style: italic;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .phase:nth-child(1)  { animation-delay: 0.04s; }
+  .phase:nth-child(2)  { animation-delay: 0.08s; }
+  .phase:nth-child(3)  { animation-delay: 0.12s; }
+  .phase:nth-child(4)  { animation-delay: 0.16s; }
+  .phase:nth-child(5)  { animation-delay: 0.20s; }
+  .phase:nth-child(6)  { animation-delay: 0.24s; }
+  .phase:nth-child(7)  { animation-delay: 0.28s; }
+
+  @media (max-width: 600px) {
+    .phase { flex-direction: column !important; padding-left: 30px; }
+    .phase-block { width: 100% !important; padding: 0 0 40px 0 !important; text-align: left !important; }
+    .trunk { left: 10px; }
+    .trunk-node { left: 10px; }
+    .phase-block::after { display: none; }
+    .films { align-items: flex-start !important; }
+    .spotlight { border-left: 2px solid rgba(201,168,76,0.25) !important; border-right: none !important; padding-left: 10px !important; padding-right: 0 !important; }
+    .phase:nth-child(even) .phase-block { padding-left: 0 !important; }
+    .film-item:hover { transform: translateX(2px) !important; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div class="header-ornament">❖ Cinematic Curriculum ❖</div>
+    <div class="back-link"><a href="index.html">← All Empires</a></div>
+    <h1>THE MUGHAL EMPIRE<br>IN FILM &amp; SERIES</h1>
+    <p class="header-sub">From Babur's conquest to the 1857 collapse</p>
+    <div class="header-line">
+      <span class="header-dates">1526 AD - 1857 AD</span>
+    </div>
+  </header>
+
+  <div class="tree">
+    <div class="trunk"></div>
+
+    <!-- PHASE I -->
+    <div class="phase">
+      <div class="phase-block">
+        <div class="phase-num">Phase I</div>
+        <div class="phase-date">1526 - 1530</div>
+        <div class="phase-title">Babur and the Mughal Foundation</div>
+        <div class="phase-desc">Battle of Panipat - Babur establishes Mughal rule - Timurid legacy transplanted into India</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-series">SERIES</span> The Empire (2021)</div>
+        </div>
+        <div class="parallel-label">⟡ The Empire is the primary screen treatment for Babur and the founding era.</div>
+      </div>
+      <div class="trunk-node"></div>
+      <div class="phase-spacer"></div>
+    </div>
+
+    <!-- PHASE II -->
+    <div class="phase">
+      <div class="phase-spacer"></div>
+      <div class="trunk-node"></div>
+      <div class="phase-block">
+        <div class="phase-num">Phase II</div>
+        <div class="phase-date">1530 - 1556</div>
+        <div class="phase-title">Humayun, Exile, and Return</div>
+        <div class="phase-desc">Humayun loses the throne to Sher Shah Suri - years in exile - the Mughal restoration sets the stage for Akbar</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-series">SERIES</span> The Empire (2021)</div>
+        </div>
+        <div class="parallel-label">⟡ Continue The Empire for the exile and restoration arc.</div>
+      </div>
+    </div>
+
+    <!-- PHASE III -->
+    <div class="phase">
+      <div class="phase-block">
+        <div class="phase-num">Phase III</div>
+        <div class="phase-date">1556 - 1605</div>
+        <div class="phase-title">Akbar's Consolidation</div>
+        <div class="phase-desc">Akbar unifies the subcontinent - Rajput alliances - cultural and religious synthesis at court</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-movie">FILM</span> Jodhaa Akbar (2008)</div>
+          <div class="film-item"><span class="film-type type-series">SERIES</span> Jodha Akbar (2013)</div>
+          <div class="film-item"><span class="film-type type-series">SERIES</span> Akbar Birbal (2014)</div>
+        </div>
+        <div class="parallel-label">⟡ Jodhaa Akbar is the cinematic anchor; the TV series expands the court politics.</div>
+      </div>
+      <div class="trunk-node"></div>
+      <div class="phase-spacer"></div>
+    </div>
+
+    <!-- PHASE IV -->
+    <div class="phase">
+      <div class="phase-spacer"></div>
+      <div class="trunk-node"></div>
+      <div class="phase-block">
+        <div class="phase-num">Phase IV</div>
+        <div class="phase-date">1605 - 1658</div>
+        <div class="phase-title">Jahangir, Shah Jahan, and the Taj</div>
+        <div class="phase-desc">Court artistry peaks - the Taj Mahal rises as imperial monument - Mughal wealth reaches its zenith</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-movie">FILM</span> Mughal-e-Azam (1960)</div>
+          <div class="film-item"><span class="film-type type-movie">FILM</span> Taj Mahal: An Eternal Love Story (2005)</div>
+          <div class="film-item"><span class="film-type type-movie">FILM</span> Mughal-E-Azam (2010)</div>
+        </div>
+        <div class="parallel-label">⟡ Mughal-e-Azam is the classic court epic; Taj Mahal centers the monument.</div>
+      </div>
+    </div>
+
+    <!-- PHASE V -->
+    <div class="phase">
+      <div class="phase-block">
+        <div class="phase-num">Phase V</div>
+        <div class="phase-date">1658 - 1707</div>
+        <div class="phase-title">Aurangzeb and the Long Wars</div>
+        <div class="phase-desc">Orthodox rule, extended campaigns in the Deccan - imperial strain deepens</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-series">SERIES</span> The Empire (2021)</div>
+        </div>
+        <div class="parallel-label">⟡ Later episodes of The Empire sketch the shift toward militarized rule.</div>
+      </div>
+      <div class="trunk-node"></div>
+      <div class="phase-spacer"></div>
+    </div>
+
+    <!-- PHASE VI -->
+    <div class="phase">
+      <div class="phase-spacer"></div>
+      <div class="trunk-node"></div>
+      <div class="phase-block">
+        <div class="phase-num">Phase VI</div>
+        <div class="phase-date">1707 - 1761</div>
+        <div class="phase-title">Maratha Pressure and Imperial Decline</div>
+        <div class="phase-desc">Regional powers rise - Maratha raids and battlefield reversals - the empire loses cohesion</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-movie">FILM</span> Bajirao Mastani (2015)</div>
+        </div>
+        <div class="parallel-label">⟡ Bajirao Mastani shows the Maratha challenge to Mughal power.</div>
+      </div>
+    </div>
+
+    <!-- PHASE VII -->
+    <div class="phase">
+      <div class="phase-block">
+        <div class="phase-num">Phase VII</div>
+        <div class="phase-date">1761 - 1857</div>
+        <div class="phase-title">British Ascendancy and the 1857 End</div>
+        <div class="phase-desc">The Mughal throne becomes symbolic - the 1857 uprising ends the empire - the last emperor is exiled</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-series">SERIES</span> The Empire (2021)</div>
+        </div>
+        <div class="parallel-label">⟡ Documentary bridge recommended for the final collapse and British takeover.</div>
+      </div>
+      <div class="trunk-node"></div>
+      <div class="phase-spacer"></div>
+    </div>
+
+  </div>
+
+  <div class="end-node">
+    <div class="end-diamond"></div>
+    <div class="end-label">THE MUGHAL EMPIRE FALLS</div>
+    <div class="end-year">1857 AD</div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><span class="film-type type-movie">FILM</span> Feature Film</div>
+    <div class="legend-item"><span class="film-type type-series">SERIES</span> TV Series</div>
+    <div class="legend-item"><span class="film-type type-mini">MINI</span> Miniseries</div>
+    <div class="legend-item"><span class="film-type type-doc">DOC</span> Documentary</div>
+    <div class="legend-item"><span class="film-type type-drama">DRAMA</span> Docudrama</div>
+    <div class="legend-item" style="color:var(--text-dim); font-style:italic; font-size:12px;">⟡ parallel / optional</div>
+  </div>
+
+</div>
+</body>
+</html>

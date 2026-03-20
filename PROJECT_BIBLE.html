@@ -1,0 +1,1650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Bible — Cinematic History of Empires</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #c9a84c;
+    --gold-light: #e8cc7a;
+    --gold-dim: #8a6e30;
+    --crimson: #8b1a1a;
+    --crimson-light: #b52020;
+    --marble-dark: #0e0c0a;
+    --marble-mid: #1a1510;
+    --marble-light: #2a2018;
+    --marble-card: #1e1a14;
+    --text: #e8dcc8;
+    --text-dim: #9a8870;
+    --text-faint: #5a4e40;
+    --teal: #1D9E75;
+    --teal-light: #5DCAA5;
+    --purple: #534AB7;
+    --purple-light: #AFA9EC;
+    --code-bg: #151210;
+    --code-border: rgba(201,168,76,0.2);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--marble-dark);
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    font-size: 17px;
+    line-height: 1.75;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(105deg, transparent, transparent 40px, rgba(255,255,255,0.006) 40px, rgba(255,255,255,0.006) 41px),
+      repeating-linear-gradient(75deg, transparent, transparent 60px, rgba(255,255,255,0.004) 60px, rgba(255,255,255,0.004) 61px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 28px 120px;
+  }
+
+  /* ── HEADER ── */
+  .doc-header {
+    text-align: center;
+    margin-bottom: 80px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+  }
+
+  .doc-header .ornament {
+    font-size: 11px;
+    letter-spacing: 9px;
+    color: var(--gold);
+    text-transform: uppercase;
+    opacity: 0.65;
+    margin-bottom: 18px;
+  }
+
+  .doc-header h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(22px, 3.5vw, 40px);
+    font-weight: 900;
+    color: var(--gold-light);
+    letter-spacing: 2px;
+    line-height: 1.2;
+    text-shadow: 0 0 50px rgba(201,168,76,0.25);
+    margin-bottom: 14px;
+  }
+
+  .doc-header .subtitle {
+    font-size: 16px;
+    color: var(--text-dim);
+    font-style: italic;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .version-tag {
+    display: inline-block;
+    margin-top: 20px;
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--crimson-light);
+    border: 1px solid rgba(139,26,26,0.4);
+    padding: 3px 12px;
+    border-radius: 2px;
+  }
+
+  /* ── TABLE OF CONTENTS ── */
+  .toc {
+    background: var(--marble-card);
+    border: 1px solid rgba(201,168,76,0.12);
+    border-radius: 4px;
+    padding: 28px 32px;
+    margin-bottom: 64px;
+  }
+
+  .toc-title {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 5px;
+    color: var(--gold);
+    opacity: 0.7;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+
+  .toc ol {
+    padding-left: 0;
+    list-style: none;
+    counter-reset: toc-counter;
+  }
+
+  .toc ol li {
+    counter-increment: toc-counter;
+    position: relative;
+    padding: 4px 0 4px 32px;
+    border-bottom: 1px solid rgba(201,168,76,0.06);
+    font-size: 14px;
+  }
+
+  .toc ol li::before {
+    content: counter(toc-counter, upper-roman);
+    position: absolute;
+    left: 0;
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    color: var(--gold);
+    opacity: 0.6;
+    top: 7px;
+  }
+
+  .toc ol li a {
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .toc ol li a:hover { color: var(--gold-light); }
+
+  .toc ol li:last-child { border-bottom: none; }
+
+  /* ── SECTION ── */
+  .section {
+    margin-bottom: 72px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 28px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+  }
+
+  .section-num {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    color: var(--crimson-light);
+    letter-spacing: 3px;
+    opacity: 0.8;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .section h2 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(16px, 2.2vw, 22px);
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: 1px;
+    line-height: 1.3;
+  }
+
+  .section h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 1.5px;
+    margin: 32px 0 12px;
+    padding-left: 12px;
+    border-left: 2px solid rgba(201,168,76,0.4);
+  }
+
+  .section h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 3px;
+    color: var(--teal-light);
+    text-transform: uppercase;
+    margin: 24px 0 8px;
+  }
+
+  .section p {
+    color: var(--text);
+    margin-bottom: 14px;
+    font-size: 16px;
+  }
+
+  .section p:last-child { margin-bottom: 0; }
+
+  /* ── CODE BLOCKS ── */
+  .code-block {
+    background: var(--code-bg);
+    border: 1px solid var(--code-border);
+    border-radius: 3px;
+    padding: 18px 22px;
+    margin: 16px 0;
+    overflow-x: auto;
+  }
+
+  .code-block pre {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 12.5px;
+    line-height: 1.8;
+    color: #c8b98a;
+    white-space: pre;
+  }
+
+  .code-label {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    opacity: 0.55;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+
+  .inline-code {
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    background: rgba(201,168,76,0.08);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 2px;
+    padding: 1px 6px;
+    color: var(--gold-light);
+  }
+
+  /* ── CARDS / CALLOUTS ── */
+  .callout {
+    border-radius: 3px;
+    padding: 16px 20px;
+    margin: 16px 0;
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  .callout-rule {
+    background: rgba(201,168,76,0.06);
+    border-left: 3px solid var(--gold);
+  }
+
+  .callout-warn {
+    background: rgba(139,26,26,0.1);
+    border-left: 3px solid var(--crimson-light);
+    color: #e8b0b0;
+  }
+
+  .callout-teal {
+    background: rgba(29,158,117,0.07);
+    border-left: 3px solid var(--teal);
+    color: var(--teal-light);
+  }
+
+  .callout-purple {
+    background: rgba(83,74,183,0.08);
+    border-left: 3px solid var(--purple);
+    color: var(--purple-light);
+  }
+
+  .callout strong {
+    font-weight: 600;
+    color: inherit;
+  }
+
+  /* ── TABLES ── */
+  .spec-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 13.5px;
+  }
+
+  .spec-table th {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 2.5px;
+    color: var(--gold);
+    opacity: 0.75;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    text-align: left;
+  }
+
+  .spec-table td {
+    padding: 9px 14px;
+    border-bottom: 1px solid rgba(201,168,76,0.07);
+    color: var(--text-dim);
+    vertical-align: top;
+    font-size: 13.5px;
+  }
+
+  .spec-table tr:last-child td { border-bottom: none; }
+
+  .spec-table td strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .spec-table tr:hover td { background: rgba(201,168,76,0.03); }
+
+  /* ── COLOR SWATCHES ── */
+  .swatch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 10px;
+    margin: 16px 0;
+  }
+
+  .swatch {
+    border-radius: 3px;
+    padding: 14px;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .swatch-name {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+
+  .swatch-hex {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    opacity: 0.7;
+  }
+
+  /* ── PHASE DIAGRAM ── */
+  .phase-example {
+    background: var(--marble-card);
+    border: 1px solid rgba(201,168,76,0.12);
+    border-radius: 4px;
+    padding: 24px;
+    margin: 16px 0;
+    font-size: 13px;
+  }
+
+  .phase-example .pex-num {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    color: var(--crimson-light);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .phase-example .pex-date {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    color: var(--gold);
+    letter-spacing: 3px;
+    margin-bottom: 4px;
+  }
+
+  .phase-example .pex-title {
+    font-family: 'Cinzel', serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .phase-example .pex-desc {
+    font-size: 12px;
+    color: var(--text-dim);
+    font-style: italic;
+    margin-bottom: 12px;
+  }
+
+  .pex-film {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--marble-light);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 3px;
+    padding: 5px 11px;
+    font-size: 12px;
+    font-style: italic;
+    color: var(--text);
+    margin: 3px 3px 3px 0;
+  }
+
+  .badge {
+    font-family: 'Cinzel', serif;
+    font-size: 7.5px;
+    letter-spacing: 1.5px;
+    padding: 2px 5px;
+    border-radius: 2px;
+    font-style: normal;
+    white-space: nowrap;
+  }
+
+  .badge-film   { background: rgba(139,26,26,0.4);   color: #e87070; border: 1px solid rgba(139,26,26,0.5); }
+  .badge-series { background: rgba(30,60,100,0.4);   color: #7ab0e8; border: 1px solid rgba(30,60,100,0.5); }
+  .badge-mini   { background: rgba(40,90,60,0.4);    color: #7adfa0; border: 1px solid rgba(40,90,60,0.5); }
+  .badge-doc    { background: rgba(80,50,10,0.5);    color: #e8c070; border: 1px solid rgba(150,100,20,0.4); }
+  .badge-drama  { background: rgba(70,30,100,0.45);  color: #c07ae8; border: 1px solid rgba(100,40,140,0.5); }
+
+  /* ── FILE TREE ── */
+  .file-tree {
+    background: var(--code-bg);
+    border: 1px solid var(--code-border);
+    border-radius: 3px;
+    padding: 20px 24px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    line-height: 2;
+    color: #c8b98a;
+    margin: 16px 0;
+  }
+
+  .file-tree .dir  { color: var(--gold-light); }
+  .file-tree .hub  { color: #7adfa0; }
+  .file-tree .done { color: #7ab0e8; }
+  .file-tree .todo { color: var(--text-dim); }
+  .file-tree .note { color: #9a8870; font-style: italic; }
+
+  /* ── EMPIRE COLOR PATCHES ── */
+  .empire-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 16px 0;
+  }
+
+  .empire-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 16px;
+    background: var(--marble-card);
+    border: 1px solid rgba(201,168,76,0.08);
+    border-radius: 3px;
+    font-size: 14px;
+  }
+
+  .empire-swatch {
+    width: 28px;
+    height: 28px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  .empire-name {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    color: var(--text);
+    letter-spacing: 0.5px;
+    min-width: 200px;
+  }
+
+  .empire-palette {
+    display: flex;
+    gap: 5px;
+    flex: 1;
+  }
+
+  .empire-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+    font-size: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .empire-dates {
+    font-size: 12px;
+    color: var(--text-dim);
+    font-style: italic;
+    white-space: nowrap;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 56px 0;
+  }
+
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201,168,76,0.2), transparent);
+  }
+
+  .divider-icon {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    color: var(--gold);
+    opacity: 0.4;
+    letter-spacing: 4px;
+  }
+
+  /* ── NUMBERED STEPS ── */
+  .step-list {
+    counter-reset: step-counter;
+    list-style: none;
+    padding: 0;
+    margin: 16px 0;
+  }
+
+  .step-list li {
+    counter-increment: step-counter;
+    position: relative;
+    padding: 12px 16px 12px 52px;
+    margin-bottom: 8px;
+    background: var(--marble-card);
+    border: 1px solid rgba(201,168,76,0.08);
+    border-radius: 3px;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .step-list li::before {
+    content: counter(step-counter);
+    position: absolute;
+    left: 16px;
+    top: 12px;
+    width: 24px;
+    height: 24px;
+    background: rgba(201,168,76,0.12);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 50%;
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 24px;
+  }
+
+  /* ── RULE CALLOUT ── */
+  .rule-box {
+    background: var(--marble-card);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 4px;
+    padding: 20px 24px;
+    margin: 16px 0;
+  }
+
+  .rule-box .rule-title {
+    font-family: 'Cinzel', serif;
+    font-size: 9.5px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    opacity: 0.7;
+  }
+
+  .rule-box ul {
+    padding-left: 20px;
+    font-size: 14.5px;
+    line-height: 1.9;
+    color: var(--text-dim);
+  }
+
+  .rule-box ul li { margin-bottom: 2px; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .swatch-grid { grid-template-columns: repeat(2, 1fr); }
+    .empire-row { flex-wrap: wrap; }
+    .empire-name { min-width: unset; width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ══════════════════ HEADER ══════════════════ -->
+  <div class="doc-header">
+    <div class="ornament">✦ Project Specification ✦</div>
+    <h1>CINEMATIC HISTORY<br>OF EMPIRES</h1>
+    <p class="subtitle">A complete technical and creative specification for building the multi-empire cinematic timeline system — from hub tree to individual empire files</p>
+    <div class="version-tag">Version 1.0 — Master Build Document</div>
+  </div>
+
+  <!-- ══════════════════ TABLE OF CONTENTS ══════════════════ -->
+  <div class="toc">
+    <div class="toc-title">✦ Contents</div>
+    <ol>
+      <li><a href="#s1">Project Overview &amp; Vision</a></li>
+      <li><a href="#s2">File Architecture &amp; Linking System</a></li>
+      <li><a href="#s3">Build Order — What to Make First</a></li>
+      <li><a href="#s4">The Core Aesthetic System (CSS Specification)</a></li>
+      <li><a href="#s5">Per-Empire Color Variation Rules</a></li>
+      <li><a href="#s6">The Hub File — Main Empires Tree</a></li>
+      <li><a href="#s7">Individual Empire Timeline File Structure</a></li>
+      <li><a href="#s8">Phase Anatomy — How Each Node is Built</a></li>
+      <li><a href="#s9">Research Methodology — How to Find &amp; Verify Media</a></li>
+      <li><a href="#s10">The 18 Empires — Individual Briefs</a></li>
+      <li><a href="#s11">Quality Rules &amp; Accuracy Standards</a></li>
+      <li><a href="#s12">Exact HTML Boilerplate Templates</a></li>
+    </ol>
+  </div>
+
+  <!-- ══════════════════ SECTION 1 ══════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">I</span>
+      <h2>Project Overview &amp; Vision</h2>
+    </div>
+
+    <p>This project is a self-contained, browser-based cinematic curriculum for learning the entire history of human civilization through film, television series, miniseries, and documentaries. It consists of a <strong>central hub file</strong> (the master empires tree) and a set of <strong>individual empire timeline files</strong> — one per empire — each showing the complete watch order from that empire's founding to its fall.</p>
+
+    <p>The project was conceived because no streaming guide, Wikipedia article, or YouTube video adequately answers the question: <em>"If I wanted to learn the entire history of Rome — or Egypt, or the Ottomans — through only film and television, in the right order, what would I watch?"</em> This system answers that question definitively for every major civilization with adequate screen coverage.</p>
+
+    <h3>The Two-Level Structure</h3>
+    <p><strong>Level 1 — The Hub:</strong> A single HTML file (<span class="inline-code">index.html</span>) displaying all empires as a visual tree. Each empire node is a clickable card that navigates to that empire's dedicated timeline file. The hub shows empire names, date ranges, and their relationship to one another (main succession trunk, fork/successor, or concurrent).</p>
+
+    <p><strong>Level 2 — Empire Files:</strong> One HTML file per empire (e.g., <span class="inline-code">rome.html</span>, <span class="inline-code">egypt.html</span>, etc.). Each file is a complete, self-contained cinematic timeline — a vertical alternating tree of phases, each phase containing the films and series that cover that historical period, with character spotlights, watch-order notes, and parallel viewing instructions.</p>
+
+    <h3>The Aesthetic Contract</h3>
+    <p>All files share the same foundational aesthetic: a dark marble background, serif typography using the Cinzel (headings) and Cormorant Garamond (body) font pairing, a gold-and-crimson color language, and the same alternating left-right tree layout. What <em>varies</em> between empire files is a single accent color ramp that replaces the Roman crimson — so the Egyptian file has a turquoise-and-sand palette, the Persian file has an amethyst-and-gold palette, and so on. The marble stays. The fonts stay. The layout stays. Only the accent shifts. This makes the collection feel unified while giving each empire its own identity.</p>
+
+    <div class="callout callout-rule">
+      <strong>Core Principle:</strong> Every file in this project must feel like it belongs to the same hand-crafted historical atlas. A person who opens <span class="inline-code">mongol.html</span> after reading <span class="inline-code">rome.html</span> should immediately recognize the family, but feel the shift in culture through the changed palette.
+    </div>
+  </div>
+
+  <div class="divider"><span class="divider-icon">✦ ✦ ✦</span></div>
+
+  <!-- ══════════════════ SECTION 2 ══════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">II</span>
+      <h2>File Architecture &amp; Linking System</h2>
+    </div>
+
+    <h3>Directory Structure</h3>
+    <div class="file-tree">
+      <span class="dir">/cinematic-empires/</span><br>
+      │<br>
+      ├── <span class="hub">index.html</span>         <span class="note">← The Hub: master empires tree</span><br>
+      │<br>
+      ├── <span class="done">rome.html</span>          <span class="note">← COMPLETE (Phase I–XXII, 753 BC–1453 AD)</span><br>
+      ├── <span class="todo">egypt.html</span>         <span class="note">← Empire II</span><br>
+      ├── <span class="todo">persia.html</span>        <span class="note">← Empire III</span><br>
+      ├── <span class="todo">macedon.html</span>       <span class="note">← Empire IV</span><br>
+      ├── <span class="todo">maurya.html</span>        <span class="note">← Empire V</span><br>
+      ├── <span class="todo">han.html</span>           <span class="note">← Empire VI</span><br>
+      ├── <span class="todo">viking.html</span>        <span class="note">← Empire VII</span><br>
+      ├── <span class="todo">islamic.html</span>       <span class="note">← Empire VIII</span><br>
+      ├── <span class="todo">mongol.html</span>        <span class="note">← Empire IX</span><br>
+      ├── <span class="todo">ottoman.html</span>       <span class="note">← Empire X</span><br>
+      ├── <span class="todo">spanish.html</span>       <span class="note">← Empire XI</span><br>
+      ├── <span class="todo">mughal.html</span>        <span class="note">← Empire XII</span><br>
+      ├── <span class="todo">british.html</span>       <span class="note">← Empire XIII</span><br>
+      ├── <span class="todo">russian.html</span>       <span class="note">← Empire XIV</span><br>
+      ├── <span class="todo">napoleon.html</span>      <span class="note">← Empire XV</span><br>
+      ├── <span class="todo">japanese.html</span>      <span class="note">← Empire XVI</span><br>
+      └── <span class="todo">american.html</span>      <span class="note">← Empire XVII (optional, modern era)</span><br>
+    </div>
+
+    <h3>Linking Rules — Hub → Empire</h3>
+    <p>Every empire node on the hub tree contains a clickable link. When clicked, it opens that empire's individual HTML file. The link is implemented as a standard <span class="inline-code">&lt;a href="rome.html"&gt;</span> wrapped around the empire's node card on the hub. The node must visually indicate it is clickable — a subtle gold border glow on hover is the correct treatment. There is <strong>no JavaScript required</strong> for basic navigation; all links are standard anchor tags.</p>
+
+    <h3>Linking Rules — Empire → Hub</h3>
+    <p>Every individual empire file must have a "Return to All Empires" link in the header, placed below the title. It reads: <em>← All Empires</em> and links back to <span class="inline-code">index.html</span>. It uses the <span class="inline-code">.back-link</span> CSS class defined in the boilerplate. It is styled as a small Cinzel-font label in muted gold, with a left-pointing arrow character (←). It appears on one line, centered, between the ornament and the main H1 title.</p>
+
+    <h3>Self-Contained Files</h3>
+
+    <div class="callout callout-warn">
+      <strong>Critical Rule:</strong> Every file — hub and empire files alike — must be 100% self-contained. All CSS is embedded in a <span class="inline-code">&lt;style&gt;</span> block in the <span class="inline-code">&lt;head&gt;</span>. No external stylesheets. No JavaScript frameworks. The only external resources are the two Google Fonts imports (Cinzel and Cormorant Garamond). The files must work when opened directly from a file system without a server.
+    </div>
+
+    <h3>Google Fonts Import</h3>
+    <p>This exact import line must appear in every file, unchanged:</p>
+    <div class="code-block">
+      <div class="code-label">Required Font Import</div>
+      <pre>&lt;link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&amp;family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&amp;display=swap" rel="stylesheet"&gt;</pre>
+    </div>
+  </div>
+
+  <div class="divider"><span class="divider-icon">✦ ✦ ✦</span></div>
+
+  <!-- ══════════════════ SECTION 3 ══════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">III</span>
+      <h2>Build Order — What to Make First</h2>
+    </div>
+
+    <p>Build in this exact sequence. Do not skip ahead. Each stage depends on the clarity established by the previous one.</p>
+
+    <ol class="step-list">
+      <li><strong>Complete rome.html</strong> — This file already exists and serves as the master reference. Every other empire file is built to match its structure exactly. If anything feels wrong in a later file, refer back to <span class="inline-code">rome.html</span> and copy the pattern precisely.</li>
+      <li><strong>Build index.html (the Hub)</strong> — Before building any more empire files, build the hub. The hub's visual grammar (amber trunk = main succession, purple solid = fork/successor, teal dashed = concurrent) must be established before it can be populated. The hub is the "map" that will guide the user. Build it with placeholder links for all empires not yet built (grayed-out nodes with "Coming Soon" treatment).</li>
+      <li><strong>Build ottoman.html</strong> — The Ottoman Empire has the richest modern media coverage outside Rome (Rise of Empires, Magnificent Century, etc.) and is the direct chronological successor to Byzantium/Rome on the main trunk. Build this third to validate that the Rome template scales cleanly to a different culture and color palette.</li>
+      <li><strong>Build egypt.html</strong> — Massive film coverage (Cleopatra, The Ten Commandments, Pharaoh, Nefertiti, etc.), historically early, and visually distinct palette. Good stress test for the template.</li>
+      <li><strong>Build mongol.html</strong> — Tests the Eastern/non-Western media challenge. Forces you to include Chinese and Mongolian productions alongside Western content.</li>
+      <li><strong>Build british.html</strong> — The deepest media coverage of any modern empire. Will likely be the longest file. Covers ~1583–1997 AD and spans dozens of phases.</li>
+      <li><strong>Build all remaining empire files</strong> in rough chronological order: <span class="inline-code">persia.html</span>, <span class="inline-code">macedon.html</span>, <span class="inline-code">maurya.html</span>, <span class="inline-code">han.html</span>, <span class="inline-code">viking.html</span>, <span class="inline-code">islamic.html</span>, <span class="inline-code">spanish.html</span>, <span class="inline-code">mughal.html</span>, <span class="inline-code">russian.html</span>, <span class="inline-code">napoleon.html</span>, <span class="inline-code">japanese.html</span>.</li>
+      <li><strong>Final pass — update index.html</strong> — Once all empire files are complete, revisit the hub and replace all "Coming Soon" placeholder nodes with fully linked, active nodes. Verify all links work. Add any new relationships discovered during the empire builds.</li>
+    </ol>
+  </div>
+
+  <div class="divider"><span class="divider-icon">✦ ✦ ✦</span></div>
+
+  <!-- ══════════════════ SECTION 4 ══════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">IV</span>
+      <h2>The Core Aesthetic System — CSS Specification</h2>
+    </div>
+
+    <p>These CSS custom properties form the unchanging foundation of every file. Copy this <span class="inline-code">:root</span> block verbatim into every file. Do not alter any value here. Empire-specific accent colors are handled separately in Section V.</p>
+
+    <div class="code-block">
+      <div class="code-label">:root — Universal Variables (identical in every file)</div>
+      <pre>:root {
+  /* Core palette — NEVER change these across files */
+  --gold:           #c9a84c;
+  --gold-light:     #e8cc7a;
+  --crimson:        #8b1a1a;
+  --crimson-light:  #b52020;
+  --marble-dark:    #0e0c0a;
+  --marble-mid:     #1a1510;
+  --marble-light:   #2a2018;
+  --text:           #e8dcc8;
+  --text-dim:       #9a8870;
+  --trunk:          #c9a84c;
+
+  /* Empire accent — THESE change per file (see Section V) */
+  --accent:         #8b1a1a;   /* Roman crimson (default) */
+  --accent-light:   #b52020;
+  --accent-glow:    rgba(139,26,26,0.6);
+}</pre>
+    </div>
+
+    <h3>Typography Rules</h3>
+    <table class="spec-table">
+      <thead>
+        <tr>
+          <th>Element</th>
+          <th>Font</th>
+          <th>Size</th>
+          <th>Weight</th>
+          <th>Color</th>
+          <th>Additional</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>H1 (file title)</strong></td>
+          <td>Cinzel</td>
+          <td>clamp(22px, 4vw, 42px)</td>
+          <td>900</td>
+          <td>--gold-light</td>
+          <td>letter-spacing: 3px; text-shadow: 0 0 40px rgba(201,168,76,0.3)</td>
+        </tr>
+        <tr>
+          <td><strong>Phase title</strong></td>
+          <td>Cinzel</td>
+          <td>clamp(13px, 2vw, 17px)</td>
+          <td>600</td>
+          <td>--text</td>
+          <td>letter-spacing: 1px</td>
+        </tr>
+        <tr>
+          <td><strong>Phase number</strong></td>
+          <td>Cinzel</td>
+          <td>10px</td>
+          <td>400</td>
+          <td>--accent-light</td>
+          <td>letter-spacing: 3px; text-transform: uppercase</td>
+        </tr>
+        <tr>
+          <td><strong>Phase date</strong></td>
+          <td>Cinzel</td>
+          <td>11px</td>
+          <td>400</td>
+          <td>--gold</td>
+          <td>letter-spacing: 3px; opacity: 0.85</td>
+        </tr>
+        <tr>
+          <td><strong>Phase description</strong></td>
+          <td>Cormorant Garamond</td>
+          <td>12.5px</td>
+          <td>400</td>
+          <td>--text-dim</td>
+          <td>font-style: italic; line-height: 1.6</td>
+        </tr>
+        <tr>
+          <td><strong>Film item text</strong></td>
+          <td>Cormorant Garamond</td>
+          <td>13px</td>
+          <td>400</td>
+          <td>--text</td>
+          <td>font-style: italic</td>
+        </tr>
+        <tr>
+          <td><strong>Badge text</strong></td>
+          <td>Cinzel</td>
+          <td>8px</td>
+          <td>400</td>
+          <td>varies by type</td>
+          <td>letter-spacing: 2px; font-style: normal</td>
+        </tr>
+        <tr>
+          <td><strong>Parallel label</strong></td>
+          <td>Cinzel</td>
+          <td>9px</td>
+          <td>400</td>
+          <td>--gold</td>
+          <td>letter-spacing: 2px; opacity: 0.65</td>
+        </tr>
+        <tr>
+          <td><strong>Body / general</strong></td>
+          <td>Cormorant Garamond</td>
+          <td>base (inherited)</td>
+          <td>400</td>
+          <td>--text</td>
+          <td>line-height: 1.75</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>The Marble Background</h3>
+    <p>The background is not a flat color. It uses a <span class="inline-code">body::before</span> pseudo-element with two layered <span class="inline-code">repeating-linear-gradient</span>s at 105° and 75° to create a subtle marble vein texture. The gradients use <span class="inline-code">rgba(255,255,255,0.008)</span> and <span class="inline-code">rgba(255,255,255,0.005)</span> — extremely faint, almost invisible. The background color itself is <span class="inline-code">#0e0c0a</span> — a very dark warm brown-black, not pure black. This warmth is critical; pure black (#000000) makes the file feel sterile rather than historical.</p>
+
+    <div class="code-block">
+      <div class="code-label">Marble Texture (body::before)</div>
+      <pre>body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(
+      105deg,
+      transparent, transparent 40px,
+      rgba(255,255,255,0.008) 40px,
+      rgba(255,255,255,0.008) 41px
+    ),
+    repeating-linear-gradient(
+      75deg,
+      transparent, transparent 60px,
+      rgba(255,255,255,0.005) 60px,
+      rgba(255,255,255,0.005) 61px
+    );
+  pointer-events: none;
+  z-index: 0;
+}</pre>
+    </div>
+
+    <h3>The Central Trunk Line</h3>
+    <p>The vertical timeline line running down the center of every empire file is produced by a single <span class="inline-code">div.trunk</span> positioned absolutely within the <span class="inline-code">div.tree</span> container. It is 2px wide, centered at 50%, and uses a vertical linear gradient that fades from solid gold at the top to transparent at the bottom (at 85–90% of its height). Opacity of the trunk itself is set to 0.45–0.5. The gold trunk color is always <span class="inline-code">#c9a84c</span> — the empire accent color does NOT affect the trunk.</p>
+
+    <h3>Media Type Badges</h3>
+    <p>The five badge types are universal and identical across all empire files. Their colors are fixed and do not shift with the empire accent:</p>
+
+    <table class="spec-table">
+      <thead><tr><th>Badge</th><th>Label</th><th>Background</th><th>Text Color</th><th>Border</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="badge badge-film">FILM</span></td>
+          <td>Feature Film</td>
+          <td>rgba(139,26,26,0.4)</td>
+          <td>#e87070</td>
+          <td>rgba(139,26,26,0.5)</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-series">SERIES</span></td>
+          <td>TV Series</td>
+          <td>rgba(30,60,100,0.4)</td>
+          <td>#7ab0e8</td>
+          <td>rgba(30,60,100,0.5)</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-mini">MINI</span></td>
+          <td>Miniseries</td>
+          <td>rgba(40,90,60,0.4)</td>
+          <td>#7adfa0</td>
+          <td>rgba(40,90,60,0.5)</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-doc">DOC</span></td>
+          <td>Documentary</td>
+          <td>rgba(80,50,10,0.5)</td>
+          <td>#e8c070</td>
+          <td>rgba(150,100,20,0.4)</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-drama">DRAMA</span></td>
+          <td>Docudrama</td>
+          <td>rgba(70,30,100,0.45)</td>
+          <td>#c07ae8</td>
+          <td>rgba(100,40,140,0.5)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>The End Node (Finis)</h3>
+    <p>Every empire file ends with a crimson diamond (<span class="inline-code">div.end-diamond</span>) and the Latin phrase <em>FINIS [EMPIRE NAME]</em> in Cinzel. The diamond uses the empire's <strong>accent color</strong>, not Roman crimson. The end year is displayed below in large Cinzel 900 weight. This is the only element where the accent color replaces crimson explicitly.</p>
+  </div>
+
+  <div class="divider"><span class="divider-icon">✦ ✦ ✦</span></div>
+
+  <!-- ══════════════════ SECTION 5 ══════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">V</span>
+      <h2>Per-Empire Color Variation Rules</h2>
+    </div>
+
+    <p>Each empire file changes <strong>exactly three CSS variables</strong>: <span class="inline-code">--accent</span>, <span class="inline-code">--accent-light</span>, and <span class="inline-code">--accent-glow</span>. These replace the Roman crimson in phase numbers, the end node, and the spotlight border. Everything else — gold, marble, text, badges — is unchanged.</p>
+
+    <p>The accent color is chosen to evoke the empire's cultural identity and geography. It must be <strong>dark enough</strong> to work on the near-black marble background (minimum contrast 3:1 with <span class="inline-code">#0e0c0a</span>) and <strong>saturated enough</strong> to be visible as an accent without overwhelming the gold.</p>
+
+    <div class="empire-list">
+
+      <div class="empire-row">
+        <div class="empire-swatch" style="background:#8b1a1a;"></div>
+        <div class="empire-name">Rome / Byzantine</div>
+        <div class="empire-palette">
+          <div class="empire-dot" style="background:#8b1a1a;" title="#8b1a1a"></div>
+          <div class="empire-dot" style="background:#b52020;" title="#b52020"></div>
+        </div>
+        <div class="empire-dates">Crimson red</div>
+      </div>
+
+      <div class="empire-row">
+        <div class="empire-swatch" style="background:#1a6b6b;"></div>
+        <div class="empire-name">Egyptian Empire</div>
+        <div class="empire-palette">
+          <div class="empire-dot" style="background:#1a6b6b;" title="#1a6b6b"></div>
+          <div class="empire-dot" style="background:#25a0a0;" title="#25a0a0"></div>
+        </div>
+        <div class="empire-dates">Nile turquoise</div>
+      </div>
+
+      <div class="empire-row">
+        <div class="empire-swatch" style="background:#5a2080;"></div>
+        <div class="empire-name">Achaemenid Persian</div>
+        <div class="empire-palette">
+          <div class="empire-dot" style="background:#5a2080;" title="#5a2080"></div>
+          <div class="empire-dot" style="background:#8040b0;" title="#8040b0"></div>
+        </div>
+        <div class="empire-dates">Royal amethyst</div>
+      </div>
+
+      <div class="empire-row">
+        <div class="empire-swatch" style="background:#2a3d8b;"></div>
+        <div class="empire-name">Macedonian / Alexandrian</div>
+        <div class="empire-palette">
+          <div class="empire-dot" style="background:#2a3d8b;" title="#2a3d8b"></div>
+          <div class="empire-dot" style="background:#4060c8;" title="#4060c8"></div>
+        </div>
+        <div class="empire-dates">Macedonian blue</div>
+      </div>
+
+      <div class="empire-row">
+        <div class="empire-swatch" style="background:#8b4500;"></div>
+        <div class="empire-name">Maurya Empire (India)</div>
+        <div class="empire-palette">
+          <div class="empire-dot" style="background:#8b4500;" title="#8b4500"></div>
+          <div class="empire-dot" style="background:#c06010;" title="#c06010"></div>
+        </div>
+        <div class="empire-dates">Saffron amber</div>
+      </div>
+
+      <div class="empire-row">
+        <div class="empire-swatch" style="background:#8b0000;"></div>
+        <div class="empire-name">Han Dynasty (China)</div>
+        <div class="empire-palette">
+          <div class="empire-dot" style="background:#8b0000;" title="#8b0000"></div>
+          <div class="empire-dot" style="background:#c01010;" title="#c01010"></div>
+        </div>
+        <div class="empire-dates">Imperial vermilion</div>
+      </div>
+
+      <div class="empire-row">
+        <div class="empire-swatch" style="background:#2a5080;"></div>
+        <div class="empire-name">Viking / Norse Age</div>
+        <div class="empire-palette">
+          <div class="empire-dot" style="background:#2a5080;" title="#2a5080"></div>
+          <div class="empire-dot" style="background:#4080b0;" title="#4080b0"></div>
+        </div>
+        <div class="empire-dates">North sea steel-blue</div>
+      </div>
+
+      <div class="empire-row">
+        <div class="empire-swatch" style="background:#1a5c35;"></div>
+        <div class="empire-name">Islamic Caliphates</div>
+        <div class="empire-palette">
+          <div class="empire-dot" style="background:#1a5c35;" title="#1a5c35"></div>
+          <div class="empire-dot" style="background:#267a4a;" title="#267a4a"></div>
+        </div>
+        <div class="empire-dates">Caliphate green</div>
+      </div>
+
+      <div class="empire-row">
+        <div class="empire-swatch" style="background:#6b3010;"></div>
+        <div class="empire-name">Mongol Empire</div>
+        <div class="empire-palette">
+          <div class="empire-dot" style="background:#6b3010;" title="#6b3010"></div>
+          <div class="empire-dot" style="background:#9a4818;" title="#9a4818"></div>
+        </div>
+        <div class="empire-dates">Steppe earth-brown</div>
+      </div>
+
+      <div class="empire-row">
+        <div class="empire-swatch" style="background:#8b1a2a;"></div>
+        <div class="empire-name">Ottoman Empire</div>
+        <div class="empire-palette">
+          <div class="empire-dot" style="background:#8b1a2a;" title="#8b1a2a"></div>
+          <div class="empire-dot" style="background:#c02040;" title="#c02040"></div>
+        </div>
+        <div class="empire-dates">Ottoman rose-crimson</div>
+      </div>
+
+      <div class="empire-row">
+        <div class="empire-swatch" style="background:#8b6010;"></div>
+        <div class="empire-name">Spanish Empire</div>
+        <div class="empire-palette">
+          <div class="empire-dot" style="background:#8b6010;" title="#8b6010"></div>
+          <div class="empire-dot" style="background:#c08820;" title="#c08820"></div>
+        </div>
+        <div class="empire-dates">Castilian gold-ochre</div>
+      </div>
+
+      <div class="empire-row">
+        <div class="empire-swatch" style="background:#5a1a60;"></div>
+        <div class="empire-name">Mughal Empire</div>
+        <div class="empire-palette">
+          <div class="empire-dot" style="background:#5a1a60;" title="#5a1a60"></div>
+          <div class="empire-dot" style="background:#802888;" title="#802888"></div>
+        </div>
+        <div class="empire-dates">Mughal violet</div>
+      </div>
+
+      <div class="empire-row">
+        <div class="empire-swatch" style="background:#1a3a6b;"></div>
+        <div class="empire-name">British Empire</div>
+        <div class="empire-palette">
+          <div class="empire-dot" style="background:#1a3a6b;" title="#1a3a6b"></div>
+          <div class="empire-dot" style="background:#2855a0;" title="#2855a0"></div>
+        </div>
+        <div class="empire-dates">Royal navy blue</div>
+      </div>
+
+      <div class="empire-row">
+        <div class="empire-swatch" style="background:#6b1a1a;"></div>
+        <div class="empire-name">Russian Empire</div>
+        <div class="empire-palette">
+          <div class="empire-dot" style="background:#6b1a1a;" title="#6b1a1a"></div>
+          <div class="empire-dot" style="background:#982525;" title="#982525"></div>
+        </div>
+        <div class="empire-dates">Romanov deep crimson</div>
+      </div>
+
+      <div class="empire-row">
+        <div class="empire-swatch" style="background:#1a2870;"></div>
+        <div class="empire-name">Napoleon's French Empire</div>
+        <div class="empire-palette">
+          <div class="empire-dot" style="background:#1a2870;" title="#1a2870"></div>
+          <div class="empire-dot" style="background:#2840a8;" title="#2840a8"></div>
+        </div>
+        <div class="empire-dates">Imperial Napoleonic blue</div>
+      </div>
+
+      <div class="empire-row">
+        <div class="empire-swatch" style="background:#6b1a00;"></div>
+        <div class="empire-name">Japanese Imperial Age</div>
+        <div class="empire-palette">
+          <div class="empire-dot" style="background:#6b1a00;" title="#6b1a00"></div>
+          <div class="empire-dot" style="background:#a02800;" title="#a02800"></div>
+        </div>
+        <div class="empire-dates">Rising sun red-vermilion</div>
+      </div>
+
+    </div>
+
+    <h3>How to Apply the Accent Color</h3>
+    <p>In the <span class="inline-code">:root</span> of each empire file, override only these three variables after the base palette block:</p>
+    <div class="code-block">
+      <div class="code-label">Empire accent override — example for Egypt</div>
+      <pre>/* Add this block after the base :root block */
+:root {
+  --accent:       #1a6b6b;   /* Nile turquoise */
+  --accent-light: #25a0a0;
+  --accent-glow:  rgba(26,107,107,0.6);
+}
+
+/* Then use --accent everywhere the Roman files used --crimson */
+/* Specifically in: .phase-num, .end-diamond, .spotlight borders */</pre>
+    </div>
+
+    <div class="callout callout-rule">
+      <strong>Important:</strong> The gold color (<span class="inline-code">--gold: #c9a84c</span>) must never be replaced with the empire accent. Gold is the universal language of history in this project. The accent is a secondary color only — used for phase numbers, the end node, and spotlight dividers. The film badge colors are also completely fixed and do not change per empire.
+    </div>
+  </div>
+
+  <div class="divider"><span class="divider-icon">✦ ✦ ✦</span></div>
+
+  <!-- ══════════════════ SECTION 6 ══════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">VI</span>
+      <h2>The Hub File — Main Empires Tree (index.html)</h2>
+    </div>
+
+    <p>The hub is a single-page HTML file using the same marble-dark aesthetic as the empire files. It displays all empires as a visual chronological tree, organized into three visual lanes:</p>
+
+    <h3>Three-Lane Structure</h3>
+    <p><strong>Lane 1 (Center-Left, amber nodes):</strong> The main succession trunk. These are empires that directly conquered, replaced, or inherited the previous one's dominant world-region. The main Western trunk runs: Egypt → Persia → Rome → Byzantine → Ottoman. The main Eastern trunk runs: Maurya → Han → Mongol → Mughal. These are amber-colored nodes connected by a vertical gold line.</p>
+
+    <p><strong>Lane 2 (Right, purple nodes, solid connector):</strong> Forks and successor states. Empires that split off from, claimed succession to, or emerged directly from a trunk empire. Examples: Macedonian (forked from the Persian world), Holy Roman Empire (claimed Roman succession), Napoleon's Empire (claimed Carolingian/Roman succession). Connected to their parent trunk node by a solid purple horizontal branch.</p>
+
+    <p><strong>Lane 3 (Far-Right, teal nodes, dashed connector):</strong> Concurrent but independent empires. Civilizations that rose and fell in parallel with a trunk empire, on different continents, with no direct succession claim. Examples: Han Dynasty (contemporary with Rome), Viking Age (contemporary with Byzantine), Japanese Imperial Age (contemporary with the British Empire). Connected to the trunk at their chronological starting point by a dashed teal horizontal branch.</p>
+
+    <h3>Node Content on the Hub</h3>
+    <p>Each empire node on the hub displays: Empire name (Cinzel, 13px, font-weight 600), date range (Cormorant Garamond, 11px, italic), relationship type (for fork/concurrent nodes: "fork · dates" or "concurrent · dates"), and — once the empire file is built — a clickable link to that file. Unbuilt empire files show the node as slightly dimmed (opacity: 0.5) with no link, and the text "(forthcoming)" in muted gold.</p>
+
+    <h3>Hub Header</h3>
+    <p>The hub header reads: ornament line → H1 "EMPIRES OF HISTORY / IN FILM &amp; SERIES" → subtitle "A complete cinematic atlas, from earliest kingdoms to modern empires" → date range "1550 BC — 1945 AD" (or appropriate range for the included empires).</p>
+
+    <h3>Hub Legend</h3>
+    <p>A legend at the bottom of the hub explains the three node types and two connector types. It uses the same format as the legend in individual empire files (inline flex, small badges).</p>
+
+    <h3>Hub Does NOT Contain Phase Content</h3>
+    <div class="callout callout-warn">
+      <strong>The hub contains NO film listings, NO phase descriptions, NO character spotlights.</strong> The hub is purely a navigational map. All detailed content lives in the individual empire files. The hub's only job is to show the relationships between empires and link to each empire's file.
+    </div>
+  </div>
+
+  <div class="divider"><span class="divider-icon">✦ ✦ ✦</span></div>
+
+  <!-- ══════════════════ SECTION 7 ══════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">VII</span>
+      <h2>Individual Empire Timeline File Structure</h2>
+    </div>
+
+    <p>Every empire file follows this exact structure from top to bottom. Do not reorder or skip any section.</p>
+
+    <ol class="step-list">
+      <li><strong>DOCTYPE, meta, title, font import</strong> — Standard HTML5 boilerplate. Title format: <em>"[Empire Name] — The Complete Cinematic History"</em>.</li>
+      <li><strong>&lt;style&gt; block</strong> — Complete CSS, entirely self-contained. Base :root variables, then empire accent override, then all component styles. See Section XII for the exact boilerplate.</li>
+      <li><strong>Header</strong> — Ornament line, back-link to hub, H1 title, subtitle, header-line with date range.</li>
+      <li><strong>Tree container (div.tree)</strong> — Contains the trunk line (div.trunk) and all phase nodes.</li>
+      <li><strong>Phase nodes</strong> — Alternating left-right. Odd phases go left, even phases go right. Each phase contains: phase number, date, title, description, film list, optional spotlight, optional parallel label. See Section VIII for exact anatomy.</li>
+      <li><strong>Era dividers (optional)</strong> — Between major historical periods (e.g., "Kingdom → Republic → Empire" transitions), a centered horizontal divider with a label can be inserted. This is a decorative separator, not a phase node. Use sparingly — maximum 3–4 per file.</li>
+      <li><strong>End node (div.end-node)</strong> — Diamond shape in accent color, FINIS label in Latin, final year in large Cinzel 900. The Latin phrase follows the format: <em>"FINIS [EMPIRE IN GENITIVE LATIN]"</em>. For empires where a Latin phrase is inappropriate (e.g., Mongol, Japanese), use <em>"THE [EMPIRE NAME] FALLS"</em> in Cinzel caps.</li>
+      <li><strong>Legend</strong> — The five badge types plus the ⟡ parallel/optional note. Always centered, always at the bottom.</li>
+    </ol>
+
+    <h3>Phase Count Guidelines</h3>
+    <table class="spec-table">
+      <thead><tr><th>Empire</th><th>Duration</th><th>Approx. Phases</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Rome</strong></td><td>~2,200 years</td><td>22</td><td>Already built — the reference</td></tr>
+        <tr><td><strong>Egypt</strong></td><td>~3,000 years</td><td>14–18</td><td>Heavy consolidation needed; eras are long</td></tr>
+        <tr><td><strong>Ottoman</strong></td><td>~623 years</td><td>10–14</td><td>Rich Turkish media; many phases have 4–6 items</td></tr>
+        <tr><td><strong>British</strong></td><td>~414 years</td><td>16–20</td><td>Deepest coverage — most phases needed</td></tr>
+        <tr><td><strong>Mongol</strong></td><td>~162 years</td><td>6–8</td><td>Short but intense; limited media</td></tr>
+        <tr><td><strong>Macedonian</strong></td><td>~13 years</td><td>4–6</td><td>Very short — Alexander's life is the empire</td></tr>
+        <tr><td><strong>Napoleon</strong></td><td>~11 years</td><td>6–8</td><td>Dense military coverage; rich media</td></tr>
+        <tr><td><strong>Viking</strong></td><td>~307 years</td><td>8–10</td><td>Excellent modern series coverage</td></tr>
+      </tbody>
+    </table>
+
+    <h3>The Alternating Layout — The Single Most Important Rule</h3>
+    <p>Odd-numbered phases (Phase I, III, V…) place their content block on the LEFT side of the trunk. The <span class="inline-code">flex-direction</span> for odd phases is <span class="inline-code">row</span>. Even-numbered phases (Phase II, IV, VI…) place their content block on the RIGHT side. The <span class="inline-code">flex-direction</span> for even phases is <span class="inline-code">row-reverse</span>. This is enforced by the CSS selectors <span class="inline-code">.phase:nth-child(odd)</span> and <span class="inline-code">.phase:nth-child(even)</span>. The trunk-node dot is always centered at 50% regardless of which side the content is on.</p>
+
+    <div class="callout callout-warn">
+      <strong>Critical:</strong> When odd phases have text-align: right and even phases have text-align: left, the film item list alignment must match. Odd phases' <span class="inline-code">.films</span> use <span class="inline-code">align-items: flex-end</span>. Even phases use <span class="inline-code">align-items: flex-start</span>. This ensures film cards align to the trunk side, not the outer margin.
+    </div>
+  </div>
+
+  <div class="divider"><span class="divider-icon">✦ ✦ ✦</span></div>
+
+  <!-- ══════════════════ SECTION 8 ══════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">VIII</span>
+      <h2>Phase Anatomy — How Each Node is Built</h2>
+    </div>
+
+    <p>A phase node is the core repeating unit of every empire file. Here is a visual breakdown of every element within one phase, in order:</p>
+
+    <div class="phase-example">
+      <div class="pex-num">Phase VII</div>
+      <div class="pex-date">49 – 44 BC</div>
+      <div class="pex-title">Caesar's Civil War &amp; Dictatorship</div>
+      <div class="pex-desc">Caesar vs Pompey · Battle of Pharsalus · Cleopatra in Alexandria · Ides of March · 23 stab wounds</div>
+      <div>
+        <span class="pex-film"><span class="badge badge-series">SERIES</span> Rome — Season 1, Eps. 5–12 (2005)</span>
+        <span class="pex-film"><span class="badge badge-film">FILM</span> Julius Caesar (1953) — Marlon Brando</span>
+        <span class="pex-film"><span class="badge badge-film">FILM</span> Cleopatra (1963) ⟡ parallel</span>
+      </div>
+    </div>
+
+    <h3>The Seven Elements of a Phase</h3>
+
+    <h4>1. Phase Number (div.phase-num)</h4>
+    <p>Format: "Phase I", "Phase II" etc. using Roman numerals. Cinzel, 10px, --accent-light color, letter-spacing 3px, uppercase. This is where the empire accent color appears most visibly.</p>
+
+    <h4>2. Phase Date (div.phase-date)</h4>
+    <p>The historical date range in gold. Format options: "753 BC", "509 – 27 BC", "27 BC – 14 AD", "1299 AD". Always use the format "[start] – [end]" for ranges. Never use "CE" or "BCE" — always "BC" and "AD". Cinzel, 11px, --gold.</p>
+
+    <h4>3. Phase Title (div.phase-title)</h4>
+    <p>A short, evocative name for the historical period. 3–7 words. Cinzel, 600 weight. Should be memorable and specific — not "Roman Expansion" but "Rome Becomes a Superpower". These titles are how users navigate and remember the timeline.</p>
+
+    <h4>4. Phase Description (div.phase-desc)</h4>
+    <p>A dense, dot-separated summary of the key events, people, and themes of this period. Format: "Person · event · outcome · context". Maximum 2 lines. Cormorant Garamond, 12.5px, italic, --text-dim color. This is the historical briefing that tells the reader WHY this period matters before they watch anything.</p>
+
+    <h4>5. Film List (div.films)</h4>
+    <p>One <span class="inline-code">div.film-item</span> per entry. Each film item contains: a badge (FILM/SERIES/MINI/DOC/DRAMA) followed by the title, year, and key cast note. Optional: a ⟡ symbol indicating a parallel/optional watch. Maximum ~8 items per phase (if more, split the phase). Always list in recommended watch order, not release year order. Items that are optional are given the class <span class="inline-code">type-optional</span> (reduced opacity).</p>
+
+    <h4>6. Parallel Label (div.parallel-label) — Optional</h4>
+    <p>Lines beginning with ⟡ that give watch-order instructions, parallel viewing notes, or accuracy warnings. Cinzel, 9px, --gold, opacity 0.65. Each line is a separate instruction. Never more than 5 lines. Examples: "⟡ Watch X before Y — it covers the earlier events" or "⟡ Watch X and Y simultaneously — they cover the same battle from different sides".</p>
+
+    <h4>7. Character Spotlight (div.spotlight) — Optional</h4>
+    <p>A box with a colored accent border (right side for left-aligned phases, left side for right-aligned phases) that spotlights one major character from this phase. Contains: spotlight label with an emoji prefix and character name, a 2–4 sentence explanation of why this character matters and which performance is best, and optionally a sub-list of 2–3 specific film items showing the best portrayals. Used for historically consequential figures who appear across multiple films or whose portrayal varies dramatically.</p>
+
+    <div class="callout callout-teal">
+      <strong>Spotlight Rule:</strong> Not every phase needs a spotlight. Spotlights are reserved for figures of exceptional historical importance where the <em>choice of which film to watch first</em> genuinely matters. Every empire file should have roughly 3–6 spotlights total — one for the founder, one for the empire's peak figure, one for the fall figure. Do not add a spotlight for minor characters.
+    </div>
+
+    <h3>Film Item Content Format</h3>
+    <p>Every film item entry follows this exact content format inside the <span class="inline-code">div.film-item</span>:</p>
+    <div class="code-block">
+      <div class="code-label">Film item content format</div>
+      <pre>[BADGE] Title (Year) — Key cast or distinguishing note [optional: ⟡ parallel]
+
+Examples:
+[SERIES] Rome — Season 1, Eps. 1–4 (2005) — Pullo &amp; Vorenus as witnesses
+[FILM]   Julius Caesar (1953) — Marlon Brando as Mark Antony
+[MINI]   Hannibal (2005) — Alexander Siddig; most accurate treatment
+[DOC]    Byzantium: The Lost Empire — Eps. 1–2 (1997)
+[DRAMA]  Barbarians Rising — Attila episodes (2016) ⟡ parallel</pre>
+    </div>
+  </div>
+
+  <div class="divider"><span class="divider-icon">✦ ✦ ✦</span></div>
+
+  <!-- ══════════════════ SECTION 9 ══════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">IX</span>
+      <h2>Research Methodology — How to Find &amp; Verify Media</h2>
+    </div>
+
+    <p>This is the most critical section of the entire document. The quality of the project depends entirely on the accuracy and completeness of the media listed. Follow this exact research process for every empire.</p>
+
+    <h3>Step 1 — Define the Historical Skeleton</h3>
+    <p>Before searching for any media, write out the complete list of historical phases for the empire (as described in Section VIII). Know the key dates, key figures, and key events. This skeleton is built from historical knowledge, not from media searches. The phases are determined by history; the media is then mapped onto those phases. <strong>Never build phases around the media you happen to find.</strong></p>
+
+    <h3>Step 2 — Primary Media Search Queries</h3>
+    <p>Run web searches for each of the following query types. All searches should specify the empire name explicitly:</p>
+
+    <table class="spec-table">
+      <thead><tr><th>Query Type</th><th>Example Query</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Overview query</strong></td>
+          <td>"best movies TV series [empire] history complete list"</td>
+          <td>Gets the major known titles quickly</td>
+        </tr>
+        <tr>
+          <td><strong>Period-specific query</strong></td>
+          <td>"films about [specific figure or event] [empire]"</td>
+          <td>Finds media for specific phases with thin coverage</td>
+        </tr>
+        <tr>
+          <td><strong>Non-English media query</strong></td>
+          <td>"[native language] TV series [empire name in native language]"</td>
+          <td>Finds Turkish, Chinese, Indian, Japanese productions</td>
+        </tr>
+        <tr>
+          <td><strong>Documentary query</strong></td>
+          <td>"BBC documentary [empire] history" / "Netflix documentary [empire]"</td>
+          <td>Fills gaps where drama coverage is thin</td>
+        </tr>
+        <tr>
+          <td><strong>Accuracy check query</strong></td>
+          <td>"most historically accurate [empire] films"</td>
+          <td>Confirms which entries are defensible recommendations</td>
+        </tr>
+        <tr>
+          <td><strong>Gap-filling query</strong></td>
+          <td>"films set in [specific century/reign period]"</td>
+          <td>Addresses phases with no obvious media match</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Step 3 — Verification Rules</h3>
+    <p>Before including any media item, verify all three of the following:</p>
+    <ol class="step-list">
+      <li><strong>The media actually exists.</strong> Confirm title, year, and that it was actually produced. Do not include announced-but-not-produced projects or incorrectly remembered titles.</li>
+      <li><strong>The media actually covers the claimed period.</strong> A film listed under "Phase V — 73 BC" must genuinely be set in that era. If a film is set across multiple phases, list it only in the phase where it begins, with a note that it spans forward.</li>
+      <li><strong>The media is findable by a general audience.</strong> It must be available on a major streaming platform, purchasable digitally, or available on DVD. Do not list obscure films that cannot be accessed. Italian peplum films are acceptable as optional items since many are on YouTube, but must be flagged as such.</li>
+    </ol>
+
+    <h3>Step 4 — Handling Media Gaps</h3>
+    <p>Some historical phases have no drama or film coverage. This is expected and must be handled honestly:</p>
+    <ul style="padding-left: 24px; font-size: 15px; color: var(--text-dim); line-height: 2;">
+      <li>First, check if there is a documentary that covers the period. BBC, National Geographic, and History Channel have broad historical coverage.</li>
+      <li>If no documentary exists, check for a relevant episode of a documentary series (e.g., Mary Beard's Rome, Civilisations, etc.).</li>
+      <li>If still nothing, mark the phase with the note "⟡ No major drama covers this era — documentary bridge recommended" and suggest the best available background resource.</li>
+      <li><strong>Never invent or fabricate media entries.</strong> A gap is better than a false entry.</li>
+    </ul>
+
+    <h3>Step 5 — Non-Western Media Rules</h3>
+    <p>For empires outside the Western European tradition, the research must include native-language productions. The Ottoman, Mongol, Mughal, Han, Japanese, and Islamic files must each contain a meaningful proportion of media produced in the empire's home culture:</p>
+    <ul style="padding-left: 24px; font-size: 15px; color: var(--text-dim); line-height: 2;">
+      <li><strong>Ottoman:</strong> Turkish series (Diriliş: Ertuğrul, Muhteşem Yüzyıl/Magnificent Century, Rise of Empires: Ottoman)</li>
+      <li><strong>Mongol:</strong> Mongolian film Genghis Khan (2012), Chinese co-productions, Sergei Bodrov's Mongol (2007)</li>
+      <li><strong>Mughal:</strong> Bollywood productions (Mughal-E-Azam, Jodhaa Akbar, Bajirao Mastani)</li>
+      <li><strong>Han/Chinese:</strong> Chinese historical dramas (Hero, House of Flying Daggers era, Three Kingdoms series)</li>
+      <li><strong>Japanese:</strong> Akira Kurosawa's complete filmography plus modern NHK Taiga dramas</li>
+    </ul>
+
+    <h3>Step 6 — Watch Order Logic</h3>
+    <p>Within each phase, items are listed in <strong>recommended watch order</strong>, not chronological release order. The rules for determining watch order are:</p>
+    <ol class="step-list">
+      <li>Any series that begins before the phase's start date but overlaps into it goes first.</li>
+      <li>The primary narrative item (usually the most accurate or most comprehensive) goes first.</li>
+      <li>Parallel items (items covering the same events from a different perspective) are listed after the primary, with a ⟡ note.</li>
+      <li>Optional items (lower accuracy, or covering a minor sub-event) go last and use the <span class="inline-code">type-optional</span> class.</li>
+      <li>Documentaries always go after dramas within the same phase, unless they serve as an essential historical briefing that should be watched before the drama to understand context.</li>
+    </ol>
+  </div>
+
+  <div class="divider"><span class="divider-icon">✦ ✦ ✦</span></div>
+
+  <!-- ══════════════════ SECTION 10 ══════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">X</span>
+      <h2>The 18 Empires — Individual Build Briefs</h2>
+    </div>
+
+    <p>Brief notes for each empire file. These are the key facts the builder needs before beginning research, including the critical media anchors (the 1–3 most important media items that form the backbone of each file) and the known coverage gaps.</p>
+
+    <h3>Egypt (egypt.html)</h3>
+    <p><strong>Dates:</strong> New Kingdom ~1550 BC – Cleopatra's death 30 BC (after which Egypt becomes a Roman province). <strong>Accent:</strong> Nile turquoise (#1a6b6b). <strong>Key phases:</strong> New Kingdom glory (Ramesses II), Third Intermediate Period decline, Ptolemaic Greek dynasty, Cleopatra. <strong>Media anchors:</strong> The Ten Commandments (1956), Pharaoh (1966, Polish), Nefertiti: Daughter of the Sun (1994). <strong>Gap:</strong> The Amarna period (Akhenaten/Nefertiti) has minimal dramatization — use documentaries. Cross-reference Rome file: the Cleopatra phases overlap and files should direct viewers to each other.</p>
+
+    <h3>Persia (persia.html)</h3>
+    <p><strong>Dates:</strong> Achaemenid ~550–330 BC. <strong>Accent:</strong> Royal amethyst (#5a2080). <strong>Key phases:</strong> Cyrus the Great's rise, Darius and Xerxes' Greek Wars, Alexander's conquest. <strong>Media anchors:</strong> 300 (2007), 300: Rise of an Empire (2014), One Night with the King (2006 — Esther/Xerxes). <strong>Note:</strong> Persian films are told primarily through the enemies' eyes (Greek films). Must include Persian-sympathetic context via documentaries (BBC's Persian Empire series). The empire's foundation by Cyrus has almost no screen coverage — gap to flag.</p>
+
+    <h3>Macedonian / Alexander (macedon.html)</h3>
+    <p><strong>Dates:</strong> 336–323 BC (Alexander's reign). Can include Philip II buildup from ~359 BC. <strong>Accent:</strong> Macedonian blue (#2a3d8b). <strong>Key phases:</strong> Philip II unifying Greece, Alexander's campaigns (Persia, Egypt, India), Alexander's death and the Wars of the Diadochi. <strong>Media anchors:</strong> Alexander (2004, Oliver Stone — use Director's Cut), Alexander the Great (1956 — Richard Burton). <strong>Note:</strong> This is a short file — 4–6 phases maximum. Alexander's life IS the empire. Diadochi wars that follow are briefly covered in a final phase before transitioning out.</p>
+
+    <h3>Ottoman (ottoman.html)</h3>
+    <p><strong>Dates:</strong> 1299–1922 AD. <strong>Accent:</strong> Ottoman rose-crimson (#8b1a2a). <strong>Key phases:</strong> Osman's founding, Mehmed II conquers Constantinople (1453), Suleiman the Magnificent's golden age, Decline and Tanzimat reforms, WWI and the fall. <strong>Media anchors:</strong> Rise of Empires: Ottoman (Netflix, 2020), Muhteşem Yüzyıl/Magnificent Century (Turkish, 4 seasons), Diriliş: Ertuğrul (for the pre-empire founding period). <strong>Note:</strong> This file connects directly to the Rome file — the Phase XXII Fall of Constantinople is shared content. Link the two files explicitly in the Ottoman founding phase and the Rome final phase.</p>
+
+    <h3>Viking (viking.html)</h3>
+    <p><strong>Dates:</strong> ~793–1066 AD (Viking Age). <strong>Accent:</strong> North sea steel-blue (#2a5080). <strong>Key phases:</strong> First raids (Lindisfarne 793), Ragnar Lothbrok era, Rollo and Normandy, The Great Heathen Army, Harald Hardrada and 1066. <strong>Media anchors:</strong> Vikings (History Channel, 6 seasons — the backbone of this file), The Last Kingdom (5 seasons — Anglo-Saxon side of same story), Norsemen (Norwegian comedy — optional). <strong>Note:</strong> Vikings and The Last Kingdom cover nearly identical periods from different perspectives — they are the definitive parallel-viewing pair of the entire project. Must direct viewers to watch them interleaved.</p>
+
+    <h3>Mongol (mongol.html)</h3>
+    <p><strong>Dates:</strong> 1206–1368 AD. <strong>Accent:</strong> Steppe earth-brown (#6b3010). <strong>Key phases:</strong> Temüjin's early life, Genghis Khan unifying the steppes, conquest of China/Persia/Europe, Kublai Khan and the Yuan Dynasty, fragmentation. <strong>Media anchors:</strong> Mongol (2007, Sergei Bodrov — Genghis youth), Marco Polo (Netflix, 2 seasons — Kublai Khan era), The Story of the Mongols (various docs). <strong>Note:</strong> Western media is very thin for this empire. Must lean heavily on documentaries and the Bodrov film. Marco Polo (Netflix) is well-produced but covers only the Kublai era — flag this limitation clearly.</p>
+
+    <h3>British (british.html)</h3>
+    <p><strong>Dates:</strong> ~1583–1997 AD (Elizabeth I's charters to Hong Kong handover). <strong>Accent:</strong> Royal navy blue (#1a3a6b). <strong>Key phases:</strong> Elizabethan foundation, East India Company, American colonies, Raj India, Victorian expansion, Boer War, WWI, WWII, independence movements, Suez, decolonization. <strong>Media anchors:</strong> The Crown (Netflix, 6 seasons — modern era), Victoria (ITV, 3 seasons — Victorian era), India — A History/The Jewel in the Crown (Raj), Shogun (adjacent context). <strong>Note:</strong> This is the longest file. Must cover both the domestic British story (monarchy, politics) and the colonial story (from the perspective of colonized peoples). Films like Gandhi (1982), Zulu (1964), and Michael Collins (1996) give non-British perspectives and must be included.</p>
+
+    <h3>Napoleon (napoleon.html)</h3>
+    <p><strong>Dates:</strong> 1804–1815 AD (First French Empire). Can include Revolutionary period from 1789 as Phase I. <strong>Accent:</strong> Imperial Napoleonic blue (#1a2870). <strong>Key phases:</strong> French Revolution context, Napoleon's rise as First Consul, the Empire proclaimed, European campaigns (Austerlitz, Jena, Wagram), Russia 1812, Leipzig/Waterloo, exile and death. <strong>Media anchors:</strong> Napoleon (2023, Ridley Scott — despite inaccuracies, the primary modern reference), Waterloo (1970 — Rod Steiger, the best battle film), Napoleon (1955 — Raymond Pellegrin, French production), War and Peace (1956 and 1966 Soviet version). <strong>Note:</strong> The 2023 Ridley Scott Napoleon is controversial for accuracy but is now the entry point for most viewers. Place it as primary, add accuracy caveats, then recommend Waterloo (1970) and the Soviet War and Peace as corrective parallels.</p>
+
+    <h3>Japanese Imperial (japanese.html)</h3>
+    <p><strong>Dates:</strong> Edo Period 1600 through Imperial Japan to 1945 surrender. <strong>Accent:</strong> Rising sun red-vermilion (#6b1a00). <strong>Key phases:</strong> Sengoku period ending, Tokugawa Shogunate, Perry's Black Ships and the opening of Japan, Meiji Restoration, Sino-Japanese War, Russo-Japanese War, Showa era and WWII. <strong>Media anchors:</strong> Kurosawa's full samurai filmography (Seven Samurai, Rashomon, Ran, Kagemusha), Shogun (1980 miniseries and 2024 remake), Empire of the Sun (1987), Grave of the Fireflies (1988). <strong>Note:</strong> This file must be split into two eras: Feudal Japan (pre-1868) as a long first half and Meiji/Imperial Japan (1868–1945) as the second half. These are culturally very different periods and the media reflects this completely.</p>
+  </div>
+
+  <div class="divider"><span class="divider-icon">✦ ✦ ✦</span></div>
+
+  <!-- ══════════════════ SECTION 11 ══════════════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num">XI</span>
+      <h2>Quality Rules &amp; Accuracy Standards</h2>
+    </div>
+
+    <div class="rule-box">
+      <div class="rule-title">The 8 Unbreakable Rules</div>
+      <ul>
+        <li><strong>Never invent media.</strong> Every film, series, or documentary listed must actually exist and be verifiable. If uncertain, search before including.</li>
+        <li><strong>Never list a film under a period it does not cover.</strong> Historical setting must match the phase date. Verify before listing.</li>
+        <li><strong>Always include the year.</strong> Every media entry must include the production year in parentheses. This prevents confusion between remakes (e.g., Spartacus 1960 vs the Starz series).</li>
+        <li><strong>Mark parallels explicitly.</strong> Any item that covers the same events as another item in the same phase must be marked ⟡ parallel in the film item text and explained in the parallel-label below.</li>
+        <li><strong>Always give a watch-order rationale.</strong> For each phase with more than 2 items, the parallel-label must explain WHY items are in the listed order. Users need to know which to watch first and why.</li>
+        <li><strong>Never recommend an inaccessible film as primary.</strong> If the best film for a period is extremely rare, list it as optional and recommend a more accessible alternative as primary.</li>
+        <li><strong>Be honest about accuracy.</strong> If a film is well-known but historically inaccurate, say so in the parallel-label. Example: "⟡ Gladiator (2000) takes creative liberty with the timeline but captures the spirit correctly."</li>
+        <li><strong>Include non-Western perspectives wherever they exist.</strong> For every empire that is sometimes portrayed as "the enemy" in Western films (Persia in 300, Mongols in countless films), find media that shows their own perspective and include it.</li>
+      </ul>
+    </div>
+
+    <h3>What Counts as "Adequate Media Coverage"</h3>
+    <p>An empire qualifies for inclusion in this project only if it has at least <strong>8 distinct media items</strong> across its timeline. These 8 items can include documentaries and non-English productions. Empires with fewer than 8 items are too thinly covered to build a satisfying timeline and should be noted in the hub as "insufficient coverage" rather than given a dedicated file.</p>
+
+    <h3>Handling Controversial or Explicit Content</h3>
+    <p>Some historically significant films contain explicit violence or adult content (e.g., Caligula 1979, certain gladiatorial films). These must be included because they are part of the honest cinematic record, but must be flagged with a ⚠ warning symbol inline and noted as "explicit content" in the parallel-label. The warning symbol appears directly after the film title in the film-item text.</p>
+  </div>
+
+  <div class="divider"><span class="divider-icon">✦ ✦ ✦</span></div>
+
+  <!-- ══════════════════ SECTION 12 ══════════════════ -->
+  <div class="section" id="s12">
+    <div class="section-header">
+      <span class="section-num">XII</span>
+      <h2>Exact HTML Boilerplate Templates</h2>
+    </div>
+
+    <h3>Empire File — Complete Shell Template</h3>
+    <p>Copy this exactly for every new empire file. Replace all [BRACKETED] values. Do not alter any other part of the structure.</p>
+
+    <div class="code-block">
+      <div class="code-label">Empire File Shell (replace all [BRACKETED] values)</div>
+      <pre>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+&lt;title&gt;[EMPIRE NAME] — The Complete Cinematic History&lt;/title&gt;
+&lt;link href="https://fonts.googleapis.com/css2?family=Cinzel:wght
+  @400;600;900&amp;family=Cormorant+Garamond:ital,wght@0,300;0,400;
+  0,600;1,300;1,400&amp;display=swap" rel="stylesheet"&gt;
+&lt;style&gt;
+  /* ① Paste the complete base CSS from rome.html here, unchanged */
+  /* ② Then add this accent override block: */
+  :root {
+    --accent:       [EMPIRE ACCENT HEX];
+    --accent-light: [EMPIRE ACCENT LIGHT HEX];
+    --accent-glow:  [EMPIRE ACCENT RGBA];
+  }
+  /* ③ Replace all instances of var(--crimson) in .phase-num,
+        .end-diamond, .end-year, .end-label, .spotlight borders
+        with var(--accent) and var(--accent-light) */
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class="page"&gt;
+
+  &lt;header&gt;
+    &lt;div class="header-ornament"&gt;✦ Cinematic Curriculum ✦&lt;/div&gt;
+    &lt;div class="back-link"&gt;&lt;a href="index.html"&gt;← All Empires&lt;/a&gt;&lt;/div&gt;
+    &lt;h1&gt;THE [EMPIRE NAME]&lt;br&gt;IN FILM &amp;amp; SERIES&lt;/h1&gt;
+    &lt;p class="header-sub"&gt;[Subtitle describing the scope]&lt;/p&gt;
+    &lt;div class="header-line"&gt;
+      &lt;span class="header-dates"&gt;[START YEAR] — [END YEAR]&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/header&gt;
+
+  &lt;div class="tree"&gt;
+    &lt;div class="trunk"&gt;&lt;/div&gt;
+
+    &lt;!-- PHASE I --&gt;
+    &lt;div class="phase"&gt;
+      &lt;div class="phase-block"&gt;
+        &lt;div class="phase-num"&gt;Phase I&lt;/div&gt;
+        &lt;div class="phase-date"&gt;[DATE]&lt;/div&gt;
+        &lt;div class="phase-title"&gt;[TITLE]&lt;/div&gt;
+        &lt;div class="phase-desc"&gt;[desc]&lt;/div&gt;
+        &lt;div class="films"&gt;
+          &lt;div class="film-item"&gt;
+            &lt;span class="film-type type-[TYPE]"&gt;[TYPE]&lt;/span&gt;
+            [Title (Year) — note]
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="parallel-label"&gt;⟡ [watch note]&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="trunk-node"&gt;&lt;/div&gt;
+      &lt;div class="phase-spacer"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- PHASE II (even = reverse, content on RIGHT) --&gt;
+    &lt;div class="phase"&gt;
+      &lt;div class="phase-spacer"&gt;&lt;/div&gt;
+      &lt;div class="trunk-node"&gt;&lt;/div&gt;
+      &lt;div class="phase-block"&gt;
+        &lt;!-- same internal structure --&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Continue alternating... --&gt;
+
+  &lt;/div&gt;&lt;!-- end tree --&gt;
+
+  &lt;div class="end-node"&gt;
+    &lt;div class="end-diamond"&gt;&lt;/div&gt;
+    &lt;div class="end-label"&gt;[FINIS / THE FALL OF] [EMPIRE]&lt;/div&gt;
+    &lt;div class="end-year"&gt;[FINAL YEAR] AD&lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class="legend"&gt;
+    &lt;div class="legend-item"&gt;
+      &lt;span class="film-type type-movie"&gt;FILM&lt;/span&gt; Feature Film
+    &lt;/div&gt;
+    &lt;div class="legend-item"&gt;
+      &lt;span class="film-type type-series"&gt;SERIES&lt;/span&gt; TV Series
+    &lt;/div&gt;
+    &lt;div class="legend-item"&gt;
+      &lt;span class="film-type type-mini"&gt;MINI&lt;/span&gt; Miniseries
+    &lt;/div&gt;
+    &lt;div class="legend-item"&gt;
+      &lt;span class="film-type type-doc"&gt;DOC&lt;/span&gt; Documentary
+    &lt;/div&gt;
+    &lt;div class="legend-item"&gt;
+      &lt;span class="film-type type-drama"&gt;DRAMA&lt;/span&gt; Docudrama
+    &lt;/div&gt;
+    &lt;div class="legend-item" style="color:var(--text-dim);
+      font-style:italic;font-size:12px;"&gt;
+      ⟡ parallel / optional
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+    </div>
+
+    <h3>Spotlight Block Template</h3>
+    <div class="code-block">
+      <div class="code-label">Character Spotlight (paste inside a phase-block, after .films)</div>
+      <pre>&lt;div class="spotlight"&gt;
+  &lt;div class="spotlight-label"&gt;[EMOJI] Character Spotlight — [NAME]&lt;/div&gt;
+  &lt;div class="spotlight-text"&gt;
+    [2–4 sentences: who they are, why they matter,
+     which performance is best and why]
+  &lt;/div&gt;
+  &lt;!-- Optional: sub-film list for this character --&gt;
+  &lt;div class="spotlight-films"&gt;
+    &lt;div class="film-item"&gt;
+      &lt;span class="film-type type-[TYPE]"&gt;[TYPE]&lt;/span&gt;
+      [Title — Actor as Character]
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+    </div>
+
+    <h3>Era Divider Template</h3>
+    <div class="code-block">
+      <div class="code-label">Era Divider (insert between phases to mark major transitions)</div>
+      <pre>&lt;div class="era-divider"&gt;
+  &lt;div class="era-divider-line"&gt;&lt;/div&gt;
+  &lt;div class="era-divider-label"&gt;[ERA NAME e.g. "THE REPUBLIC"]&lt;/div&gt;
+  &lt;div class="era-divider-line"&gt;&lt;/div&gt;
+&lt;/div&gt;</pre>
+    </div>
+
+    <h3>Mobile Responsive Block</h3>
+    <p>This media query must appear at the very end of every file's <span class="inline-code">&lt;style&gt;</span> block, unchanged:</p>
+    <div class="code-block">
+      <div class="code-label">Mobile Responsive (paste at end of &lt;style&gt;, always identical)</div>
+      <pre>@media (max-width: 600px) {
+  .phase { flex-direction: column !important; padding-left: 30px; }
+  .phase-block {
+    width: 100% !important;
+    padding: 0 0 40px 0 !important;
+    text-align: left !important;
+  }
+  .trunk { left: 10px; }
+  .trunk-node { left: 10px; }
+  .phase-block::after { display: none; }
+  .films { align-items: flex-start !important; }
+  .spotlight-films { align-items: flex-start !important; }
+  .spotlight {
+    border-left: 2px solid rgba(201,168,76,0.25) !important;
+    border-right: none !important;
+    padding-left: 10px !important;
+    padding-right: 0 !important;
+  }
+  .phase:nth-child(even) .phase-block { padding-left: 0 !important; }
+  .film-item:hover { transform: translateX(2px) !important; }
+}</pre>
+    </div>
+
+    <h3>Naming Convention for FINIS / End Label</h3>
+    <table class="spec-table">
+      <thead><tr><th>Empire</th><th>End Label Text</th><th>End Year</th></tr></thead>
+      <tbody>
+        <tr><td>Roman / Byzantine</td><td>FINIS IMPERII ROMANI</td><td>1453 AD</td></tr>
+        <tr><td>Egyptian</td><td>FINIS AEGYPTI</td><td>30 BC</td></tr>
+        <tr><td>Persian (Achaemenid)</td><td>FINIS IMPERII PERSARUM</td><td>330 BC</td></tr>
+        <tr><td>Macedonian</td><td>THE EMPIRE OF ALEXANDER FALLS</td><td>323 BC</td></tr>
+        <tr><td>Ottoman</td><td>SONA ERDI — THE OTTOMAN FALLS</td><td>1922 AD</td></tr>
+        <tr><td>Mongol</td><td>THE GREAT MONGOL EMPIRE FALLS</td><td>1368 AD</td></tr>
+        <tr><td>Viking Age</td><td>THE VIKING AGE ENDS</td><td>1066 AD</td></tr>
+        <tr><td>British Empire</td><td>THE SUN SETS ON THE EMPIRE</td><td>1997 AD</td></tr>
+        <tr><td>Napoleon</td><td>FINIS IMPERII NAPOLEONICI</td><td>1815 AD</td></tr>
+        <tr><td>Japanese Imperial</td><td>終焉 — THE EMPIRE SURRENDERS</td><td>1945 AD</td></tr>
+        <tr><td>Mughal</td><td>THE MUGHAL EMPIRE FALLS</td><td>1857 AD</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-teal">
+      <strong>Final Reminder:</strong> The completed <span class="inline-code">rome.html</span> file is the master reference for this entire project. Before building any new empire file, open <span class="inline-code">rome.html</span> and study its structure, spacing, and content philosophy. Every decision — how dense to make the phase descriptions, how many film items per phase, how to write spotlight text, how to phrase parallel-label instructions — should produce output that feels consistent with <span class="inline-code">rome.html</span>. If it looks different, find out why and fix it.
+    </div>
+
+  </div>
+
+  <!-- ══════════════════ FOOTER ══════════════════ -->
+  <div style="text-align:center; margin-top: 80px; padding-top: 40px; border-top: 1px solid rgba(201,168,76,0.12);">
+    <div style="font-family:'Cinzel',serif; font-size:10px; letter-spacing:5px; color:var(--gold); opacity:0.4;">✦ END OF SPECIFICATION ✦</div>
+    <div style="font-family:'Cormorant Garamond',serif; font-size:14px; color:var(--text-dim); font-style:italic; margin-top:12px;">Cinematic History of Empires — Project Bible v1.0</div>
+  </div>
+
+</div>
+</body>
+</html>
