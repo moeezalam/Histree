@@ -55,38 +55,39 @@
     position: relative;
     z-index: 1;
     width: 100%;
-    max-width: 1180px;
+    max-width: 5200px;
   }
 
   header {
     text-align: center;
-    margin-bottom: 36px;
+    margin-bottom: 48px;
   }
 
   .header-ornament {
-    font-size: 11px;
-    letter-spacing: 9px;
+    font-size: 12px;
+    letter-spacing: 10px;
     text-transform: uppercase;
-    color: rgba(200, 255, 235, 0.55);
-    margin-bottom: 14px;
+    color: rgba(200, 255, 235, 0.65);
+    margin-bottom: 16px;
+    font-weight: 600;
   }
 
   h1 {
     font-family: 'Cinzel', serif;
-    font-size: clamp(20px, 3.6vw, 36px);
+    font-size: clamp(24px, 4vw, 42px);
     font-weight: 900;
-    color: #e6fff5;
-    letter-spacing: 3px;
-    line-height: 1.2;
-    text-shadow: 0 0 28px rgba(85, 255, 210, 0.35);
+    color: #ffffff;
+    letter-spacing: 4px;
+    line-height: 1.15;
+    text-shadow: 0 0 40px rgba(85, 255, 210, 0.5), 0 0 80px rgba(85, 255, 210, 0.2);
   }
 
   .header-sub {
-    margin-top: 10px;
-    font-size: 15px;
-    color: rgba(200, 255, 235, 0.7);
+    margin-top: 14px;
+    font-size: 16px;
+    color: rgba(200, 255, 235, 0.8);
     font-style: italic;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
   }
 
   .header-line {
@@ -113,11 +114,11 @@
 
   .tree-wrap {
     position: relative;
-    padding: 34px;
-    border-radius: 22px;
-    background: rgba(7, 14, 18, 0.6);
-    border: 1px solid rgba(90, 255, 210, 0.12);
-    box-shadow: 0 0 50px rgba(10, 40, 35, 0.6), inset 0 0 70px rgba(20, 100, 80, 0.25);
+    padding: 40px;
+    border-radius: 24px;
+    background: rgba(5, 10, 15, 0.75);
+    border: 1px solid rgba(90, 255, 210, 0.15);
+    box-shadow: 0 0 60px rgba(10, 40, 35, 0.8), inset 0 0 80px rgba(20, 100, 80, 0.3);
     overflow: hidden;
   }
 
@@ -157,15 +158,16 @@
     stroke: url(#trunkGradient);
     fill: none;
     filter: url(#glow);
-    opacity: 0.9;
+    opacity: 0.95;
     stroke-linecap: round;
     stroke-linejoin: round;
     animation: glowPulse 6s ease-in-out infinite;
+    filter: drop-shadow(0 0 10px rgba(127, 255, 224, 0.6));
   }
 
-  .trunk-base { stroke-width: 18; opacity: 0.35; filter: url(#glowStrong); }
-  .trunk-mid  { stroke-width: 11; opacity: 0.7; }
-  .trunk-core { stroke-width: 6; opacity: 1; }
+  .trunk-base { stroke-width: 22; opacity: 0.4; filter: url(#glowStrong); }
+  .trunk-mid  { stroke-width: 14; opacity: 0.8; }
+  .trunk-core { stroke-width: 8; opacity: 1; }
 
   .branch-main,
   .branch-fork,
@@ -180,19 +182,61 @@
 
   .branch-main {
     stroke: var(--branch-main);
-    stroke-width: 3;
+    stroke-width: 8;
+    fill: none;
     animation: branchPulse 8s ease-in-out infinite;
+    filter: drop-shadow(0 0 8px rgba(90, 240, 220, 0.7));
+    opacity: 0.85;
   }
 
   .branch-fork {
     stroke: var(--branch-fork);
-    stroke-width: 2.3;
+    stroke-width: 6;
+    fill: none;
+    stroke-dasharray: 16 8;
     animation: branchPulse 9s ease-in-out infinite;
+    filter: drop-shadow(0 0 8px rgba(154, 133, 255, 0.9));
+    opacity: 0.9;
+  }
+
+  .fork-label {
+    font-family: 'Cinzel', serif;
+    font-size: 15px;
+    fill: #9a85ff;
+    opacity: 0.98;
+    letter-spacing: 1.5px;
+    text-anchor: middle;
+    filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.95)) drop-shadow(0 0 4px rgba(154, 133, 255, 0.7)) drop-shadow(0 0 12px rgba(154, 133, 255, 0.3));
+    font-weight: 700;
+  }
+
+  .trunk-label {
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    fill: #7fffe0;
+    opacity: 0.98;
+    letter-spacing: 1px;
+    text-anchor: middle;
+    filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.95)) drop-shadow(0 0 3px rgba(127, 255, 224, 0.6)) drop-shadow(0 0 12px rgba(127, 255, 224, 0.25));
+    font-weight: 600;
+  }
+
+  .concurrent-label {
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    fill: #4ddcc2;
+    opacity: 0.99;
+    letter-spacing: 1.2px;
+    text-anchor: middle;
+    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.96)) drop-shadow(0 0 5px rgba(95, 232, 211, 0.8)) drop-shadow(0 0 15px rgba(95, 232, 211, 0.4));
+    font-weight: 700;
   }
 
   .branch-concurrent {
     stroke: var(--branch-concurrent);
-    stroke-width: 2;
+    stroke-width: 6;
+    fill: none;
+    stroke-dasharray: 12 12;
     stroke-dasharray: 6 4;
     animation: branchPulse 10s ease-in-out infinite;
   }
@@ -210,6 +254,18 @@
     opacity: 0.7;
   }
 
+  .fork-marker {
+    filter: drop-shadow(0 0 6px rgba(154, 133, 255, 0.95));
+    animation: markerGlow 2s ease-in-out infinite;
+    stroke: rgba(154, 133, 255, 0.8);
+    stroke-width: 1.5;
+  }
+
+  @keyframes markerGlow {
+    0%, 100% { opacity: 0.7; r: 4px; }
+    50% { opacity: 1; r: 5.5px; }
+  }
+
   .ambient-glow {
     opacity: 0.55;
     filter: url(#glowSoft);
@@ -223,30 +279,31 @@
   .node {
     cursor: pointer;
     opacity: 0;
-    transform: translateY(6px) scale(0.98);
+    transform: translateY(8px) scale(0.96);
     transform-box: fill-box;
     transform-origin: center;
-    animation: nodeIn 1.15s ease forwards;
+    animation: nodeIn 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
   }
 
   .node rect {
-    rx: 10px;
-    ry: 10px;
-    stroke-width: 1.2;
+    rx: 12px;
+    ry: 12px;
+    stroke-width: 1.5;
     filter: url(#nodeGlow);
+    transition: all 0.3s ease;
   }
 
-  .c-amber rect  { fill: rgba(20, 18, 10, 0.82); stroke: #c9a84c; }
-  .c-amber text  { fill: #f4d993; }
-  .c-purple rect { fill: rgba(20, 16, 36, 0.85); stroke: #7e6cff; }
-  .c-purple text { fill: #c7beff; }
-  .c-teal rect   { fill: rgba(10, 22, 24, 0.85); stroke: #4ddcc2; }
-  .c-teal text   { fill: #92f5df; }
+  .c-amber rect  { fill: rgba(30, 25, 15, 0.9); stroke: #d4a855; }
+  .c-amber text  { fill: #fce5a8; }
+  .c-purple rect { fill: rgba(25, 20, 40, 0.9); stroke: #9a85ff; }
+  .c-purple text { fill: #dcd8ff; }
+  .c-teal rect   { fill: rgba(12, 28, 30, 0.9); stroke: #5fe8d3; }
+  .c-teal text   { fill: #a8ffeb; }
 
-  .node:hover rect { stroke: #ffffff; filter: url(#nodeGlowStrong); }
+  .node:hover rect { stroke: #ffffff; stroke-width: 2; filter: url(#nodeGlowStrong); }
 
-  .th { font-family: 'Cinzel', serif; font-size: 13px; font-weight: 600; }
-  .ts { font-family: 'Cormorant Garamond', serif; font-size: 11.5px; font-style: italic; fill: rgba(230, 240, 235, 0.75); }
+  .th { font-family: \'Cinzel\', serif; font-size: 28px; font-weight: 600; }
+  .ts { font-family: \'Cormorant Garamond\', serif; font-size: 22px; font-style: italic; fill: rgba(230, 240, 235, 0.75); }
 
   .legend {
     display: flex;
@@ -316,15 +373,19 @@
   }
 
   @keyframes nodeIn {
-    0% { opacity: 0; transform: translateY(8px) scale(0.98); }
+    0% { opacity: 0; transform: translateY(12px) scale(0.92); }
     100% { opacity: 1; transform: translateY(0) scale(1); }
   }
 
   @media (max-width: 900px) {
-    .tree-wrap { padding: 22px; }
-    .th { font-size: 12px; }
-    .ts { font-size: 10px; }
+    .tree-wrap { padding: 24px; }
+    .th { font-size: 11px; }
+    .ts { font-size: 9.5px; }
+    h1 { font-size: clamp(20px, 3.5vw, 36px); }
   }
+
+  .conn-label { font-family: 'Cinzel', serif; font-size: 22px; font-weight: 700; fill: #ffffff; text-anchor: middle; letter-spacing: 1px; }
+  .label-g { filter: drop-shadow(0 0 10px rgba(0,0,0,0.8)); }
 </style>
 </head>
 <body>
@@ -340,7 +401,7 @@
   </header>
 
   <div class="tree-wrap">
-    <svg viewBox="0 0 1100 900" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="-400 0 5200 3000" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <linearGradient id="trunkGradient" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stop-color="#7fffe0"/>
@@ -394,183 +455,186 @@
         </filter>
       </defs>
 
-      <ellipse class="ambient-glow" cx="550" cy="220" rx="320" ry="180" fill="url(#canopyGlow)"/>
-      <ellipse class="ambient-glow fast" cx="550" cy="360" rx="280" ry="200" fill="url(#canopyGlow)"/>
-      <ellipse class="ambient-glow" cx="550" cy="640" rx="320" ry="220" fill="url(#canopyGlow)"/>
-      <ellipse class="ambient-glow" cx="550" cy="840" rx="260" ry="140" fill="url(#rootGlow)"/>
+    <path class="branch-main" d="M 2200 320 L 2200 650" />
+    <g class="label-g" transform="translate(2200.0,485.0)">
+        <rect x="-210.0" y="-28" width="420" height="56" rx="28" class="conn-bg" fill="#08151a" stroke="#7fffe0" stroke-width="2" />
+        <text class="conn-label" x="0" y="8">↓ Middle East Dominance ↓</text>
+    </g><path class="branch-main" d="M 2200 770 L 2200 1400" />
+    <g class="label-g" transform="translate(2200.0,1085.0)">
+        <rect x="-210.0" y="-28" width="420" height="56" rx="28" class="conn-bg" fill="#08151a" stroke="#7fffe0" stroke-width="2" />
+        <text class="conn-label" x="0" y="8">↓ Era of Great Empires ↓</text>
+    </g><path class="branch-main" d="M 2200 1520 L 2200 1750" />
+    <g class="label-g" transform="translate(2200.0,1635.0)">
+        <rect x="-230.0" y="-28" width="460" height="56" rx="28" class="conn-bg" fill="#08151a" stroke="#7fffe0" stroke-width="2" />
+        <text class="conn-label" x="0" y="8">↓ Eastern Roman Continuation ↓</text>
+    </g><path class="branch-main" d="M 2200 1870 L 2200 2550" />
+    <g class="label-g" transform="translate(2200.0,2210.0)">
+        <rect x="-210.0" y="-28" width="420" height="56" rx="28" class="conn-bg" fill="#08151a" stroke="#7fffe0" stroke-width="2" />
+        <text class="conn-label" x="0" y="8">↓ Ottoman Conquest (1453) ↓</text>
+    </g><path class="branch-fork" d="M 2200 770 C 2200 908.0, 1600 908.0, 1600 1000" />
+    <g class="label-g" transform="translate(1900.0,902.25)">
+        <rect x="-251.0" y="-28" width="502" height="56" rx="28" class="conn-bg" fill="#08151a" stroke="#9a85ff" stroke-width="2" />
+        <text class="conn-label" x="0" y="8">↙ Conquered by Alexander (330 BC)</text>
+    </g><path class="branch-fork" d="M 1600 1120 C 1600 1232.0, 2200 1232.0, 2200 1400" />
+    <g class="label-g" transform="translate(1900.0,1239.0)">
+        <rect x="-210.0" y="-28" width="420" height="56" rx="28" class="conn-bg" fill="#08151a" stroke="#9a85ff" stroke-width="2" />
+        <text class="conn-label" x="0" y="8">↘ Annexed by Rome (146 BC)</text>
+    </g><path class="branch-fork" d="M 2200 1520 C 2200 1694.0, 1000 1694.0, 1000 2100" />
+    <g class="label-g" transform="translate(1600.0,1723.0)">
+        <rect x="-237.0" y="-28" width="474" height="56" rx="28" class="conn-bg" fill="#08151a" stroke="#9a85ff" stroke-width="2" />
+        <text class="conn-label" x="0" y="8">↙ Claimed Roman Catholic Legacy</text>
+    </g><path class="branch-fork" d="M 2200 1520 C 2200 1810.0, 400 1810.0, 400 2100" />
+    <g class="label-g" transform="translate(1300.0,1810.0)">
+        <rect x="-210.0" y="-28" width="420" height="56" rx="28" class="conn-bg" fill="#08151a" stroke="#9a85ff" stroke-width="2" />
+        <text class="conn-label" x="0" y="8">↙ Modeled Imperial Ambition</text>
+    </g><path class="branch-fork" d="M 2200 1520 C 2200 2241.0, -200 2241.0, -200 2550" />
+    <g class="label-g" transform="translate(1000.0,2189.5)">
+        <rect x="-210.0" y="-28" width="420" height="56" rx="28" class="conn-bg" fill="#08151a" stroke="#9a85ff" stroke-width="2" />
+        <text class="conn-label" x="0" y="8">↙ Napoleonic Vision (1804)</text>
+    </g><path class="branch-fork" d="M 2200 1870 C 2200 2414.0, 1600 2414.0, 1600 2550" />
+    <g class="label-g" transform="translate(1900.0,2363.0)">
+        <rect x="-216.0" y="-28" width="432" height="56" rx="28" class="conn-bg" fill="#08151a" stroke="#9a85ff" stroke-width="2" />
+        <text class="conn-label" x="0" y="8">↙ Declared Third Rome (1547)</text>
+    </g><path class="branch-concurrent" d="M 2400.0 1810.0 L 3200.0 1810.0" />
+    <g class="label-g" transform="translate(2800.0,1810.0)">
+        <rect x="-230.0" y="-28" width="460" height="56" rx="28" class="conn-bg" fill="#08151a" stroke="#4ddcc2" stroke-width="2" />
+        <text class="conn-label" x="0" y="8">→ Byzantine Levant Conquered →</text>
+    </g><path class="branch-concurrent" d="M 3400 1870 C 3400 2008.0, 2800 2008.0, 2800 2100" />
+    <g class="label-g" transform="translate(3100.0,2002.25)">
+        <rect x="-210.0" y="-28" width="420" height="56" rx="28" class="conn-bg" fill="#08151a" stroke="#4ddcc2" stroke-width="2" />
+        <text class="conn-label" x="0" y="8">↙ Sack of Baghdad (1258)</text>
+    </g><path class="branch-concurrent" d="M 2800 2220 L 2800 2550" />
+    <g class="label-g" transform="translate(2800.0,2385.0)">
+        <rect x="-210.0" y="-28" width="420" height="56" rx="28" class="conn-bg" fill="#08151a" stroke="#4ddcc2" stroke-width="2" />
+        <text class="conn-label" x="0" y="8">↓ Timurid Ancestry (1526) ↓</text>
+    </g>
+    
+<g transform="translate(2200, 120)"><text class="conn-label" style="fill: #7fffe0; font-size: 32px; letter-spacing: 4px; text-shadow: 0 0 16px rgba(127, 255, 224, 0.4);">THE MAIN SUCCESSION</text></g>
+<g transform="translate(600, 1600)"><text class="conn-label" style="fill: #9a85ff; font-size: 32px; letter-spacing: 4px; text-shadow: 0 0 16px rgba(154, 133, 255, 0.4);">WESTERN FORKS & OFFSHOOTS</text></g>
+<g transform="translate(3100, 500)"><text class="conn-label" style="fill: #4ddcc2; font-size: 32px; letter-spacing: 4px; text-shadow: 0 0 16px rgba(77, 220, 194, 0.4);">CONCURRENT & INDEPENDENT</text></g>
 
-      <path class="tree-trunk trunk-base" d="M550 820 C510 760 590 700 545 635 C505 575 585 520 555 450 C525 380 565 320 552 250 C540 195 555 150 550 95"/>
-      <path class="tree-trunk trunk-mid" d="M550 820 C510 760 590 700 545 635 C505 575 585 520 555 450 C525 380 565 320 552 250 C540 195 555 150 550 95"/>
-      <path class="tree-trunk trunk-core" d="M550 820 C510 760 590 700 545 635 C505 575 585 520 555 450 C525 380 565 320 552 250 C540 195 555 150 550 95"/>
-
-      <path class="root-line" d="M550 820 C520 850 470 875 400 890"/>
-      <path class="root-line" d="M550 820 C580 850 640 880 720 892"/>
-      <path class="root-line" d="M550 820 C540 860 545 885 555 900"/>
-      <path class="root-line" d="M540 815 C500 835 450 855 420 875"/>
-      <path class="root-line" d="M560 815 C610 835 660 850 700 868"/>
-
-      <path class="branch-canopy" d="M550 110 C520 80 450 60 360 55"/>
-      <path class="branch-canopy" d="M550 110 C590 75 690 55 820 70"/>
-      <path class="branch-canopy" d="M520 140 C480 120 430 110 380 120"/>
-      <path class="branch-canopy" d="M580 140 C630 115 700 110 760 125"/>
-
-      <path class="branch-main" d="M545 150 C500 120 420 120 360 140"/>
-      <path class="branch-main" d="M545 230 C505 210 430 210 360 230"/>
-      <path class="branch-main" d="M545 330 C505 300 430 300 360 330"/>
-      <path class="branch-main" d="M545 420 C505 400 430 400 360 420"/>
-      <path class="branch-main" d="M545 540 C505 530 430 530 360 540"/>
-
-      <path class="branch-main" d="M555 180 C600 140 670 140 740 180"/>
-      <path class="branch-main" d="M555 280 C610 250 670 250 740 280"/>
-      <path class="branch-main" d="M555 400 C610 380 670 380 740 400"/>
-      <path class="branch-main" d="M555 520 C610 500 670 500 740 520"/>
-
-      <path class="branch-fork" d="M520 250 C430 240 300 240 140 250"/>
-      <path class="branch-fork" d="M520 580 C430 570 300 570 140 580"/>
-      <path class="branch-fork" d="M520 650 C430 640 300 640 140 650"/>
-      <path class="branch-fork" d="M520 720 C430 710 300 710 140 720"/>
-      <path class="branch-fork" d="M520 790 C430 780 300 780 140 790"/>
-
-      <path class="branch-concurrent" d="M580 460 C670 450 800 450 960 460"/>
-      <path class="branch-concurrent" d="M580 520 C670 510 800 510 960 520"/>
-      <path class="branch-concurrent" d="M580 700 C670 690 800 690 960 700"/>
-
-      <a href="egypt.html">
-        <g class="node c-amber" style="animation-delay: 0.1s;">
-          <rect x="260" y="112" width="200" height="56"/>
-          <text class="th" x="360" y="134" text-anchor="middle">Egyptian Empire</text>
-          <text class="ts" x="360" y="154" text-anchor="middle">c.1550 - 30 BC</text>
+    <ellipse class="ambient-glow" cx="2200" cy="1400" rx="1200" ry="1400" fill="url(#canopyGlow)"/><ellipse class="ambient-glow" cx="700" cy="2200" rx="1000" ry="800" fill="url(#canopyGlow)"/><ellipse class="ambient-glow" cx="3200" cy="2000" rx="1000" ry="800" fill="url(#rootGlow)"/>
+    <a href="egypt.html">
+        <g class="node c-amber">
+        <rect x="2000.0" y="200" width="400" height="120"/>
+        <text class="th" x="2200" y="250" text-anchor="middle">Egyptian Empire</text>
+        <text class="ts" x="2200" y="290" text-anchor="middle">c.1550 - 30 BC</text>
         </g>
-      </a>
-
-      <a href="persia.html">
-        <g class="node c-amber" style="animation-delay: 0.16s;">
-          <rect x="260" y="202" width="200" height="56"/>
-          <text class="th" x="360" y="224" text-anchor="middle">Achaemenid Persia</text>
-          <text class="ts" x="360" y="244" text-anchor="middle">550 - 330 BC</text>
+    </a>
+    <a href="persia.html">
+        <g class="node c-amber">
+        <rect x="2000.0" y="650" width="400" height="120"/>
+        <text class="th" x="2200" y="700" text-anchor="middle">Achaemenid Persia</text>
+        <text class="ts" x="2200" y="740" text-anchor="middle">550 - 330 BC</text>
         </g>
-      </a>
-
-      <a href="rome.html">
-        <g class="node c-amber" style="animation-delay: 0.22s;">
-          <rect x="260" y="302" width="200" height="56"/>
-          <text class="th" x="360" y="324" text-anchor="middle">Roman Empire</text>
-          <text class="ts" x="360" y="344" text-anchor="middle">753 BC - 476 AD</text>
+    </a>
+    <a href="macedon.html">
+        <g class="node c-purple">
+        <rect x="1400.0" y="1000" width="400" height="120"/>
+        <text class="th" x="1600" y="1050" text-anchor="middle">Macedonian Empire</text>
+        <text class="ts" x="1600" y="1090" text-anchor="middle">336 - 323 BC</text>
         </g>
-      </a>
-
-      <a href="rome.html">
-        <g class="node c-amber" style="animation-delay: 0.28s;">
-          <rect x="260" y="392" width="200" height="56"/>
-          <text class="th" x="360" y="414" text-anchor="middle">Byzantine Empire</text>
-          <text class="ts" x="360" y="434" text-anchor="middle">476 - 1453 AD</text>
+    </a>
+    <a href="rome.html">
+        <g class="node c-amber">
+        <rect x="2000.0" y="1400" width="400" height="120"/>
+        <text class="th" x="2200" y="1450" text-anchor="middle">Roman Empire</text>
+        <text class="ts" x="2200" y="1490" text-anchor="middle">753 BC - 476 AD</text>
         </g>
-      </a>
-
-      <a href="ottoman.html">
-        <g class="node c-amber" style="animation-delay: 0.34s;">
-          <rect x="260" y="512" width="200" height="56"/>
-          <text class="th" x="360" y="534" text-anchor="middle">Ottoman Empire</text>
-          <text class="ts" x="360" y="554" text-anchor="middle">1299 - 1922 AD</text>
+    </a>
+    <a href="byzantine.html">
+        <g class="node c-amber">
+        <rect x="2000.0" y="1750" width="400" height="120"/>
+        <text class="th" x="2200" y="1800" text-anchor="middle">Byzantine Empire</text>
+        <text class="ts" x="2200" y="1840" text-anchor="middle">476 - 1453 AD</text>
         </g>
-      </a>
-
-      <a href="maurya.html">
-        <g class="node c-amber" style="animation-delay: 0.2s;">
-          <rect x="640" y="152" width="200" height="56"/>
-          <text class="th" x="740" y="174" text-anchor="middle">Maurya Empire</text>
-          <text class="ts" x="740" y="194" text-anchor="middle">322 - 185 BC</text>
+    </a>
+    <a href="ottoman.html">
+        <g class="node c-amber">
+        <rect x="2000.0" y="2550" width="400" height="120"/>
+        <text class="th" x="2200" y="2600" text-anchor="middle">Ottoman Empire</text>
+        <text class="ts" x="2200" y="2640" text-anchor="middle">1299 - 1922 AD</text>
         </g>
-      </a>
-
-      <a href="han.html">
-        <g class="node c-amber" style="animation-delay: 0.26s;">
-          <rect x="640" y="252" width="200" height="56"/>
-          <text class="th" x="740" y="274" text-anchor="middle">Han Dynasty</text>
-          <text class="ts" x="740" y="294" text-anchor="middle">206 BC - 220 AD</text>
+    </a>
+    <a href="spanish.html">
+        <g class="node c-purple">
+        <rect x="800.0" y="2100" width="400" height="120"/>
+        <text class="th" x="1000" y="2150" text-anchor="middle">Spanish Empire</text>
+        <text class="ts" x="1000" y="2190" text-anchor="middle">1492 - 1975 AD</text>
         </g>
-      </a>
-
-      <a href="mongol.html">
-        <g class="node c-amber" style="animation-delay: 0.32s;">
-          <rect x="640" y="372" width="200" height="56"/>
-          <text class="th" x="740" y="394" text-anchor="middle">Mongol Empire</text>
-          <text class="ts" x="740" y="414" text-anchor="middle">1206 - 1368 AD</text>
+    </a>
+    <a href="british.html">
+        <g class="node c-purple">
+        <rect x="200.0" y="2100" width="400" height="120"/>
+        <text class="th" x="400" y="2150" text-anchor="middle">British Empire</text>
+        <text class="ts" x="400" y="2190" text-anchor="middle">1583 - 1997 AD</text>
         </g>
-      </a>
-
-      <a href="mughal.html">
-        <g class="node c-amber" style="animation-delay: 0.38s;">
-          <rect x="640" y="492" width="200" height="56"/>
-          <text class="th" x="740" y="514" text-anchor="middle">Mughal Empire</text>
-          <text class="ts" x="740" y="534" text-anchor="middle">1526 - 1857 AD</text>
+    </a>
+    <a href="russian.html">
+        <g class="node c-purple">
+        <rect x="1400.0" y="2550" width="400" height="120"/>
+        <text class="th" x="1600" y="2600" text-anchor="middle">Russian Empire</text>
+        <text class="ts" x="1600" y="2640" text-anchor="middle">1721 - 1917 AD</text>
         </g>
-      </a>
-
-      <a href="macedon.html">
-        <g class="node c-purple" style="animation-delay: 0.24s;">
-          <rect x="40" y="222" width="200" height="56"/>
-          <text class="th" x="140" y="244" text-anchor="middle">Macedonian Empire</text>
-          <text class="ts" x="140" y="264" text-anchor="middle">fork - 336 - 323 BC</text>
+    </a>
+    <a href="napoleon.html">
+        <g class="node c-purple">
+        <rect x="-400.0" y="2550" width="400" height="120"/>
+        <text class="th" x="-200" y="2600" text-anchor="middle">Napoleon's Empire</text>
+        <text class="ts" x="-200" y="2640" text-anchor="middle">1804 - 1815 AD</text>
         </g>
-      </a>
-
-      <a href="spanish.html">
-        <g class="node c-purple" style="animation-delay: 0.42s;">
-          <rect x="40" y="552" width="200" height="56"/>
-          <text class="th" x="140" y="574" text-anchor="middle">Spanish Empire</text>
-          <text class="ts" x="140" y="594" text-anchor="middle">fork - 1492 - 1975 AD</text>
+    </a>
+    <a href="maurya.html">
+        <g class="node c-teal">
+        <rect x="2600.0" y="650" width="400" height="120"/>
+        <text class="th" x="2800" y="700" text-anchor="middle">Maurya Empire</text>
+        <text class="ts" x="2800" y="740" text-anchor="middle">322 - 185 BC</text>
         </g>
-      </a>
-
-      <a href="british.html">
-        <g class="node c-purple" style="animation-delay: 0.46s;">
-          <rect x="40" y="622" width="200" height="56"/>
-          <text class="th" x="140" y="644" text-anchor="middle">British Empire</text>
-          <text class="ts" x="140" y="664" text-anchor="middle">fork - 1583 - 1997 AD</text>
+    </a>
+    <a href="han.html">
+        <g class="node c-teal">
+        <rect x="2600.0" y="1000" width="400" height="120"/>
+        <text class="th" x="2800" y="1050" text-anchor="middle">Han Dynasty</text>
+        <text class="ts" x="2800" y="1090" text-anchor="middle">206 BC - 220 AD</text>
         </g>
-      </a>
-
-      <a href="russian.html">
-        <g class="node c-purple" style="animation-delay: 0.5s;">
-          <rect x="40" y="692" width="200" height="56"/>
-          <text class="th" x="140" y="714" text-anchor="middle">Russian Empire</text>
-          <text class="ts" x="140" y="734" text-anchor="middle">fork - 1721 - 1917 AD</text>
+    </a>
+    <a href="mongol.html">
+        <g class="node c-teal">
+        <rect x="2600.0" y="2100" width="400" height="120"/>
+        <text class="th" x="2800" y="2150" text-anchor="middle">Mongol Empire</text>
+        <text class="ts" x="2800" y="2190" text-anchor="middle">1206 - 1368 AD</text>
         </g>
-      </a>
-
-      <a href="napoleon.html">
-        <g class="node c-purple" style="animation-delay: 0.54s;">
-          <rect x="40" y="762" width="200" height="56"/>
-          <text class="th" x="140" y="784" text-anchor="middle">Napoleon's Empire</text>
-          <text class="ts" x="140" y="804" text-anchor="middle">fork - 1804 - 1815 AD</text>
+    </a>
+    <a href="mughal.html">
+        <g class="node c-teal">
+        <rect x="2600.0" y="2550" width="400" height="120"/>
+        <text class="th" x="2800" y="2600" text-anchor="middle">Mughal Empire</text>
+        <text class="ts" x="2800" y="2640" text-anchor="middle">1526 - 1857 AD</text>
         </g>
-      </a>
-
-      <a href="islamic.html">
-        <g class="node c-teal" style="animation-delay: 0.36s;">
-          <rect x="860" y="432" width="200" height="56"/>
-          <text class="th" x="960" y="454" text-anchor="middle">Islamic Caliphates</text>
-          <text class="ts" x="960" y="474" text-anchor="middle">concurrent - 632 - 1258 AD</text>
+    </a>
+    <a href="islamic.html">
+        <g class="node c-teal">
+        <rect x="3200.0" y="1750" width="400" height="120"/>
+        <text class="th" x="3400" y="1800" text-anchor="middle">Islamic Caliphates</text>
+        <text class="ts" x="3400" y="1840" text-anchor="middle">632 - 1258 AD</text>
         </g>
-      </a>
-
-      <a href="viking.html">
-        <g class="node c-teal" style="animation-delay: 0.4s;">
-          <rect x="860" y="492" width="200" height="56"/>
-          <text class="th" x="960" y="514" text-anchor="middle">Viking Age</text>
-          <text class="ts" x="960" y="534" text-anchor="middle">concurrent - 793 - 1066 AD</text>
+    </a>
+    <a href="viking.html">
+        <g class="node c-teal">
+        <rect x="3200.0" y="2100" width="400" height="120"/>
+        <text class="th" x="3400" y="2150" text-anchor="middle">Viking Age</text>
+        <text class="ts" x="3400" y="2190" text-anchor="middle">793 - 1066 AD</text>
         </g>
-      </a>
-
-      <a href="japanese.html">
-        <g class="node c-teal" style="animation-delay: 0.58s;">
-          <rect x="860" y="672" width="200" height="56"/>
-          <text class="th" x="960" y="694" text-anchor="middle">Japanese Imperial Age</text>
-          <text class="ts" x="960" y="714" text-anchor="middle">concurrent - 1868 - 1945 AD</text>
+    </a>
+    <a href="japanese.html">
+        <g class="node c-teal">
+        <rect x="3200.0" y="2550" width="400" height="120"/>
+        <text class="th" x="3400" y="2600" text-anchor="middle">Japanese Imperial Age</text>
+        <text class="ts" x="3400" y="2640" text-anchor="middle">1868 - 1945 AD</text>
         </g>
-      </a>
-    </svg>
+    </a>
+
+  </svg>
   </div>
 
   <div class="legend">

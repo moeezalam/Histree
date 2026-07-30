@@ -14,6 +14,10 @@
 [![No build step](https://img.shields.io/badge/build-none%20required-blue)](#run-it-locally)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-purple)](#contributing)
 
+[![The hub tree — every empire on one page](docs/hub-tree.png)](https://moeezalam.github.io/Histree/)
+
+<sub>The hub tree — solid lines are the main succession and its forks, dashed lines are concurrent civilizations. Every node is clickable.</sub>
+
 </div>
 
 ---
