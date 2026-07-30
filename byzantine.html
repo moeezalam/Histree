@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Byzantine Empire - The Complete Cinematic History</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #c9a84c;
+    --gold-light: #e8cc7a;
+    --crimson: #8b1a1a;
+    --crimson-light: #b52020;
+    --marble-dark: #0e0c0a;
+    --marble-mid: #1a1510;
+    --marble-light: #2a2018;
+    --text: #e8dcc8;
+    --text-dim: #9a8870;
+    --trunk: #c9a84c;
+    --accent: #8b1a1a;
+    --accent-light: #b52020;
+    --accent-glow: rgba(139,26,26,0.6);
+  }
+
+  :root {
+    --accent: #8b1a1a;
+    --accent-light: #b52020;
+    --accent-glow: rgba(139,26,26,0.6);
+  }
+
+  body {
+    background: var(--marble-dark);
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(105deg, transparent, transparent 40px, rgba(255,255,255,0.008) 40px, rgba(255,255,255,0.008) 41px),
+      repeating-linear-gradient(75deg, transparent, transparent 60px, rgba(255,255,255,0.005) 60px, rgba(255,255,255,0.005) 61px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    max-width: 1060px;
+    margin: 0 auto;
+    padding: 60px 20px 100px;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 80px;
+  }
+
+  .header-ornament {
+    font-size: 12px;
+    letter-spacing: 8px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    opacity: 0.7;
+  }
+
+  .back-link {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    opacity: 0.6;
+    margin-bottom: 12px;
+  }
+
+  .back-link a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .back-link a:hover { color: var(--gold-light); }
+
+  h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(22px, 4vw, 42px);
+    font-weight: 900;
+    color: var(--gold-light);
+    letter-spacing: 3px;
+    line-height: 1.2;
+    text-shadow: 0 0 40px rgba(201,168,76,0.3);
+  }
+
+  .header-sub {
+    margin-top: 14px;
+    font-size: 16px;
+    color: var(--text-dim);
+    font-style: italic;
+    letter-spacing: 1px;
+  }
+
+  .header-line {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 24px;
+    justify-content: center;
+  }
+
+  .header-line::before, .header-line::after {
+    content: '';
+    height: 1px;
+    width: 120px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  .header-dates {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    color: var(--gold);
+    letter-spacing: 4px;
+  }
+
+  .tree {
+    position: relative;
+    padding: 0 0 40px;
+  }
+
+  .trunk {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    transform: translateX(-50%);
+    background: linear-gradient(to bottom, var(--gold) 0%, var(--gold) 90%, transparent 100%);
+    opacity: 0.45;
+  }
+
+  .phase {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 0;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .phase:nth-child(odd)  { flex-direction: row; }
+  .phase:nth-child(even) { flex-direction: row-reverse; }
+
+  .phase-block {
+    width: calc(50% - 32px);
+    padding-bottom: 64px;
+    position: relative;
+  }
+
+  .phase:nth-child(odd)  .phase-block { padding-right: 32px; text-align: right; }
+  .phase:nth-child(even) .phase-block { padding-left:  32px; text-align: left;  }
+
+  .phase:nth-child(odd)  .phase-block::after {
+    content: ''; position: absolute; right: 0; top: 6px;
+    width: 32px; height: 1px; background: var(--gold); opacity: 0.4;
+  }
+  .phase:nth-child(even) .phase-block::after {
+    content: ''; position: absolute; left: 0; top: 6px;
+    width: 32px; height: 1px; background: var(--gold); opacity: 0.4;
+  }
+
+  .trunk-node {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--gold);
+    border: 2px solid var(--marble-dark);
+    box-shadow: 0 0 12px rgba(201,168,76,0.6);
+    z-index: 2;
+    flex-shrink: 0;
+  }
+
+  .phase-spacer { width: 64px; flex-shrink: 0; }
+
+  .phase-num {
+    font-size: 10px;
+    color: var(--accent-light);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    opacity: 0.9;
+  }
+
+  .phase-date {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 3px;
+    opacity: 0.85;
+    margin-bottom: 6px;
+  }
+
+  .phase-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(13px, 2vw, 17px);
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: 1px;
+    line-height: 1.3;
+    margin-bottom: 6px;
+  }
+
+  .phase-desc {
+    font-size: 12.5px;
+    color: var(--text-dim);
+    font-style: italic;
+    line-height: 1.6;
+    margin-top: 6px;
+    margin-bottom: 2px;
+  }
+
+  .films {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 12px;
+  }
+
+  .phase:nth-child(odd)  .films { align-items: flex-end; }
+  .phase:nth-child(even) .films { align-items: flex-start; }
+
+  .film-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--marble-light);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 3px;
+    padding: 6px 12px;
+    font-size: 13px;
+    color: var(--text);
+    font-style: italic;
+    transition: all 0.2s;
+    position: relative;
+    max-width: 300px;
+  }
+
+  .film-item:hover {
+    border-color: rgba(201,168,76,0.5);
+    background: rgba(201,168,76,0.07);
+    color: var(--gold-light);
+    transform: translateX(-2px);
+  }
+
+  .phase:nth-child(even) .film-item:hover { transform: translateX(2px); }
+
+  .film-item.type-optional { opacity: 0.65; }
+
+  .film-type {
+    font-family: 'Cinzel', serif;
+    font-size: 8px;
+    letter-spacing: 2px;
+    padding: 2px 5px;
+    border-radius: 2px;
+    font-style: normal;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .type-movie  { background: rgba(139,26,26,0.4);  color: #e87070; border: 1px solid rgba(139,26,26,0.5); }
+  .type-series { background: rgba(30,60,100,0.4);  color: #7ab0e8; border: 1px solid rgba(30,60,100,0.5); }
+  .type-mini   { background: rgba(40,90,60,0.4);   color: #7adfa0; border: 1px solid rgba(40,90,60,0.5); }
+  .type-doc    { background: rgba(80,50,10,0.5);   color: #e8c070; border: 1px solid rgba(150,100,20,0.4); }
+  .type-drama  { background: rgba(70,30,100,0.45); color: #c07ae8; border: 1px solid rgba(100,40,140,0.5); }
+
+  .parallel-label {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    opacity: 0.65;
+    margin-top: 5px;
+    line-height: 1.7;
+  }
+
+  .phase:nth-child(even) .parallel-label { text-align: left; }
+  .phase:nth-child(odd)  .parallel-label { text-align: right; }
+
+  .spotlight {
+    margin-top: 14px;
+    border-left: 2px solid var(--accent);
+    padding-left: 10px;
+  }
+
+  .phase:nth-child(odd) .spotlight {
+    border-left: none;
+    border-right: 2px solid var(--accent);
+    padding-left: 0;
+    padding-right: 10px;
+  }
+
+  .spotlight-label {
+    font-family: 'Cinzel', serif;
+    font-size: 8.5px;
+    letter-spacing: 2.5px;
+    color: #c07ae8;
+    opacity: 0.85;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+
+  .spotlight-text {
+    font-size: 11.5px;
+    color: var(--text-dim);
+    font-style: italic;
+    line-height: 1.6;
+  }
+
+  .end-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0;
+    padding-top: 20px;
+    position: relative;
+  }
+
+  .end-node::before {
+    content: '';
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    opacity: 0.4;
+    margin-bottom: 0;
+  }
+
+  .end-diamond {
+    width: 20px; height: 20px;
+    background: var(--accent);
+    transform: rotate(45deg);
+    box-shadow: 0 0 20px var(--accent-glow);
+    margin-bottom: 20px;
+  }
+
+  .end-label {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 3px;
+    color: var(--accent-light);
+    text-align: center;
+  }
+
+  .end-year {
+    font-family: 'Cinzel', serif;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--accent);
+    text-shadow: 0 0 30px var(--accent-glow);
+    margin-top: 6px;
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 60px;
+    padding-top: 30px;
+    border-top: 1px solid rgba(201,168,76,0.15);
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--text-dim);
+    font-style: italic;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .phase:nth-child(1)  { animation-delay: 0.04s; }
+  .phase:nth-child(2)  { animation-delay: 0.08s; }
+  .phase:nth-child(3)  { animation-delay: 0.12s; }
+  .phase:nth-child(4)  { animation-delay: 0.16s; }
+  .phase:nth-child(5)  { animation-delay: 0.20s; }
+  .phase:nth-child(6)  { animation-delay: 0.24s; }
+  .phase:nth-child(7)  { animation-delay: 0.28s; }
+  .phase:nth-child(8)  { animation-delay: 0.32s; }
+  .phase:nth-child(9)  { animation-delay: 0.36s; }
+  .phase:nth-child(10) { animation-delay: 0.40s; }
+
+  @media (max-width: 600px) {
+    .phase { flex-direction: column !important; padding-left: 30px; }
+    .phase-block { width: 100% !important; padding: 0 0 40px 0 !important; text-align: left !important; }
+    .trunk { left: 10px; }
+    .trunk-node { left: 10px; }
+    .phase-block::after { display: none; }
+    .films { align-items: flex-start !important; }
+    .spotlight { border-left: 2px solid rgba(201,168,76,0.25) !important; border-right: none !important; padding-left: 10px !important; padding-right: 0 !important; }
+    .phase:nth-child(even) .phase-block { padding-left: 0 !important; }
+    .film-item:hover { transform: translateX(2px) !important; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div class="header-ornament">❖ Cinematic Curriculum ❖</div>
+    <div class="back-link"><a href="index.html">← All Empires</a></div>
+    <h1>THE BYZANTINE EMPIRE<br>IN FILM &amp; SERIES</h1>
+    <p class="header-sub">From New Rome on the Bosporus to the fall of the Queen of Cities</p>
+    <div class="header-line">
+      <span class="header-dates">330 AD - 1453 AD</span>
+    </div>
+  </header>
+
+  <div class="tree">
+    <div class="trunk"></div>
+
+    <!-- PHASE I -->
+    <div class="phase">
+      <div class="phase-block">
+        <div class="phase-num">Phase I</div>
+        <div class="phase-date">306 - 395</div>
+        <div class="phase-title">New Rome on the Bosporus</div>
+        <div class="phase-desc">Constantine wins the West at the Milvian Bridge · the empire turns Christian · a Greek trading town is refounded in 330 as Constantinople</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-movie">FILM</span> Constantine and the Cross (1961) — Cornel Wilde</div>
+          <div class="film-item"><span class="film-type type-doc">DOC</span> Byzantium: The Lost Empire — Ep. 1, "Building the Dream" (1997)</div>
+          <div class="film-item"><span class="film-type type-doc">DOC</span> Byzantium: A Tale of Three Cities — Ep. 1 (2013)</div>
+        </div>
+        <div class="parallel-label">⟡ Watch the drama first, then the two documentary openers as context.</div>
+        <div class="parallel-label">⟡ Everything before this point is in rome.html — start there if you want the Republic and the West.</div>
+        <div class="spotlight">
+          <div class="spotlight-label">⚔ Character Spotlight — Constantine the Great</div>
+          <div class="spotlight-text">The founder. He moved the capital east and legalised Christianity, and both decisions outlived the Western empire by a thousand years. Cornel Wilde's 1961 peplum is the only feature-length screen biography — treat it as a colourful outline, not as history, and let John Romer's first episode do the correcting.</div>
+        </div>
+      </div>
+      <div class="trunk-node"></div>
+      <div class="phase-spacer"></div>
+    </div>
+
+    <!-- PHASE II -->
+    <div class="phase">
+      <div class="phase-spacer"></div>
+      <div class="trunk-node"></div>
+      <div class="phase-block">
+        <div class="phase-num">Phase II</div>
+        <div class="phase-date">395 - 476</div>
+        <div class="phase-title">The East Survives the West</div>
+        <div class="phase-desc">The empire splits permanently · the Theodosian Walls rise · Attila is bought off and turned west · Rome falls, Constantinople does not</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-movie">FILM</span> Sign of the Pagan (1954) — Jack Palance as Attila</div>
+          <div class="film-item type-optional"><span class="film-type type-movie">FILM</span> Agora (2009) — Hypatia in Christian Alexandria ⟡</div>
+        </div>
+        <div class="parallel-label">⟡ Sign of the Pagan is told from Constantinople's side — Marcian, Theodosius II, and the Hun problem.</div>
+        <div class="parallel-label">⟡ Agora is optional and covers the eastern provinces, not the capital.</div>
+      </div>
+    </div>
+
+    <!-- PHASE III -->
+    <div class="phase">
+      <div class="phase-block">
+        <div class="phase-num">Phase III</div>
+        <div class="phase-date">527 - 565</div>
+        <div class="phase-title">Justinian and the Reconquest</div>
+        <div class="phase-desc">The Nika riots nearly end the reign · Hagia Sophia is built in five years · Belisarius retakes Africa and Italy · the last serious attempt to make the Mediterranean Roman again</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-movie">FILM</span> Theodora, Slave Empress (1954) — Gianna Maria Canale</div>
+          <div class="film-item"><span class="film-type type-movie">FILM</span> The Last Roman (1968) — Orson Welles as Justinian</div>
+        </div>
+        <div class="parallel-label">⟡ Watch Theodora first — it covers the rise and the Nika riots.</div>
+        <div class="parallel-label">⟡ The Last Roman picks up the Italian reconquest and the fall of the Goths.</div>
+        <div class="spotlight">
+          <div class="spotlight-label">⚔ Character Spotlight — Theodora</div>
+          <div class="spotlight-text">Actress, then empress, and the reason the throne survived 532: when Justinian's court packed for exile she refused to run. Riccardo Freda's 1954 film is the only accessible drama built around her. It romanticises heavily — read her as the political operator the sources describe, not the melodrama heroine on screen.</div>
+        </div>
+      </div>
+      <div class="trunk-node"></div>
+      <div class="phase-spacer"></div>
+    </div>
+
+    <!-- PHASE IV -->
+    <div class="phase">
+      <div class="phase-spacer"></div>
+      <div class="trunk-node"></div>
+      <div class="phase-block">
+        <div class="phase-num">Phase IV</div>
+        <div class="phase-date">610 - 717</div>
+        <div class="phase-title">Heraclius and the Century of Sieges</div>
+        <div class="phase-desc">Persia takes Jerusalem and Heraclius takes it back · the Arab conquests strip Syria, Egypt and Africa within a generation · Constantinople holds twice behind Greek fire</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-doc">DOC</span> Byzantium: The Lost Empire — Ep. 3, "Envy of the World" (1997)</div>
+        </div>
+        <div class="parallel-label">⟡ No major drama covers this era — documentary bridge recommended.</div>
+        <div class="parallel-label">⟡ For the other side of the same wars, see persia.html and islamic.html.</div>
+      </div>
+    </div>
+
+    <!-- PHASE V -->
+    <div class="phase">
+      <div class="phase-block">
+        <div class="phase-num">Phase V</div>
+        <div class="phase-date">726 - 1025</div>
+        <div class="phase-title">Iconoclasm and the Macedonian Peak</div>
+        <div class="phase-desc">Two centuries of war over images · the icon wins · the Macedonian dynasty pushes the frontier back to the Danube and the Euphrates under Basil II</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-doc">DOC</span> Byzantium: The Lost Empire — Ep. 2, "Heaven on Earth" (1997)</div>
+        </div>
+        <div class="parallel-label">⟡ No major drama covers this era — documentary bridge recommended.</div>
+        <div class="parallel-label">⟡ Episode 2 is the best screen account of why icons were worth a civil war.</div>
+      </div>
+      <div class="trunk-node"></div>
+      <div class="phase-spacer"></div>
+    </div>
+
+    <!-- PHASE VI -->
+    <div class="phase">
+      <div class="phase-spacer"></div>
+      <div class="trunk-node"></div>
+      <div class="phase-block">
+        <div class="phase-num">Phase VI</div>
+        <div class="phase-date">988 - 1042</div>
+        <div class="phase-title">The Varangians in Miklagard</div>
+        <div class="phase-desc">Basil II hires six thousand Rus axemen and never sends them home · Norse mercenaries guard the emperor · Harald Hardrada earns a fortune in the City before claiming Norway</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-series">SERIES</span> Vikings: Valhalla — Season 3 (2024) — the Constantinople arc</div>
+        </div>
+        <div class="parallel-label">⟡ Season 3 is the Byzantine season — Seasons 1–2 are Scandinavian and belong to viking.html.</div>
+        <div class="parallel-label">⟡ Watch alongside viking.html for the same men seen from the north.</div>
+      </div>
+    </div>
+
+    <!-- PHASE VII -->
+    <div class="phase">
+      <div class="phase-block">
+        <div class="phase-num">Phase VII</div>
+        <div class="phase-date">1071</div>
+        <div class="phase-title">Manzikert and the Loss of Anatolia</div>
+        <div class="phase-desc">Romanos IV marches east and is captured by Alp Arslan · the Seljuks pour into Anatolia · the empire loses the ground that fed and manned it</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-series">SERIES</span> Alparslan: The Great Seljuks (2021) — the Seljuk view of 1071</div>
+        </div>
+        <div class="parallel-label">⟡ This is the enemy's telling — the only sustained screen treatment of Manzikert that exists.</div>
+        <div class="parallel-label">⟡ The empire's answer to this defeat is the First Crusade, covered in islamic.html.</div>
+        <div class="spotlight">
+          <div class="spotlight-label">⚔ Character Spotlight — Romanos IV Diogenes</div>
+          <div class="spotlight-text">A competent soldier-emperor betrayed on the field by his own aristocracy, spared by Alp Arslan, then blinded by the court he came home to. No Western production has ever dramatised him. In Alparslan he is the antagonist — watch him as the tragedy the Byzantine sources actually record.</div>
+        </div>
+      </div>
+      <div class="trunk-node"></div>
+      <div class="phase-spacer"></div>
+    </div>
+
+    <!-- PHASE VIII -->
+    <div class="phase">
+      <div class="phase-spacer"></div>
+      <div class="trunk-node"></div>
+      <div class="phase-block">
+        <div class="phase-num">Phase VIII</div>
+        <div class="phase-date">1204 - 1261</div>
+        <div class="phase-title">The Fourth Crusade Sacks the City</div>
+        <div class="phase-desc">A crusade aimed at Egypt is diverted to Constantinople · Venice profits, the relics leave forever · a Latin empire rules the ruins until Nicaea takes the City back</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-doc">DOC</span> Byzantium: The Lost Empire — Ep. 4, "Forever and Ever" (1997)</div>
+        </div>
+        <div class="parallel-label">⟡ No major drama covers this era — documentary bridge recommended.</div>
+        <div class="parallel-label">⟡ 1204, not 1453, is the wound the empire never recovers from. Watch this before the final phase.</div>
+      </div>
+    </div>
+
+    <!-- PHASE IX -->
+    <div class="phase">
+      <div class="phase-block">
+        <div class="phase-num">Phase IX</div>
+        <div class="phase-date">1453</div>
+        <div class="phase-title">The Fall of Constantinople</div>
+        <div class="phase-desc">Fifty-three days of siege · Mehmed II's cannon against the Theodosian Walls · Constantine XI dies in the breach and the Roman state ends after twenty-one centuries</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-series">SERIES</span> Rise of Empires: Ottoman — Season 1 (2020)</div>
+          <div class="film-item type-optional"><span class="film-type type-movie">FILM</span> Fetih 1453 (2012) — the Ottoman epic ⟡</div>
+          <div class="film-item"><span class="film-type type-doc">DOC</span> Byzantium: A Tale of Three Cities — Ep. 3 (2013)</div>
+        </div>
+        <div class="parallel-label">⟡ Rise of Empires gives both sides — it is the closest thing to a Byzantine account on screen.</div>
+        <div class="parallel-label">⟡ Continue into ottoman.html: the City has a second life as an imperial capital.</div>
+        <div class="spotlight">
+          <div class="spotlight-label">⚔ Character Spotlight — Constantine XI Palaiologos</div>
+          <div class="spotlight-text">The last Roman emperor, ruling a city of perhaps fifty thousand people with seven thousand defenders on the walls. Offered his life and a province if he surrendered, he refused, took off his imperial insignia and died fighting. Rise of Empires: Ottoman gives him the only serious screen portrayal in English.</div>
+        </div>
+      </div>
+      <div class="trunk-node"></div>
+      <div class="phase-spacer"></div>
+    </div>
+
+  </div>
+
+  <div class="end-node">
+    <div class="end-diamond"></div>
+    <div class="end-label">ΕΑΛΩ Η ΠΟΛΙΣ - THE CITY HAS FALLEN</div>
+    <div class="end-year">1453 AD</div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><span class="film-type type-movie">FILM</span> Feature Film</div>
+    <div class="legend-item"><span class="film-type type-series">SERIES</span> TV Series</div>
+    <div class="legend-item"><span class="film-type type-mini">MINI</span> Miniseries</div>
+    <div class="legend-item"><span class="film-type type-doc">DOC</span> Documentary</div>
+    <div class="legend-item"><span class="film-type type-drama">DRAMA</span> Docudrama</div>
+    <div class="legend-item" style="color:var(--text-dim); font-style:italic; font-size:12px;">⟡ parallel / optional</div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -9,8 +9,8 @@
 [**→ Open the live atlas**](https://moeezalam.github.io/Histree/)
 
 [![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://moeezalam.github.io/Histree/)
-[![Empires](https://img.shields.io/badge/empires-15-c9a84c)](#the-empires)
-[![Titles curated](https://img.shields.io/badge/titles%20curated-247-8b1a1a)](#the-empires)
+[![Empires](https://img.shields.io/badge/empires-17-c9a84c)](#the-empires)
+[![Titles curated](https://img.shields.io/badge/titles%20curated-283-8b1a1a)](#the-empires)
 [![No build step](https://img.shields.io/badge/build-none%20required-blue)](#run-it-locally)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-purple)](#contributing)
 
@@ -29,7 +29,7 @@ It is a **two-level tree**:
 - **Level 1 — the hub** ([`index.html`](index.html)): every empire as a node on a single visual tree. Solid lines are the main succession trunk and its forks; dashed lines are concurrent civilizations running elsewhere on the planet at the same time.
 - **Level 2 — the empire timelines** ([`rome.html`](rome.html), [`egypt.html`](egypt.html), …): one file per empire. A vertical alternating timeline from founding to fall — each phase carrying its films, character spotlights, watch-order notes and parallel-viewing instructions.
 
-Currently **15 empires · 110 historical phases · 247 curated titles**, spanning **1550 BC → 1997 AD**.
+Currently **17 empires · 131 historical phases · 283 curated titles**, spanning **1550 BC → 1997 AD**.
 
 ## The empires
 
@@ -37,7 +37,9 @@ Currently **15 empires · 110 historical phases · 247 curated titles**, spannin
 |---|---|--:|--:|
 | [Roman Empire](https://moeezalam.github.io/Histree/rome.html) | 753 BC – 1453 AD | 22 | 77 |
 | [Egyptian Empire](https://moeezalam.github.io/Histree/egypt.html) | c. 1550 – 30 BC | 8 | 28 |
+| [Russian Empire](https://moeezalam.github.io/Histree/russian.html) | 1682 – 1917 AD | 12 | 21 |
 | [Han Dynasty](https://moeezalam.github.io/Histree/han.html) | 206 BC – 220 AD | 10 | 16 |
+| [Byzantine Empire](https://moeezalam.github.io/Histree/byzantine.html) | 330 – 1453 AD | 9 | 15 |
 | [Achaemenid Persia](https://moeezalam.github.io/Histree/persia.html) | 550 – 330 BC | 6 | 14 |
 | [Maurya Empire](https://moeezalam.github.io/Histree/maurya.html) | 322 – 185 BC | 7 | 13 |
 | [Islamic Caliphates](https://moeezalam.github.io/Histree/islamic.html) | 610 – 1258 AD | 7 | 12 |
@@ -51,7 +53,7 @@ Currently **15 empires · 110 historical phases · 247 curated titles**, spannin
 | [Ottoman Empire](https://moeezalam.github.io/Histree/ottoman.html) | 1299 – 1922 AD | 6 | 8 |
 | [Japanese Imperial Age](https://moeezalam.github.io/Histree/japanese.html) | 1868 – 1945 AD | 4 | 8 |
 
-**Not built yet — open for contributors:** Byzantine Empire (476–1453 AD) and Russian Empire (1721–1917 AD) already have nodes on the hub tree but no timeline file behind them. See [Contributing](#contributing).
+Every node on the hub tree now has a timeline behind it. The next empires are unbuilt in both places — see [Contributing](#contributing).
 
 ## How to read a timeline
 
@@ -100,8 +102,8 @@ Contributions are genuinely easy here — one empire is one file, and nothing el
 
 **Highest-value work right now:**
 
-1. **Build a missing empire** — `byzantine.html` and `russian.html` are already linked from the hub and currently lead nowhere.
-2. **Add empires the tree doesn't cover yet** — Aztec, Inca, Qing, Carthage, Ethiopia/Aksum, Khmer, Songhai, Zulu, Austro-Hungary.
+1. **Add an empire the tree doesn't cover yet** — Aztec, Inca, Qing, Carthage, Ethiopia/Aksum, Khmer, Songhai, Zulu, Austro-Hungary.
+2. **Fill the marked gaps** — phases carrying "⟡ No major drama covers this era" are open invitations. Byzantine 610–1025 and the Russian Crimean War are the thinnest stretches in the whole atlas.
 3. **Fill media gaps** — a phase with thin coverage that you know a film or documentary for.
 4. **Fix accuracy** — wrong date, wrong watch order, a title that doesn't actually cover the phase it's filed under.
 
@@ -117,7 +119,7 @@ Open an issue first if you're taking on a whole empire, so two people don't buil
 
 ## Roadmap
 
-- [ ] Byzantine and Russian timelines (hub links already exist)
+- [x] Byzantine and Russian timelines
 - [ ] Coverage beyond Eurasia — the Americas, Africa, Southeast Asia
 - [ ] Where-to-watch availability hints per title
 - [ ] A single continuous "world watch order" that interleaves all empires chronologically

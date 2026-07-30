@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Russian Empire - The Complete Cinematic History</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #c9a84c;
+    --gold-light: #e8cc7a;
+    --crimson: #8b1a1a;
+    --crimson-light: #b52020;
+    --marble-dark: #0e0c0a;
+    --marble-mid: #1a1510;
+    --marble-light: #2a2018;
+    --text: #e8dcc8;
+    --text-dim: #9a8870;
+    --trunk: #c9a84c;
+    --accent: #8b1a1a;
+    --accent-light: #b52020;
+    --accent-glow: rgba(139,26,26,0.6);
+  }
+
+  :root {
+    --accent: #7d1128;      /* Romanov deep crimson */
+    --accent-light: #b02a44;
+    --accent-glow: rgba(125,17,40,0.6);
+  }
+
+  body {
+    background: var(--marble-dark);
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(105deg, transparent, transparent 40px, rgba(255,255,255,0.008) 40px, rgba(255,255,255,0.008) 41px),
+      repeating-linear-gradient(75deg, transparent, transparent 60px, rgba(255,255,255,0.005) 60px, rgba(255,255,255,0.005) 61px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    max-width: 1060px;
+    margin: 0 auto;
+    padding: 60px 20px 100px;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 80px;
+  }
+
+  .header-ornament {
+    font-size: 12px;
+    letter-spacing: 8px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    opacity: 0.7;
+  }
+
+  .back-link {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    opacity: 0.6;
+    margin-bottom: 12px;
+  }
+
+  .back-link a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .back-link a:hover { color: var(--gold-light); }
+
+  h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(22px, 4vw, 42px);
+    font-weight: 900;
+    color: var(--gold-light);
+    letter-spacing: 3px;
+    line-height: 1.2;
+    text-shadow: 0 0 40px rgba(201,168,76,0.3);
+  }
+
+  .header-sub {
+    margin-top: 14px;
+    font-size: 16px;
+    color: var(--text-dim);
+    font-style: italic;
+    letter-spacing: 1px;
+  }
+
+  .header-line {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 24px;
+    justify-content: center;
+  }
+
+  .header-line::before, .header-line::after {
+    content: '';
+    height: 1px;
+    width: 120px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  .header-dates {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    color: var(--gold);
+    letter-spacing: 4px;
+  }
+
+  .tree {
+    position: relative;
+    padding: 0 0 40px;
+  }
+
+  .trunk {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    transform: translateX(-50%);
+    background: linear-gradient(to bottom, var(--gold) 0%, var(--gold) 90%, transparent 100%);
+    opacity: 0.45;
+  }
+
+  .phase {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 0;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .phase:nth-child(odd)  { flex-direction: row; }
+  .phase:nth-child(even) { flex-direction: row-reverse; }
+
+  .phase-block {
+    width: calc(50% - 32px);
+    padding-bottom: 64px;
+    position: relative;
+  }
+
+  .phase:nth-child(odd)  .phase-block { padding-right: 32px; text-align: right; }
+  .phase:nth-child(even) .phase-block { padding-left:  32px; text-align: left;  }
+
+  .phase:nth-child(odd)  .phase-block::after {
+    content: ''; position: absolute; right: 0; top: 6px;
+    width: 32px; height: 1px; background: var(--gold); opacity: 0.4;
+  }
+  .phase:nth-child(even) .phase-block::after {
+    content: ''; position: absolute; left: 0; top: 6px;
+    width: 32px; height: 1px; background: var(--gold); opacity: 0.4;
+  }
+
+  .trunk-node {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--gold);
+    border: 2px solid var(--marble-dark);
+    box-shadow: 0 0 12px rgba(201,168,76,0.6);
+    z-index: 2;
+    flex-shrink: 0;
+  }
+
+  .phase-spacer { width: 64px; flex-shrink: 0; }
+
+  .phase-num {
+    font-size: 10px;
+    color: var(--accent-light);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    opacity: 0.9;
+  }
+
+  .phase-date {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 3px;
+    opacity: 0.85;
+    margin-bottom: 6px;
+  }
+
+  .phase-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(13px, 2vw, 17px);
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: 1px;
+    line-height: 1.3;
+    margin-bottom: 6px;
+  }
+
+  .phase-desc {
+    font-size: 12.5px;
+    color: var(--text-dim);
+    font-style: italic;
+    line-height: 1.6;
+    margin-top: 6px;
+    margin-bottom: 2px;
+  }
+
+  .films {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 12px;
+  }
+
+  .phase:nth-child(odd)  .films { align-items: flex-end; }
+  .phase:nth-child(even) .films { align-items: flex-start; }
+
+  .film-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--marble-light);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 3px;
+    padding: 6px 12px;
+    font-size: 13px;
+    color: var(--text);
+    font-style: italic;
+    transition: all 0.2s;
+    position: relative;
+    max-width: 300px;
+  }
+
+  .film-item:hover {
+    border-color: rgba(201,168,76,0.5);
+    background: rgba(201,168,76,0.07);
+    color: var(--gold-light);
+    transform: translateX(-2px);
+  }
+
+  .phase:nth-child(even) .film-item:hover { transform: translateX(2px); }
+
+  .film-item.type-optional { opacity: 0.65; }
+
+  .film-type {
+    font-family: 'Cinzel', serif;
+    font-size: 8px;
+    letter-spacing: 2px;
+    padding: 2px 5px;
+    border-radius: 2px;
+    font-style: normal;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .type-movie  { background: rgba(139,26,26,0.4);  color: #e87070; border: 1px solid rgba(139,26,26,0.5); }
+  .type-series { background: rgba(30,60,100,0.4);  color: #7ab0e8; border: 1px solid rgba(30,60,100,0.5); }
+  .type-mini   { background: rgba(40,90,60,0.4);   color: #7adfa0; border: 1px solid rgba(40,90,60,0.5); }
+  .type-doc    { background: rgba(80,50,10,0.5);   color: #e8c070; border: 1px solid rgba(150,100,20,0.4); }
+  .type-drama  { background: rgba(70,30,100,0.45); color: #c07ae8; border: 1px solid rgba(100,40,140,0.5); }
+
+  .parallel-label {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    opacity: 0.65;
+    margin-top: 5px;
+    line-height: 1.7;
+  }
+
+  .phase:nth-child(even) .parallel-label { text-align: left; }
+  .phase:nth-child(odd)  .parallel-label { text-align: right; }
+
+  .spotlight {
+    margin-top: 14px;
+    border-left: 2px solid var(--accent);
+    padding-left: 10px;
+  }
+
+  .phase:nth-child(odd) .spotlight {
+    border-left: none;
+    border-right: 2px solid var(--accent);
+    padding-left: 0;
+    padding-right: 10px;
+  }
+
+  .spotlight-label {
+    font-family: 'Cinzel', serif;
+    font-size: 8.5px;
+    letter-spacing: 2.5px;
+    color: #c07ae8;
+    opacity: 0.85;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+
+  .spotlight-text {
+    font-size: 11.5px;
+    color: var(--text-dim);
+    font-style: italic;
+    line-height: 1.6;
+  }
+
+  .end-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0;
+    padding-top: 20px;
+    position: relative;
+  }
+
+  .end-node::before {
+    content: '';
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    opacity: 0.4;
+    margin-bottom: 0;
+  }
+
+  .end-diamond {
+    width: 20px; height: 20px;
+    background: var(--accent);
+    transform: rotate(45deg);
+    box-shadow: 0 0 20px var(--accent-glow);
+    margin-bottom: 20px;
+  }
+
+  .end-label {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 3px;
+    color: var(--accent-light);
+    text-align: center;
+  }
+
+  .end-year {
+    font-family: 'Cinzel', serif;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--accent);
+    text-shadow: 0 0 30px var(--accent-glow);
+    margin-top: 6px;
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 60px;
+    padding-top: 30px;
+    border-top: 1px solid rgba(201,168,76,0.15);
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--text-dim);
+    font-style: italic;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .phase:nth-child(1)  { animation-delay: 0.04s; }
+  .phase:nth-child(2)  { animation-delay: 0.08s; }
+  .phase:nth-child(3)  { animation-delay: 0.12s; }
+  .phase:nth-child(4)  { animation-delay: 0.16s; }
+  .phase:nth-child(5)  { animation-delay: 0.20s; }
+  .phase:nth-child(6)  { animation-delay: 0.24s; }
+  .phase:nth-child(7)  { animation-delay: 0.28s; }
+  .phase:nth-child(8)  { animation-delay: 0.32s; }
+  .phase:nth-child(9)  { animation-delay: 0.36s; }
+  .phase:nth-child(10) { animation-delay: 0.40s; }
+  .phase:nth-child(11) { animation-delay: 0.44s; }
+  .phase:nth-child(12) { animation-delay: 0.48s; }
+
+  @media (max-width: 600px) {
+    .phase { flex-direction: column !important; padding-left: 30px; }
+    .phase-block { width: 100% !important; padding: 0 0 40px 0 !important; text-align: left !important; }
+    .trunk { left: 10px; }
+    .trunk-node { left: 10px; }
+    .phase-block::after { display: none; }
+    .films { align-items: flex-start !important; }
+    .spotlight { border-left: 2px solid rgba(201,168,76,0.25) !important; border-right: none !important; padding-left: 10px !important; padding-right: 0 !important; }
+    .phase:nth-child(even) .phase-block { padding-left: 0 !important; }
+    .film-item:hover { transform: translateX(2px) !important; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div class="header-ornament">❖ Cinematic Curriculum ❖</div>
+    <div class="back-link"><a href="index.html">← All Empires</a></div>
+    <h1>THE RUSSIAN EMPIRE<br>IN FILM &amp; SERIES</h1>
+    <p class="header-sub">From Peter's window on the West to the cellar at Yekaterinburg</p>
+    <div class="header-line">
+      <span class="header-dates">1682 AD - 1917 AD</span>
+    </div>
+  </header>
+
+  <div class="tree">
+    <div class="trunk"></div>
+
+    <!-- PHASE I -->
+    <div class="phase">
+      <div class="phase-block">
+        <div class="phase-num">Phase I</div>
+        <div class="phase-date">1682 - 1725</div>
+        <div class="phase-title">Peter Builds an Empire</div>
+        <div class="phase-desc">A tsar who worked in Dutch shipyards · the Streltsy broken, the beards cut, the Swedes destroyed at Poltava · St Petersburg raised on a swamp and the empire proclaimed in 1721</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-mini">MINI</span> Peter the Great (1986) — Maximilian Schell</div>
+          <div class="film-item type-optional"><span class="film-type type-movie">FILM</span> Russian Ark (2002) — 300 years in one take ⟡</div>
+        </div>
+        <div class="parallel-label">⟡ The 1986 miniseries is the spine of this phase — four parts, from the Streltsy revolt to Peter's death.</div>
+        <div class="parallel-label">⟡ Russian Ark is optional and spans the whole file — save it for last if you prefer.</div>
+        <div class="spotlight">
+          <div class="spotlight-label">⚔ Character Spotlight — Peter the Great</div>
+          <div class="spotlight-text">Two metres tall, trained as a carpenter, and the only tsar who executed rebels personally. He dragged a landlocked Muscovy into Europe by force and named the result an empire. Maximilian Schell's performance in the 1986 miniseries — adapted from Robert Massie — is still the definitive screen Peter.</div>
+        </div>
+      </div>
+      <div class="trunk-node"></div>
+      <div class="phase-spacer"></div>
+    </div>
+
+    <!-- PHASE II -->
+    <div class="phase">
+      <div class="phase-spacer"></div>
+      <div class="trunk-node"></div>
+      <div class="phase-block">
+        <div class="phase-num">Phase II</div>
+        <div class="phase-date">1725 - 1762</div>
+        <div class="phase-title">The Age of Palace Revolutions</div>
+        <div class="phase-desc">Six rulers in thirty-seven years, most installed by the guards regiments · a German princess arrives to marry the heir · the coup of 1762 makes her empress</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-series">SERIES</span> Ekaterina — Season 1 (2014) — Marina Aleksandrova</div>
+          <div class="film-item type-optional"><span class="film-type type-movie">FILM</span> The Scarlet Empress (1934) — Dietrich, von Sternberg ⟡</div>
+        </div>
+        <div class="parallel-label">⟡ Ekaterina is the Russian-made account and the most historically careful.</div>
+        <div class="parallel-label">⟡ The Scarlet Empress is a masterpiece of design and almost worthless as history — watch it as expressionism.</div>
+      </div>
+    </div>
+
+    <!-- PHASE III -->
+    <div class="phase">
+      <div class="phase-block">
+        <div class="phase-num">Phase III</div>
+        <div class="phase-date">1762 - 1796</div>
+        <div class="phase-title">Catherine and the Enlightened Autocrat</div>
+        <div class="phase-desc">Crimea annexed, Poland partitioned, the Hermitage filled · correspondence with Voltaire alongside expanding serfdom · Potemkin as partner in bed and in empire</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-mini">MINI</span> Catherine the Great (2019) — Helen Mirren, four parts</div>
+          <div class="film-item"><span class="film-type type-series">SERIES</span> Ekaterina — Seasons 2-3 (2014-2023)</div>
+          <div class="film-item type-optional"><span class="film-type type-series">SERIES</span> The Great (2020) — satire, not history ⟡</div>
+        </div>
+        <div class="parallel-label">⟡ Mirren's miniseries covers the late reign and Potemkin — start there.</div>
+        <div class="parallel-label">⟡ The Great is deliberately anti-historical. Enjoy it after you know the real sequence.</div>
+        <div class="spotlight">
+          <div class="spotlight-label">⚔ Character Spotlight — Catherine II</div>
+          <div class="spotlight-text">She had no Romanov blood and no legal claim, took the throne in a bloodless coup against her own husband, and ruled for thirty-four years. The screen keeps choosing between the seductress and the stateswoman; Mirren plays both at once, which is closer to the correspondence she actually left behind.</div>
+        </div>
+      </div>
+      <div class="trunk-node"></div>
+      <div class="phase-spacer"></div>
+    </div>
+
+    <!-- PHASE IV -->
+    <div class="phase">
+      <div class="phase-spacer"></div>
+      <div class="trunk-node"></div>
+      <div class="phase-block">
+        <div class="phase-num">Phase IV</div>
+        <div class="phase-date">1773 - 1775</div>
+        <div class="phase-title">Pugachev and the Cossack Rising</div>
+        <div class="phase-desc">A Don Cossack claims to be the murdered Peter III · serfs, Old Believers and Bashkirs burn the Volga frontier · the largest peasant revolt in Russian history ends on a Moscow scaffold</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-movie">FILM</span> The Captain's Daughter / Russkiy bunt (2000)</div>
+        </div>
+        <div class="parallel-label">⟡ Adapted from Pushkin — the rising seen from inside a frontier fort.</div>
+        <div class="parallel-label">⟡ This is the cost of Catherine's golden age, and the only drama that shows it.</div>
+      </div>
+    </div>
+
+    <!-- PHASE V -->
+    <div class="phase">
+      <div class="phase-block">
+        <div class="phase-num">Phase V</div>
+        <div class="phase-date">1805 - 1815</div>
+        <div class="phase-title">Alexander I and the Fall of Napoleon</div>
+        <div class="phase-desc">Austerlitz, Tilsit, then six hundred thousand men crossing the Niemen · Borodino, a burning Moscow and a winter retreat · Russian troops enter Paris in 1814</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-movie">FILM</span> War and Peace (1966-67) — Bondarchuk, four parts</div>
+          <div class="film-item type-optional"><span class="film-type type-mini">MINI</span> War &amp; Peace (2016) — BBC, six parts ⟡</div>
+        </div>
+        <div class="parallel-label">⟡ Bondarchuk's Borodino used tens of thousands of real soldiers — nothing since compares.</div>
+        <div class="parallel-label">⟡ Watch alongside napoleon.html for the same campaign from the French side.</div>
+      </div>
+      <div class="trunk-node"></div>
+      <div class="phase-spacer"></div>
+    </div>
+
+    <!-- PHASE VI -->
+    <div class="phase">
+      <div class="phase-spacer"></div>
+      <div class="trunk-node"></div>
+      <div class="phase-block">
+        <div class="phase-num">Phase VI</div>
+        <div class="phase-date">1825</div>
+        <div class="phase-title">The Decembrist Revolt</div>
+        <div class="phase-desc">Officers who saw Europe refuse to swear to Nicholas I · three thousand men stand in Senate Square and are broken by grapeshot · five hang, the rest go to Siberia with their wives behind them</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-movie">FILM</span> The Captivating Star of Happiness (1975) — Motyl, two parts</div>
+        </div>
+        <div class="parallel-label">⟡ Told through the Decembrists' wives — the finest Soviet film about the imperial nobility.</div>
+      </div>
+    </div>
+
+    <!-- PHASE VII -->
+    <div class="phase">
+      <div class="phase-block">
+        <div class="phase-num">Phase VII</div>
+        <div class="phase-date">1825 - 1855</div>
+        <div class="phase-title">Nicholas I and the Gendarme of Europe</div>
+        <div class="phase-desc">Autocracy, Orthodoxy, Nationality · censorship and the Third Section · and underneath it the greatest generation Russian letters ever produced</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-movie">FILM</span> Onegin (1999) — Ralph Fiennes, Liv Tyler</div>
+        </div>
+        <div class="parallel-label">⟡ No major drama covers the reign itself — Onegin is the era's texture, not its politics.</div>
+      </div>
+      <div class="trunk-node"></div>
+      <div class="phase-spacer"></div>
+    </div>
+
+    <!-- PHASE VIII -->
+    <div class="phase">
+      <div class="phase-spacer"></div>
+      <div class="trunk-node"></div>
+      <div class="phase-block">
+        <div class="phase-num">Phase VIII</div>
+        <div class="phase-date">1853 - 1856</div>
+        <div class="phase-title">The Crimean War</div>
+        <div class="phase-desc">Britain and France defend the Ottomans against Russian expansion · Sevastopol besieged for eleven months · defeat exposes an empire that cannot supply its own army</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-movie">FILM</span> The Charge of the Light Brigade (1968) — British side</div>
+        </div>
+        <div class="parallel-label">⟡ No major drama covers the Russian side — documentary bridge recommended.</div>
+        <div class="parallel-label">⟡ Pair with ottoman.html: this is the same war seen from Constantinople.</div>
+      </div>
+    </div>
+
+    <!-- PHASE IX -->
+    <div class="phase">
+      <div class="phase-block">
+        <div class="phase-num">Phase IX</div>
+        <div class="phase-date">1861 - 1894</div>
+        <div class="phase-title">Emancipation and the Long Reaction</div>
+        <div class="phase-desc">Twenty-three million serfs freed in 1861 · reformers and terrorists in the same generation · Alexander II killed by a bomb in 1881 and the reforms die with him</div>
+        <div class="films">
+          <div class="film-item type-optional"><span class="film-type type-movie">FILM</span> Anna Karenina (2012) — Wright, Knightley ⟡</div>
+        </div>
+        <div class="parallel-label">⟡ No major drama covers the reforms or the assassination — documentary bridge recommended.</div>
+        <div class="parallel-label">⟡ Anna Karenina is the society this phase produced, not its politics.</div>
+      </div>
+      <div class="trunk-node"></div>
+      <div class="phase-spacer"></div>
+    </div>
+
+    <!-- PHASE X -->
+    <div class="phase">
+      <div class="phase-spacer"></div>
+      <div class="trunk-node"></div>
+      <div class="phase-block">
+        <div class="phase-num">Phase X</div>
+        <div class="phase-date">1894 - 1905</div>
+        <div class="phase-title">Nicholas II and the First Revolution</div>
+        <div class="phase-desc">A ballerina, then a coronation, then Khodynka · defeat by Japan at Tsushima · Bloody Sunday and the mutinies of 1905 force a parliament out of an autocrat</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-movie">FILM</span> Matilda (2017) — the Kshesinskaya affair</div>
+          <div class="film-item"><span class="film-type type-movie">FILM</span> Battleship Potemkin (1925) — Eisenstein</div>
+        </div>
+        <div class="parallel-label">⟡ Matilda first (1890s), then Potemkin for the mutiny of 1905.</div>
+        <div class="parallel-label">⟡ Potemkin is propaganda made twenty years after the event — powerful, and openly partisan.</div>
+      </div>
+    </div>
+
+    <!-- PHASE XI -->
+    <div class="phase">
+      <div class="phase-block">
+        <div class="phase-num">Phase XI</div>
+        <div class="phase-date">1905 - 1916</div>
+        <div class="phase-title">Rasputin and the Rotting Court</div>
+        <div class="phase-desc">A haemophiliac heir and a Siberian holy man the empress will not give up · ministers appointed and dismissed on his word · murdered in December 1916, three months before the throne falls</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-movie">FILM</span> Agony (1981) — Klimov, banned for a decade</div>
+          <div class="film-item"><span class="film-type type-drama">DRAMA</span> The Last Czars (2019) — six-part docudrama</div>
+        </div>
+        <div class="parallel-label">⟡ Agony is the great film of the late court — hallucinatory, and closer to the record than it looks.</div>
+        <div class="parallel-label">⟡ The Last Czars bridges this phase and the next with historians on camera.</div>
+      </div>
+      <div class="trunk-node"></div>
+      <div class="phase-spacer"></div>
+    </div>
+
+    <!-- PHASE XII -->
+    <div class="phase">
+      <div class="phase-spacer"></div>
+      <div class="trunk-node"></div>
+      <div class="phase-block">
+        <div class="phase-num">Phase XII</div>
+        <div class="phase-date">1914 - 1918</div>
+        <div class="phase-title">War, Abdication and Yekaterinburg</div>
+        <div class="phase-desc">The tsar takes personal command and personal blame · bread riots in February 1917 end three centuries of Romanov rule in a week · the family is shot in a cellar in July 1918</div>
+        <div class="films">
+          <div class="film-item"><span class="film-type type-movie">FILM</span> Nicholas and Alexandra (1971) — Schaffner, 1904-1918</div>
+          <div class="film-item"><span class="film-type type-movie">FILM</span> Doctor Zhivago (1965) — Lean, war into revolution</div>
+          <div class="film-item type-optional"><span class="film-type type-movie">FILM</span> Admiral (2008) — Kolchak, 1915-1920 ⟡</div>
+        </div>
+        <div class="parallel-label">⟡ Nicholas and Alexandra is the primary account of the fall — watch it first.</div>
+        <div class="parallel-label">⟡ Admiral carries the story past the empire into the civil war.</div>
+        <div class="spotlight">
+          <div class="spotlight-label">⚔ Character Spotlight — Nicholas II</div>
+          <div class="spotlight-text">The last emperor, and by every account a devoted family man with no aptitude for the job he inherited. Michael Jayston's 1971 performance is the standard portrayal: not a tyrant, a man who kept choosing the smaller loyalty over the larger one until there was nothing left to rule.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="end-node">
+    <div class="end-diamond"></div>
+    <div class="end-label">КОНЕЦ - THE ROMANOVS FALL</div>
+    <div class="end-year">1917 AD</div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><span class="film-type type-movie">FILM</span> Feature Film</div>
+    <div class="legend-item"><span class="film-type type-series">SERIES</span> TV Series</div>
+    <div class="legend-item"><span class="film-type type-mini">MINI</span> Miniseries</div>
+    <div class="legend-item"><span class="film-type type-doc">DOC</span> Documentary</div>
+    <div class="legend-item"><span class="film-type type-drama">DRAMA</span> Docudrama</div>
+    <div class="legend-item" style="color:var(--text-dim); font-style:italic; font-size:12px;">⟡ parallel / optional</div>
+  </div>
+
+</div>
+</body>
+</html>
